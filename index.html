@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelly's Website</title>
+    <!-- Integrazione del font "Jaro" da Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jaro&display=swap">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-image: url('matrix.gif');
+            background-size: cover;
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        /* Stile per l'animazione di scrittura */
+        @keyframes typing {
+            0% {
+                width: 0;
+            }
+            50% {
+                width: 100%;
+            }
+        }
+
+        /* Applicazione del font "Consolas" in grassetto per i titoli */
+        .section h1 {
+            margin-bottom: 10px;
+            font-size: 2em;
+            font-family: Consolas, monospace; /* Font del prompt dei comandi di Windows */
+            font-weight: bold; /* Testo in grassetto */
+            overflow: hidden; /* Per evitare che il testo si sposti durante l'animazione */
+            white-space: nowrap; /* Per mantenere il testo su una sola riga durante l'animazione */
+            border-right: 3px solid white; /* Simula il cursore di scrittura */
+            animation: typing 4s steps(40, end);
+        }
+
+        .section h1:hover {
+            animation-play-state: paused; /* Pausa l'animazione al passaggio del mouse */
+        }
+
+        /* Utilizzo del font "Consolas" normale per i sottotitoli */
+        .section p, .section ul {
+            font-size: 1.2em;
+            margin: 0;
+            font-family: Consolas, monospace; /* Font del prompt dei comandi di Windows */
+        }
+
+        .section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .section ul li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="content">
+        <div class="section" id="whoami">
+            <h1>About myself</h1>
+            <p>Hello! I'm Micky (known on the internet as Spelly) and i have a BIG PASSION for retro games and computers (you may have already seen me on the internet lol). Anyways, this is basically me in a nutshell :D</p>
+        </div>
+        <div class="section" id="socialmedia">
+            <h1>Social Media</h1>
+            <ul>
+                <li>Reddit: u/therealspelly</li>
+                <li>Telegram: spellybtw</li>
+                <li>Youtube: @spellybtw</li>
+                <!-- Aggiungi altri progetti qui -->
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

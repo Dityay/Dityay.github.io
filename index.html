@@ -6,21 +6,22 @@
     <title>Ditya - Android Developer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        /* --- Material You Inspired Design --- */
+        /* --- Material You Expressive Style Redesign --- */
         :root {
-            /* M3 Color Palette (Simulated) */
-            --primary-container: #d6e3ff;
-            --on-primary-container: #001b3e;
-            --primary-fixed: #007BFF; /* A vibrant accent */
-            --secondary-container: #e2e2e2;
-            --on-secondary-container: #1c1c1c;
-            --surface-container-high: #ffffff;
-            --surface-container-low: #f3f4f8;
-            --on-surface: #1c1c1c;
-            --on-surface-variant: #444746;
-            --outline: #cbcbd1;
+            /* NEW Expressive Color Palette */
+            --primary-accent: #6200EE; /* A vibrant purple */
+            --secondary-accent: #E91E63; /* A lively magenta */
+            --surface-bg: #f7f2ff;   /* Light purple-tinted background */
+            --container-bg: #ffffff;
+            --text-primary: #1c1b1f;
+            --text-secondary: #49454f;
+            --outline-color: #eaddf1;
+            
+            /* Shape Definitions */
+            --radius-large: 28px;
+            --radius-medium: 16px;
         }
 
         html {
@@ -28,13 +29,13 @@
         }
 
         body {
-            font-family: 'Roboto', 'Google Sans', sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
-            background-color: var(--surface-container-low);
-            color: var(--on-surface);
+            background-color: var(--surface-bg);
+            color: var(--text-primary);
             line-height: 1.6;
         }
-
+        
         /* --- General Layout --- */
         .container {
             max-width: 1100px;
@@ -43,24 +44,27 @@
         }
 
         section {
-            padding: 5rem 0;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden; /* Hide overflow from decorative blobs */
         }
-
+        
+        /* --- Expressive Typography --- */
         h1, h2, h3 {
-            font-family: 'Google Sans', sans-serif;
+            font-family: 'Lexend', sans-serif; /* Using the new expressive font */
             line-height: 1.2;
+            font-weight: 700;
         }
 
-        h1 { font-size: 3.5rem; font-weight: 700; color: var(--primary-fixed); }
-        h2 { font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: var(--on-surface); }
-        h3 { font-size: 1.5rem; color: var(--on-surface); }
-        p { color: var(--on-surface-variant); margin-bottom: 1rem; }
-        a { color: var(--primary-fixed); text-decoration: none; }
-        img { max-width: 100%; height: auto; display: block; }
+        h1 { font-size: 4.5rem; color: var(--primary-accent); letter-spacing: -2px; }
+        h2 { font-size: 3rem; text-align: center; margin-bottom: 4rem; color: var(--primary-accent); }
+        h3 { font-size: 1.75rem; color: var(--text-primary); margin-bottom: 0.5rem; }
+        p { color: var(--text-secondary); margin-bottom: 1rem; }
+        a { color: var(--secondary-accent); text-decoration: none; font-weight: 500;}
 
         /* --- Header & Navigation --- */
         .main-header {
-            background-color: rgba(243, 244, 248, 0.8); /* Semi-transparent surface */
+            background-color: rgba(247, 242, 255, 0.8); /* Semi-transparent surface */
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             position: fixed;
@@ -78,10 +82,10 @@
         }
 
         .main-header .logo a {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
             font-weight: 700;
-            font-family: 'Google Sans', sans-serif;
-            color: var(--on-surface);
+            font-family: 'Lexend', sans-serif;
+            color: var(--primary-accent);
         }
 
         .main-header nav ul {
@@ -91,21 +95,50 @@
             padding: 0;
         }
 
-        .main-header nav ul li {
-            margin-left: 2rem;
-        }
+        .main-header nav ul li { margin-left: 2.5rem; }
 
         .main-header nav a {
-            color: var(--on-surface-variant);
+            color: var(--text-secondary);
             font-weight: 500;
             padding: 0.5rem 0;
-            border-bottom: 2px solid transparent;
-            transition: color 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            transition: color 0.3s ease;
         }
-
-        .main-header nav a:hover {
-            color: var(--primary-fixed);
-            border-bottom-color: var(--primary-fixed);
+        .main-header nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--secondary-accent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .main-header nav a:hover { color: var(--secondary-accent); }
+        .main-header nav a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* --- Wavy Section Divider --- */
+        .wavy-divider {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        .wavy-divider svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 80px; /* Adjust height of the wave */
+        }
+        .wavy-divider .shape-fill {
+            fill: var(--surface-bg); /* Match the next section's background */
         }
 
         /* --- Hero Section --- */
@@ -115,191 +148,215 @@
             justify-content: center;
             text-align: center;
             min-height: 100vh;
-            padding-top: 80px;
+            background-color: var(--container-bg); /* Different background for hero */
         }
-
+        
         #hero .subtitle {
             font-size: 1.5rem;
-            color: var(--on-surface-variant);
-            margin: 1rem auto 2.5rem;
+            color: var(--text-secondary);
+            margin: 1.5rem auto 2.5rem;
             max-width: 600px;
         }
-
-        /* --- Buttons (Material You Style) --- */
+        
+        /* --- Expressive Buttons --- */
         .m3-button {
             display: inline-block;
-            padding: 0.8rem 1.6rem;
-            border-radius: 20px; /* Pill shape */
+            padding: 1rem 2rem;
             font-size: 1rem;
             font-weight: 700;
-            font-family: 'Google Sans', sans-serif;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Lexend', sans-serif;
+            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
             text-align: center;
             border: none;
             cursor: pointer;
+            position: relative;
+            /* NEW Expressive shape */
+            border-radius: 50px 50px 50px 15px; 
         }
 
         .m3-button.filled {
-            background-color: var(--primary-fixed);
+            background-color: var(--primary-accent);
             color: white;
+            box-shadow: 0 4px 15px rgba(98, 0, 238, 0.2);
         }
         .m3-button.filled:hover {
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.35);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(98, 0, 238, 0.3);
         }
 
         .m3-button.tonal {
-            background-color: var(--primary-container);
-            color: var(--on-primary-container);
+            background-color: var(--container-bg);
+            color: var(--primary-accent);
+            border: 2px solid var(--outline-color);
         }
         .m3-button.tonal:hover {
-            background-color: #c4d6f8;
+            background-color: var(--primary-accent);
+            color: white;
+            border-color: var(--primary-accent);
+            transform: scale(1.05);
         }
         
         .hero-social-links {
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             justify-content: center;
         }
 
         /* --- About Section --- */
+        #about {
+           background-color: var(--surface-bg);
+        }
         #about .about-content {
             display: grid;
-            grid-template-columns: 1fr 2.5fr;
+            grid-template-columns: 1fr 2fr;
             gap: 4rem;
             align-items: center;
         }
         
         #about img {
-            border-radius: 28px; /* Material You rounded corners */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 250px;
+            max-width: 300px;
             margin: 0 auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            /* NEW Expressive blob shape for the image */
+            clip-path: path('M263.8,73.5C302.4,115.3,311.5,188,285.3,232.4C259.1,276.8,197.6,292.8,145.9,293.9C94.2,295,52.3,281.2,24.1,245.8C-4.1,210.4,-18.6,153.4,1.8,110.1C22.2,66.8,95.7,37.2,151.4,22.2C207.1,7.2,245.2,52.7,263.8,73.5Z');
+            transition: transform 0.4s ease;
+        }
+        #about img:hover {
+           transform: scale(1.05) rotate(3deg);
         }
 
         /* --- Projects Section --- */
+        #projects {
+            background-color: var(--container-bg);
+        }
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            gap: 2.5rem;
         }
         
         .project-card {
-            background-color: var(--surface-container-high);
-            border-radius: 28px;
-            border: 1px solid var(--outline);
-            transition: box-shadow 0.3s ease;
+            background-color: var(--container-bg);
+            border: 1px solid var(--outline-color);
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            /* NEW Expressive shape for cards */
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%);
         }
 
         .project-card:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-color: var(--primary-accent);
         }
         
         .project-card img {
             object-fit: cover;
             height: 200px;
-            border-bottom: 1px solid var(--outline);
+            border-bottom: 1px solid var(--outline-color);
+            transition: transform 0.4s ease;
+        }
+        .project-card:hover img {
+            transform: scale(1.1);
         }
 
         .project-card .project-info {
-            padding: 1.5rem;
+            padding: 1.5rem 2rem;
             display: flex;
             flex-direction: column;
-            flex-grow: 1; 
+            flex-grow: 1;
         }
         
-        .project-card h3 {
-            margin-top: 0;
-            color: var(--on-surface);
-        }
-
         .project-card p {
-            flex-grow: 1; 
+            flex-grow: 1;
             margin-bottom: 1.5rem;
-            color: var(--on-surface-variant);
         }
         
         /* --- Credits Section --- */
         #credits {
-            background-color: var(--surface-container-high);
+            background: var(--surface-bg);
         }
-        
         .credits-container {
             max-width: 800px;
             margin: 0 auto;
-            text-align: center;
             display: grid;
             gap: 2rem;
+            grid-template-columns: 1fr 1fr;
         }
 
         .credit-item {
-            background: var(--surface-container-low);
-            padding: 1.5rem;
-            border-radius: 28px;
+            background: var(--container-bg);
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid var(--outline-color);
+            transition: all 0.3s ease;
+            /* NEW different expressive shape */
+            border-radius: 40px 10px 40px 10px;
         }
-
-        .credit-item h3 {
-            font-size: 1.5rem;
-            color: var(--on-primary-container);
+        .credit-item:hover {
+             transform: scale(1.05);
+             border-color: var(--secondary-accent);
+             box-shadow: 0 8px 25px rgba(0,0,0,0.07);
         }
         
         /* --- Footer --- */
         .main-footer {
-            background-color: var(--primary-container);
-            color: var(--on-primary-container);
+            background-color: var(--primary-accent);
+            color: #ffffff;
             text-align: center;
-            padding: 3rem 0;
+            padding: 4rem 0;
+            position: relative;
+        }
+        .main-footer .wavy-divider .shape-fill {
+             fill: var(--primary-accent);
         }
         
         .footer-social-links a {
-            color: var(--on-primary-container);
+            color: #ffffff;
             margin: 0 0.75rem;
             display: inline-block;
-            transition: color 0.3s ease, transform 0.3s ease;
+            transition: transform 0.3s ease;
         }
-        
         .footer-social-links a:hover {
-            color: var(--primary-fixed);
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.2);
         }
 
         .footer-social-links svg {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             fill: currentColor;
         }
         
         .main-footer p {
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             margin-bottom: 0;
             font-size: 0.9rem;
+            opacity: 0.8;
+            color: #ffffff; /* Explicitly set for p tag inside footer */
         }
-
+        
         /* --- Responsive Styles --- */
         @media (max-width: 768px) {
-            h1 { font-size: 2.8rem; }
-            h2 { font-size: 2.2rem; }
+            h1 { font-size: 3rem; letter-spacing: -1px; }
+            h2 { font-size: 2.5rem; }
 
             .main-header .nav-container {
                 flex-direction: column;
-                padding: 0.5rem 1rem;
+                padding: 0.75rem 1rem;
             }
-
-            .main-header nav ul {
-                margin-top: 0.5rem;
-            }
-
-            .main-header nav ul li {
-                margin: 0 0.75rem;
-            }
+            .main-header nav ul { margin-top: 0.5rem; }
+            .main-header nav ul li { margin: 0 0.75rem; }
 
             #about .about-content {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 2rem;
+                gap: 3rem;
+            }
+            .credits-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -326,9 +383,14 @@
                 <p class="subtitle">A passionate Android Developer from Indonesia exploring the world of custom ROMs.</p>
                 <a href="#projects" class="m3-button filled">View Supported Devices</a>
                 <div class="hero-social-links">
-                    <a href="https://t.me/dtyaa_ajh" target="_blank" class="m3-button tonal" id="telegram-hero-btn">Telegram</a>
+                    <a href="https://t.me/dtyaa_ajh" target="_blank" class="m3-button tonal">Telegram</a>
                     <a href="https://github.com/Dityay" target="_blank" class="m3-button tonal">GitHub</a>
                 </div>
+            </div>
+            <div class="wavy-divider">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
             </div>
         </section>
 
@@ -351,6 +413,11 @@
         </section>
         
         <section id="projects">
+             <div class="wavy-divider" style="top: -1px; bottom: auto; transform: rotate(0);">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill" style="fill: var(--container-bg);"></path>
+                </svg>
+            </div>
             <div class="container">
                 <h2>Supported Devices</h2>
                 <div class="project-grid">
@@ -370,12 +437,16 @@
                             <a href="https://t.me/r13cupdates" target="_blank" class="m3-button tonal">View Channel</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
         <section id="credits">
+            <div class="wavy-divider" style="top: -1px; bottom: auto; transform: rotate(0);">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
             <div class="container">
                 <h2>Credits & Thanks</h2>
                 <div class="credits-container">
@@ -395,6 +466,11 @@
     </main>
 
     <footer class="main-footer">
+        <div class="wavy-divider" style="top: -1px; bottom: auto; transform: rotate(0);">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
         <div class="container">
             <div class="footer-social-links">
                 <a href="https://github.com/Dityay" target="_blank" aria-label="GitHub">
@@ -409,62 +485,7 @@
     </footer>
 
     <script>
-        // Set copyright year automatically
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
     </script>
-<script>
-        // Set copyright year automatically
-        document.getElementById('copyright-year').textContent = new Date().getFullYear();
-
-        // --- NEW & IMPROVED SCRIPT FOR SOUND ---
-
-        // This function handles the click event more reliably
-        function playSoundAndRedirect(event) {
-            // 1. Prevent the link from navigating normally
-            event.preventDefault();
-
-            const destinationUrl = this.href;
-
-            // 2. Open a blank tab IMMEDIATELY. This is key to bypass pop-up blockers.
-            const newTab = window.open('', '_blank');
-            if (newTab) {
-                newTab.document.write('Loading...'); // Optional: show a message in the new tab
-            } else {
-                // Fallback if the pop-up was blocked anyway (e.g., very strict settings)
-                alert("Please allow pop-ups for this site to open the link.");
-                return;
-            }
-
-            // 3. Create an audio object with your sound file
-            const jingle = new Audio('jingle.ogg');
-
-            // 4. This function will run when the sound is done
-            const navigate = () => {
-                // Load the actual URL into the tab we already opened
-                newTab.location.href = destinationUrl;
-            };
-
-            // 5. Listen for when the audio finishes playing
-            jingle.addEventListener('ended', navigate);
-
-            // 6. Play the sound
-            jingle.play().catch(error => {
-                console.error("Audio playback failed:", error);
-                // If the sound fails to play for any reason, navigate immediately.
-                navigate();
-            });
-        }
-
-        // --- Attaching the function to the buttons (no change here) ---
-        
-        // Find all Telegram buttons by their class and content
-        // This is a more flexible way than using IDs
-        document.querySelectorAll('a.m3-button').forEach(button => {
-            if (button.textContent.trim().toLowerCase() === 'view channel') {
-                button.addEventListener('click', playSoundAndRedirect);
-            }
-        });
-    </script>
-</body>
 </body>
 </html>

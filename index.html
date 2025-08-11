@@ -326,7 +326,7 @@
                 <p class="subtitle">A passionate Android Developer from Indonesia exploring the world of custom ROMs.</p>
                 <a href="#projects" class="m3-button filled">View Supported Devices</a>
                 <div class="hero-social-links">
-                    <a href="https://t.me/dtyaa_ajh" target="_blank" class="m3-button tonal">Telegram</a>
+                    <a href="https://t.me/dtyaa_ajh" target="_blank" class="m3-button tonal" id="telegram-hero-btn">Telegram</a>
                     <a href="https://github.com/Dityay" target="_blank" class="m3-button tonal">GitHub</a>
                 </div>
             </div>
@@ -412,5 +412,59 @@
         // Set copyright year automatically
         document.getElementById('copyright-year').textContent = new Date().getFullYear();
     </script>
+<script>
+        // Set copyright year automatically
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+        // --- NEW & IMPROVED SCRIPT FOR SOUND ---
+
+        // This function handles the click event more reliably
+        function playSoundAndRedirect(event) {
+            // 1. Prevent the link from navigating normally
+            event.preventDefault();
+
+            const destinationUrl = this.href;
+
+            // 2. Open a blank tab IMMEDIATELY. This is key to bypass pop-up blockers.
+            const newTab = window.open('', '_blank');
+            if (newTab) {
+                newTab.document.write('Loading...'); // Optional: show a message in the new tab
+            } else {
+                // Fallback if the pop-up was blocked anyway (e.g., very strict settings)
+                alert("Please allow pop-ups for this site to open the link.");
+                return;
+            }
+
+            // 3. Create an audio object with your sound file
+            const jingle = new Audio('jingle.ogg');
+
+            // 4. This function will run when the sound is done
+            const navigate = () => {
+                // Load the actual URL into the tab we already opened
+                newTab.location.href = destinationUrl;
+            };
+
+            // 5. Listen for when the audio finishes playing
+            jingle.addEventListener('ended', navigate);
+
+            // 6. Play the sound
+            jingle.play().catch(error => {
+                console.error("Audio playback failed:", error);
+                // If the sound fails to play for any reason, navigate immediately.
+                navigate();
+            });
+        }
+
+        // --- Attaching the function to the buttons (no change here) ---
+        
+        // Find all Telegram buttons by their class and content
+        // This is a more flexible way than using IDs
+        document.querySelectorAll('a.m3-button').forEach(button => {
+            if (button.textContent.trim().toLowerCase() === 'view channel') {
+                button.addEventListener('click', playSoundAndRedirect);
+            }
+        });
+    </script>
+</body>
 </body>
 </html>

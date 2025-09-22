@@ -24,8 +24,7 @@
 
     <!-- The audio element is hidden and controlled by JavaScript -->
     <audio id="backgroundMusic" loop>
-        <source src="10yearslater.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
+        <!-- The source will be set dynamically using JavaScript -->
     </audio>
 
     <script>
@@ -35,6 +34,24 @@
         const instruction = document.getElementById('instruction');
         const music = document.getElementById('backgroundMusic');
 
+        // Add an error handler to the audio element itself.
+        // This will trigger if the file can't be found (e.g., 404 error).
+        music.onerror = function() {
+            console.error("Error loading the audio file: " + music.src);
+            console.error("Please check the following:");
+            console.error("1. Make sure the audio files (1.mp3, 2.mp3, etc.) are in the EXACT SAME FOLDER as this index.html file.");
+            console.error("2. Check that the file names are spelled correctly and are lowercase (e.g., '1.mp3', not '1.MP3').");
+            
+            // Update the screen to show an error message
+            mainText.textContent = "Error: Could not load audio.";
+            instruction.textContent = "Please check file paths and see the console (F12) for details.";
+            instruction.style.display = 'block'; // Make sure the instruction is visible
+            container.style.cursor = 'default'; // Change cursor back
+        };
+
+        // An array holding the names of your music files
+        const musicTracks = ['1.mp3', '2.mp3', '3.mp3'];
+
         // This function runs once when the user clicks the screen.
         function startExperience() {
             // 1. Change the main text.
@@ -43,14 +60,20 @@
             // 2. Hide the instruction text.
             instruction.style.display = 'none';
             
-            // 3. Play the music.
+            // 3. Pick a random song from the musicTracks array.
+            const randomIndex = Math.floor(Math.random() * musicTracks.length);
+            const randomTrack = musicTracks[randomIndex];
+            music.src = randomTrack; // Set the audio source to the random track
+            
+            // 4. Play the music.
             // The .play() method returns a promise, which we should handle.
             const playPromise = music.play();
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    // This catch block handles cases where the browser blocks autoplay.
-                    // Since this is triggered by a user click, it should work in most cases.
+                    // This catch block handles errors during the play attempt,
+                    // like if the user's browser blocks it.
                     console.error("Audio playback failed:", error);
+                    mainText.textContent = "Audio playback was blocked by the browser.";
                 });
             }
         }

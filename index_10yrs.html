@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10 Years Later</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Press Start 2P', cursive;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- This container listens for a click to start the experience -->
+    <div id="container" class="h-screen flex flex-col justify-center items-center text-center cursor-pointer select-none">
+        <h1 id="mainText" class="text-3xl sm:text-4xl md:text-6xl p-4">Can you believe it?</h1>
+        <p id="instruction" class="text-gray-400 text-lg md:text-xl mt-4">Click anywhere to continue</p>
+    </div>
+
+    <!-- The audio element is hidden and controlled by JavaScript -->
+    <audio id="backgroundMusic" loop>
+        <!-- The source will be set dynamically using JavaScript -->
+    </audio>
+
+    <script>
+        // Get references to the HTML elements
+        const container = document.getElementById('container');
+        const mainText = document.getElementById('mainText');
+        const instruction = document.getElementById('instruction');
+        const music = document.getElementById('backgroundMusic');
+
+        // Add an error handler to the audio element itself.
+        // This will trigger if the file can't be found (e.g., 404 error).
+        music.onerror = function() {
+            console.error("Error loading the audio file: " + music.src);
+            console.error("Please check the following:");
+            console.error("1. Make sure the audio files (1.mp3, 2.mp3, etc.) are in the EXACT SAME FOLDER as this index.html file.");
+            console.error("2. Check that the file names are spelled correctly and are lowercase (e.g., '1.mp3', not '1.MP3').");
+            
+            // Update the screen to show an error message
+            mainText.textContent = "Error: Could not load audio.";
+            instruction.textContent = "Please check file paths and see the console (F12) for details.";
+            instruction.style.display = 'block'; // Make sure the instruction is visible
+            container.style.cursor = 'default'; // Change cursor back
+        };
+
+        // An array holding the names of your music files
+        const musicTracks = ['1.mp3', '2.mp3', '3.mp3'];
+
+        // This function runs once when the user clicks the screen.
+        function startExperience() {
+            // 1. Change the main text.
+            mainText.textContent = "It's been 10 years...";
+            
+            // 2. Hide the instruction text.
+            instruction.style.display = 'none';
+            
+            // 3. Pick a random song from the musicTracks array.
+            const randomIndex = Math.floor(Math.random() * musicTracks.length);
+            const randomTrack = musicTracks[randomIndex];
+            music.src = randomTrack; // Set the audio source to the random track
+            
+            // 4. Play the music.
+            // The .play() method returns a promise, which we should handle.
+            const playPromise = music.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // This catch block handles errors during the play attempt,
+                    // like if the user's browser blocks it.
+                    console.error("Audio playback failed:", error);
+                    mainText.textContent = "Audio playback was blocked by the browser.";
+                });
+            }
+        }
+
+        // Add a click event listener to the container that only fires once.
+        container.addEventListener('click', startExperience, { once: true });
+    </script>
+
+</body>
+</html>
+

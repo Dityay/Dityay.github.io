@@ -2,12 +2,12 @@
   "response": [
     {
       "datetime": 1230764400,
-      "filename": "ota-package.zip",
+      "filename": "HelloUICN15_earth2.zip",
       "id": "5eb63bbbe01eeed093cb22bb8f5acdc3",
       "romtype": "nightly",
       "size": 314572800,
-      "url": "https://example.com/ota-package.zip",
-      "version": "15.1"
+      "url": "https://drive.google.com/file/d/1OrnaeXjf1UPZXI116GtL4RLrYxkSFH0D/view?usp=sharing",
+      "version": "15.2"
     }
   ]
 }

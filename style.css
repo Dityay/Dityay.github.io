@@ -292,6 +292,17 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
 }
 
+/* Dalam style.css */
+
+.about-content img {
+    width: 200px; /* Atur lebar sesuai keinginan Anda */
+    height: 200px; /* Pastikan tinggi sama dengan lebar untuk membuat lingkaran sempurna */
+    border-radius: 50%; /* Membuat gambar menjadi lingkaran */
+    object-fit: cover; /* Memastikan gambar mengisi area tanpa terdistorsi, memotong jika perlu */
+    margin-right: 30px; /* Memberi sedikit ruang antara gambar dan teks */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Opsional: menambahkan sedikit bayangan */
+}
+
 /* --- Footer --- */
 .main-footer {
     background-color: var(--primary-accent);
@@ -348,4 +359,13 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
     .credits-container {
         grid-template-columns: 1fr;
     }
+     .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .about-content img {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
 }

@@ -1,26 +1,13 @@
 /* --- NEW Lime Material Expressive Palette --- */
 :root {
-    /* Main Accent (User Requested) */
-    --primary-accent: #BFD63E;   
-    
-    /* Darker version for Text/Headers (for readability) */
-    --primary-dark: #829618;     
-    
-    /* Light Accent */
-    --secondary-accent: #F0F4C3; 
-    
-    /* Backgrounds */
-    --surface-bg: #F9FBE7;       /* Very Light Lime Tint */
+    --primary-accent: #BFD63E;
+    --primary-dark: #829618;
+    --secondary-accent: #F0F4C3;
+    --surface-bg: #F9FBE7;
     --container-bg: #ffffff;
-    
-    /* Text Colors (Olive-tinted Greys) */
-    --text-primary: #3E4232;     
-    --text-secondary: #737865;   
-    
-    /* Outlines */
+    --text-primary: #3E4232;
+    --text-secondary: #737865;
     --outline-color: #DCE775;
-
-    /* Shape Definitions */
     --radius-large: 28px;
     --radius-medium: 16px;
 }
@@ -57,7 +44,6 @@ h1, h2, h3 {
     font-weight: 700;
 }
 
-/* Menggunakan primary-dark agar terbaca jelas di background putih */
 h1 { font-size: 4.5rem; color: var(--primary-dark); letter-spacing: -2px; }
 h2 { font-size: 3rem; text-align: center; margin-bottom: 4rem; color: var(--primary-dark); }
 h3 { font-size: 1.75rem; color: var(--text-primary); margin-bottom: 0.5rem; }
@@ -66,7 +52,6 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 
 /* --- Header & Navigation --- */
 .main-header {
-    /* Lime tint background */
     background-color: rgba(249, 251, 231, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -88,7 +73,7 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
     font-size: 1.75rem;
     font-weight: 700;
     font-family: 'Lexend', sans-serif;
-    color: var(--primary-dark); /* Darker green for logo text */
+    color: var(--primary-dark);
 }
 
 .main-header nav ul {
@@ -113,7 +98,7 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 3px; /* Sedikit lebih tebal untuk warna cerah */
+    height: 3px;
     background: var(--primary-accent);
     transform: scaleX(0);
     transform-origin: right;
@@ -178,13 +163,12 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 
 .m3-button.filled {
     background-color: var(--primary-accent);
-    /* PENTING: Teks hitam/gelap karena background Lime cerah */
-    color: #2E3500; 
+    color: #2E3500;
     box-shadow: 0 4px 15px rgba(191, 214, 62, 0.4);
 }
 .m3-button.filled:hover {
     transform: translateY(-5px);
-    background-color: #CBE048; /* Sedikit lebih terang saat hover */
+    background-color: #CBE048;
     box-shadow: 0 8px 25px rgba(191, 214, 62, 0.5);
 }
 
@@ -221,26 +205,26 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
     align-items: center;
 }
 
-#about img {
-    /* Style gambar tetap, hanya efek hover mengikuti style baru */
-    max-width: 300px;
-    margin: 0 auto;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-    clip-path: path('M263.8,73.5C302.4,115.3,311.5,188,285.3,232.4C259.1,276.8,197.6,292.8,145.9,293.9C94.2,295,52.3,281.2,24.1,245.8C-4.1,210.4,-18.6,153.4,1.8,110.1C22.2,66.8,95.7,37.2,151.4,22.2C207.1,7.2,245.2,52.7,263.8,73.5Z');
-    transition: transform 0.4s ease;
-}
-#about img:hover {
-    transform: scale(1.05) rotate(3deg);
+/* --- PERBAIKAN GAMBAR DI SINI --- */
+/* Kita hapus aturan #about img yang lama dan gunakan yang baru ini */
+.about-content img {
+    width: 250px;          /* Ukuran kotak */
+    height: 250px;         /* Pastikan sama agar jadi persegi */
+    object-fit: cover;     /* Gambar tidak gepeng */
+    border-radius: 24px;   /* Sudut melengkung (rounded) */
+    margin: 0 auto;        /* Tengah secara horizontal */
+    display: block;        /* Agar margin auto berfungsi */
+    box-shadow: 0 12px 24px rgba(130, 150, 24, 0.2); /* Bayangan lime gelap */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.about-content img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-right: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Efek Hover */
+.about-content img:hover {
+    transform: scale(1.03); /* Sedikit membesar */
+    box-shadow: 0 16px 32px rgba(191, 214, 62, 0.4); /* Bayangan lebih terang & besar */
 }
+/* --- AKHIR PERBAIKAN GAMBAR --- */
+
 
 /* --- Projects Section --- */
 #projects {
@@ -259,14 +243,13 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* Style shape project card */
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%);
-    border-radius: 12px; /* Fallback visual jika clip-path bermasalah di browser lama */
+    border-radius: 12px;
 }
 
 .project-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(191, 214, 62, 0.15); /* Bayangan kehijauan */
+    box-shadow: 0 10px 30px rgba(191, 214, 62, 0.15);
     border-color: var(--primary-accent);
 }
 
@@ -292,7 +275,6 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
     margin-bottom: 1.5rem;
 }
 
-/* Style khusus EOL (End of Life) */
 .project-card.eol {
     filter: grayscale(100%);
     opacity: 0.8;
@@ -335,9 +317,7 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 
 /* --- Footer --- */
 .main-footer {
-    /* Background Lime Cerah */
     background-color: var(--primary-accent);
-    /* Teks GELAP agar terbaca di atas Lime */
     color: #2E3500;
     text-align: center;
     padding: 4rem 0;
@@ -348,7 +328,7 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 }
 
 .footer-social-links a {
-    color: #2E3500; /* Icon gelap */
+    color: #2E3500;
     margin: 0 0.75rem;
     display: inline-block;
     transition: transform 0.3s ease;
@@ -397,8 +377,10 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
         flex-direction: column;
         text-align: center;
     }
+    /* Perbaikan responsif untuk gambar */
     .about-content img {
-        margin-right: 0;
-        margin-bottom: 20px;
+        width: 200px;
+        height: 200px;
+        margin-bottom: 2rem; /* Jarak di bawah gambar saat di mobile */
     }
 }

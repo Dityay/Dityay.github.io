@@ -1,12 +1,24 @@
-/* --- NEW Red Material Expressive Palette --- */
+/* --- NEW Lime Material Expressive Palette --- */
 :root {
-    --primary-accent: #D32F2F;   /* Dark Red */
-    --secondary-accent: #FFCDD2; /* Light Red Accent */
-    --surface-bg: #FFEBEE;       /* Very Light Red Background */
+    /* Main Accent (User Requested) */
+    --primary-accent: #BFD63E;   
+    
+    /* Darker version for Text/Headers (for readability) */
+    --primary-dark: #829618;     
+    
+    /* Light Accent */
+    --secondary-accent: #F0F4C3; 
+    
+    /* Backgrounds */
+    --surface-bg: #F9FBE7;       /* Very Light Lime Tint */
     --container-bg: #ffffff;
-    --text-primary: #424242;     /* Dark Grey */
-    --text-secondary: #757575;   /* Medium Grey */
-    --outline-color: #EF9A9A;     /* Pale Red */
+    
+    /* Text Colors (Olive-tinted Greys) */
+    --text-primary: #3E4232;     
+    --text-secondary: #737865;   
+    
+    /* Outlines */
+    --outline-color: #DCE775;
 
     /* Shape Definitions */
     --radius-large: 28px;
@@ -35,26 +47,27 @@ body {
 section {
     padding: 6rem 0;
     position: relative;
-    overflow: hidden; /* Hide overflow from decorative blobs */
+    overflow: hidden;
 }
 
 /* --- Expressive Typography --- */
 h1, h2, h3 {
-    font-family: 'Lexend', sans-serif; /* Using the new expressive font */
+    font-family: 'Lexend', sans-serif;
     line-height: 1.2;
     font-weight: 700;
 }
 
-h1 { font-size: 4.5rem; color: var(--primary-accent); letter-spacing: -2px; }
-h2 { font-size: 3rem; text-align: center; margin-bottom: 4rem; color: var(--primary-accent); }
+/* Menggunakan primary-dark agar terbaca jelas di background putih */
+h1 { font-size: 4.5rem; color: var(--primary-dark); letter-spacing: -2px; }
+h2 { font-size: 3rem; text-align: center; margin-bottom: 4rem; color: var(--primary-dark); }
 h3 { font-size: 1.75rem; color: var(--text-primary); margin-bottom: 0.5rem; }
 p { color: var(--text-secondary); margin-bottom: 1rem; }
-a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
+a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 
 /* --- Header & Navigation --- */
 .main-header {
-    /* UPDATED: Header color to match new red theme */
-    background-color: rgba(255, 235, 238, 0.8);
+    /* Lime tint background */
+    background-color: rgba(249, 251, 231, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     position: fixed;
@@ -75,7 +88,7 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
     font-size: 1.75rem;
     font-weight: 700;
     font-family: 'Lexend', sans-serif;
-    color: var(--primary-accent);
+    color: var(--primary-dark); /* Darker green for logo text */
 }
 
 .main-header nav ul {
@@ -100,13 +113,13 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 3px; /* Sedikit lebih tebal untuk warna cerah */
     background: var(--primary-accent);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
 }
-.main-header nav a:hover { color: var(--primary-accent); }
+.main-header nav a:hover { color: var(--primary-dark); }
 .main-header nav a:hover::after {
     transform: scaleX(1);
     transform-origin: left;
@@ -125,10 +138,10 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
-    height: 80px; /* Adjust height of the wave */
+    height: 80px;
 }
 .wavy-divider .shape-fill {
-    fill: var(--surface-bg); /* Match the next section's background */
+    fill: var(--surface-bg);
 }
 
 /* --- Hero Section --- */
@@ -138,7 +151,7 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
     justify-content: center;
     text-align: center;
     min-height: 100vh;
-    background-color: var(--container-bg); /* Different background for hero */
+    background-color: var(--container-bg);
 }
 
 #hero .subtitle {
@@ -165,23 +178,24 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
 
 .m3-button.filled {
     background-color: var(--primary-accent);
-    color: white;
-    /* UPDATED: Shadow color to match new red accent */
-    box-shadow: 0 4px 15px rgba(211, 47, 47, 0.25);
+    /* PENTING: Teks hitam/gelap karena background Lime cerah */
+    color: #2E3500; 
+    box-shadow: 0 4px 15px rgba(191, 214, 62, 0.4);
 }
 .m3-button.filled:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(211, 47, 47, 0.35);
+    background-color: #CBE048; /* Sedikit lebih terang saat hover */
+    box-shadow: 0 8px 25px rgba(191, 214, 62, 0.5);
 }
 
 .m3-button.tonal {
-    background-color: var(--container-bg);
-    color: var(--primary-accent);
+    background-color: var(--surface-bg);
+    color: var(--primary-dark);
     border: 2px solid var(--outline-color);
 }
 .m3-button.tonal:hover {
     background-color: var(--primary-accent);
-    color: white;
+    color: #2E3500;
     border-color: var(--primary-accent);
     transform: scale(1.05);
 }
@@ -196,7 +210,7 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
 /* --- About Section --- */
 #about {
    background-color: var(--surface-bg);
-   min-height: 100vh; /* ensure it takes full height */
+   min-height: 100vh;
    display: flex;
    align-items: center;
 }
@@ -208,6 +222,7 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
 }
 
 #about img {
+    /* Style gambar tetap, hanya efek hover mengikuti style baru */
     max-width: 300px;
     margin: 0 auto;
     box-shadow: 0 15px 40px rgba(0,0,0,0.1);
@@ -216,6 +231,15 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
 }
 #about img:hover {
     transform: scale(1.05) rotate(3deg);
+}
+
+.about-content img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* --- Projects Section --- */
@@ -235,12 +259,14 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    /* Style shape project card */
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%);
+    border-radius: 12px; /* Fallback visual jika clip-path bermasalah di browser lama */
 }
 
 .project-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 10px 30px rgba(191, 214, 62, 0.15); /* Bayangan kehijauan */
     border-color: var(--primary-accent);
 }
 
@@ -266,6 +292,21 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
     margin-bottom: 1.5rem;
 }
 
+/* Style khusus EOL (End of Life) */
+.project-card.eol {
+    filter: grayscale(100%);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+.project-card.eol:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+.project-card.eol .project-info h3 {
+    text-decoration: line-through;
+    color: #777;
+}
+
 /* --- Credits Section --- */
 #credits {
     background: var(--surface-bg);
@@ -288,25 +329,16 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
 }
 .credit-item:hover {
      transform: scale(1.05);
-     border-color: var(--secondary-accent);
-     box-shadow: 0 8px 25px rgba(0,0,0,0.07);
-}
-
-/* Dalam style.css */
-
-.about-content img {
-    width: 200px; /* Atur lebar sesuai keinginan Anda */
-    height: 200px; /* Pastikan tinggi sama dengan lebar untuk membuat lingkaran sempurna */
-    border-radius: 50%; /* Membuat gambar menjadi lingkaran */
-    object-fit: cover; /* Memastikan gambar mengisi area tanpa terdistorsi, memotong jika perlu */
-    margin-right: 30px; /* Memberi sedikit ruang antara gambar dan teks */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Opsional: menambahkan sedikit bayangan */
+     border-color: var(--primary-accent);
+     box-shadow: 0 8px 25px rgba(191, 214, 62, 0.2);
 }
 
 /* --- Footer --- */
 .main-footer {
+    /* Background Lime Cerah */
     background-color: var(--primary-accent);
-    color: #ffffff;
+    /* Teks GELAP agar terbaca di atas Lime */
+    color: #2E3500;
     text-align: center;
     padding: 4rem 0;
     position: relative;
@@ -316,13 +348,14 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
 }
 
 .footer-social-links a {
-    color: #ffffff;
+    color: #2E3500; /* Icon gelap */
     margin: 0 0.75rem;
     display: inline-block;
     transition: transform 0.3s ease;
 }
 .footer-social-links a:hover {
     transform: translateY(-5px) scale(1.2);
+    color: #000;
 }
 
 .footer-social-links svg {
@@ -336,7 +369,8 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
     margin-bottom: 0;
     font-size: 0.9rem;
     opacity: 0.8;
-    color: #ffffff;
+    color: #2E3500;
+    font-weight: 500;
 }
 
 /* --- Responsive Styles --- */
@@ -367,5 +401,4 @@ a { color: var(--primary-accent); text-decoration: none; font-weight: 500;}
         margin-right: 0;
         margin-bottom: 20px;
     }
-
 }

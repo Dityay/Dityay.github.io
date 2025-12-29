@@ -8,6 +8,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .project-card.eol {
+            filter: grayscale(100%); /* Membuat elemen jadi hitam putih */
+            opacity: 0.8; /* Sedikit transparan agar terlihat tidak aktif */
+            transition: all 0.3s ease;
+        }
+        
+        .project-card.eol:hover {
+            filter: grayscale(0%); /* Opsional: Mengembalikan warna saat di-hover */
+            opacity: 1;
+        }
+
+        .project-card.eol .project-info h3 {
+            text-decoration: line-through; /* Opsional: Mencoret judul */
+            color: #555;
+        }
+    </style>
 </head>
 <body>
 
@@ -35,14 +53,16 @@
             <div class="container">
                 <h2>Supported Devices</h2>
                 <div class="project-grid">
+                    
                     <div class="project-card">
-                        <img src="https://i02.appmifile.com/950_operator_sg/08/03/2023/b7da7065ca3c97ea82101764d9c14a05.png?f=webp" alt="Redmi 12C">
+                        <img src="https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1647849175.76813247!400x400!85.png" alt="Redmi 10C">
                         <div class="project-info">
-                            <h3>Redmi 12C (earth)</h3>
-                            <p>This is my main device, so I frequently create and maintain custom ROMs for it.</p>
-                            <a href="https://t.me/earthstuffs" target="_blank" class="m3-button tonal">View Channel</a>
+                            <h3>Redmi 10C (fog)</h3>
+                            <p>Currently supporting this device with regular updates and maintenance.</p>
+                            <a href="#" target="_blank" class="m3-button tonal">View Channel</a>
                         </div>
                     </div>
+
                     <div class="project-card">
                         <img src="https://i02.appmifile.com/338_operator_sg/29/11/2023/b17f33bf82b16adf5cbe79fbb1d292f2.png?f=webp" alt="Redmi 13C">
                         <div class="project-info">
@@ -51,6 +71,16 @@
                             <a href="https://t.me/r13cupdates" target="_blank" class="m3-button tonal">View Channel</a>
                         </div>
                     </div>
+
+                    <div class="project-card eol">
+                        <img src="https://i02.appmifile.com/950_operator_sg/08/03/2023/b7da7065ca3c97ea82101764d9c14a05.png?f=webp" alt="Redmi 12C">
+                        <div class="project-info">
+                            <h3>Redmi 12C (earth)</h3>
+                            <p><strong>Status: EOL (End of Life).</strong> Development for this device has stopped and it is no longer maintained.</p>
+                            <a href="https://t.me/earthstuffs" target="_blank" class="m3-button tonal">Archives</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>

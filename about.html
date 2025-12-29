@@ -9,14 +9,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Tambahan CSS untuk bentuk foto profil yang baru */
+        /* CSS KHUSUS HALAMAN INI */
         .about-content img {
-            /* Menggunakan clip-path untuk membuat bentuk seperti di image_3.png dan image_4.png */
-            clip-path: path('M263.8,73.5C302.4,115.3,311.5,188,285.3,232.4C259.1,276.8,197.6,292.8,145.9,293.9C94.2,295,52.3,281.2,24.1,245.8C-4.1,210.4,-18.6,153.4,1.8,110.1C22.2,66.8,95.7,37.2,151.4,22.2C207.1,7.2,245.2,52.7,263.8,73.5Z');
-            /* Menghapus border-radius lingkaran sebelumnya */
-            border-radius: 0;
-            /* Menambahkan bayangan lembut di bagian bawah */
-            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 24px; /* Kotak dengan sudut melengkung */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-content img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 16px 32px rgba(191, 214, 62, 0.3); /* Sedikit efek glow hijau lime */
+        }
+
+        /* Jarak antar paragraf agar lebih enak dibaca */
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 768px) {
+            .about-content img {
+                width: 200px;
+                height: 200px;
+                margin-bottom: 2rem;
+            }
         }
     </style>
 </head>
@@ -41,15 +60,21 @@
             <div class="container">
                 <div class="about-content">
                     <img src="pfp.jpg" alt="Profile Picture of Ditya">
-                    <div>
+                    
+                    <div class="about-text">
                         <h2>About Me</h2>
-                        <h3>My Journey</h3>
+                        
+                        <h3>The Journey So Far</h3>
                         <p>
-                            I started my journey into Android ROM development in 2024. My first project was a modded ROM which, admittedly, was not perfect—but it was a start! Since then, my skills have improved significantly.
+                            My journey into Android development began in 2024, driven by a curiosity to push the limits of what my devices could do. What started as simple experiments with modded ROMs has evolved into a passion for building stable, high-quality ported OEM ROMs.
                         </p>
                         <p>
-                            With the help of my friends, I can now create ported OEM ROMs. While I still often use others' work as a foundation rather than building from scratch, I'm constantly learning and growing with every project. My goal is to contribute to the Android community and build amazing experiences for users.
+                            I believe strongly in the open-source spirit. By collaborating with friends and building upon the incredible work of the community, I strive to deliver reliable software experiences. I am constantly learning, debugging, and refining my skills to contribute back to the ecosystem that taught me so much.
                         </p>
+
+                        <div style="margin-top: 2rem;">
+                            <a href="https://github.com/Dityay" target="_blank" class="m3-button filled" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">Check my GitHub</a>
+                        </div>
                     </div>
                 </div>
             </div>

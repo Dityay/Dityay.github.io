@@ -8,6 +8,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Tambahan CSS untuk bentuk foto profil yang baru */
+        .about-content img {
+            /* Menggunakan clip-path untuk membuat bentuk seperti di image_3.png dan image_4.png */
+            clip-path: path('M263.8,73.5C302.4,115.3,311.5,188,285.3,232.4C259.1,276.8,197.6,292.8,145.9,293.9C94.2,295,52.3,281.2,24.1,245.8C-4.1,210.4,-18.6,153.4,1.8,110.1C22.2,66.8,95.7,37.2,151.4,22.2C207.1,7.2,245.2,52.7,263.8,73.5Z');
+            /* Menghapus border-radius lingkaran sebelumnya */
+            border-radius: 0;
+            /* Menambahkan bayangan lembut di bagian bawah */
+            filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+        }
+    </style>
 </head>
 <body>
 
@@ -29,7 +40,7 @@
         <section id="about">
             <div class="container">
                 <div class="about-content">
-                    <img src="pfp.jpg" alt="Profile Picture of Ditya" style="width: 200px; height: 200px; object-fit: cover; border-radius: 12px;">
+                    <img src="pfp.jpg" alt="Profile Picture of Ditya">
                     <div>
                         <h2>About Me</h2>
                         <h3>My Journey</h3>
@@ -69,4 +80,3 @@
     </script>
 </body>
 </html>
-

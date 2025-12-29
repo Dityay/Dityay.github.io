@@ -10,19 +10,20 @@
     <link rel="stylesheet" href="style.css">
     
     <style>
+        /* Style untuk status EOL */
         .project-card.eol {
-            filter: grayscale(100%); /* Membuat elemen jadi hitam putih */
-            opacity: 0.8; /* Sedikit transparan agar terlihat tidak aktif */
+            filter: grayscale(100%);
+            opacity: 0.8;
             transition: all 0.3s ease;
         }
         
         .project-card.eol:hover {
-            filter: grayscale(0%); /* Opsional: Mengembalikan warna saat di-hover */
+            filter: grayscale(0%);
             opacity: 1;
         }
 
         .project-card.eol .project-info h3 {
-            text-decoration: line-through; /* Opsional: Mencoret judul */
+            text-decoration: line-through;
             color: #555;
         }
     </style>
@@ -55,10 +56,10 @@
                 <div class="project-grid">
                     
                     <div class="project-card">
-                        <img src="https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1647849175.76813247!400x400!85.png" alt="Redmi 10C">
+                        <img src="https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-10c.jpg" alt="Redmi 10C">
                         <div class="project-info">
                             <h3>Redmi 10C (fog)</h3>
-                            <p>Currently supporting this device with regular updates and maintenance.</p>
+                            <p><strong>Status: Active.</strong> I actively maintain this device. Expect frequent updates, bug fixes, and consistent support.</p>
                             <a href="#" target="_blank" class="m3-button tonal">View Channel</a>
                         </div>
                     </div>
@@ -67,7 +68,7 @@
                         <img src="https://i02.appmifile.com/338_operator_sg/29/11/2023/b17f33bf82b16adf5cbe79fbb1d292f2.png?f=webp" alt="Redmi 13C">
                         <div class="project-info">
                             <h3>Redmi 13C (gale)</h3>
-                            <p>I also build for this device. While I don't own one personally, I collaborate with others to support it.</p>
+                            <p><strong>Status: Maintained.</strong> I build for this device remotely. While I don't own the unit, I collaborate with testers to ensure stability.</p>
                             <a href="https://t.me/r13cupdates" target="_blank" class="m3-button tonal">View Channel</a>
                         </div>
                     </div>

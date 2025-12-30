@@ -8,25 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
-    <style>
-        /* Style untuk status EOL */
-        .project-card.eol {
-            filter: grayscale(100%);
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-        
-        .project-card.eol:hover {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
-
-        .project-card.eol .project-info h3 {
-            text-decoration: line-through;
-            color: #555;
-        }
-    </style>
 </head>
 <body>
 
@@ -56,20 +37,20 @@
                 <div class="project-grid">
                     
                     <div class="project-card">
-                        <img src="https://i01.appmifile.com/webfile/globalimg/products/pc/redmi-10c/top001.png" alt="Redmi 10C">
+                        <img src="https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-10c.jpg" alt="Redmi 10C">
                         <div class="project-info">
                             <h3>Redmi 10C (fog)</h3>
                             <p><strong>Status: Active.</strong> I actively maintain this device. Expect frequent updates, bug fixes, and consistent support.</p>
-                            <a href="https://t.me/Redmi10CUpdates" target="_blank" class="m3-button tonal">View Channel</a>
+                            <a href="#" target="_blank" class="m3-button tonal">View Channel</a>
                         </div>
                     </div>
 
-                    <div class="project-card">
+                    <div class="project-card eol">
                         <img src="https://i02.appmifile.com/338_operator_sg/29/11/2023/b17f33bf82b16adf5cbe79fbb1d292f2.png?f=webp" alt="Redmi 13C">
                         <div class="project-info">
                             <h3>Redmi 13C (gale)</h3>
-                            <p><strong>Status: Maintained.</strong> I build for this device remotely. While I don't own the unit, I collaborate with testers to ensure stability.</p>
-                            <a href="https://t.me/r13cupdates" target="_blank" class="m3-button tonal">View Channel</a>
+                            <p><strong>Status: EOL (End of Life).</strong> Development for this device has stopped and it is no longer maintained.</p>
+                            <a href="https://t.me/r13cupdates" target="_blank" class="m3-button tonal">Archives</a>
                         </div>
                     </div>
 
@@ -111,5 +92,3 @@
     </script>
 </body>
 </html>
-
-

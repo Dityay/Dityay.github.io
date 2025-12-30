@@ -1,15 +1,57 @@
-/* --- NEW Lime Material Expressive Palette --- */
+/* --- NEW Lime Material Expressive Palette (Light & Dark Support) --- */
 :root {
-    --primary-accent: #BFD63E;
-    --primary-dark: #829618;
-    --secondary-accent: #F0F4C3;
-    --surface-bg: #F9FBE7;
-    --container-bg: #ffffff;
-    --text-primary: #3E4232;
-    --text-secondary: #737865;
-    --outline-color: #DCE775;
+    /* --- LIGHT MODE VARIABLES (DEFAULT) --- */
+    --primary-accent: #BFD63E;   /* Lime Cerah */
+    --primary-dark: #829618;     /* Lime Gelap (untuk Text Header di Light Mode) */
+    --secondary-accent: #F0F4C3; /* Lime Sangat Muda (untuk Tonal Button) */
+    
+    --surface-bg: #F9FBE7;       /* Background Halaman (Creamy Lime) */
+    --container-bg: #ffffff;     /* Background Kartu (Putih) */
+    
+    --text-primary: #3E4232;     /* Text Utama (Dark Olive) */
+    --text-secondary: #737865;   /* Text Sekunder (Greyish Olive) */
+    
+    --outline-color: #DCE775;    /* Warna Garis Pinggir */
+    
+    /* Variable khusus Header Transparan */
+    --header-bg-glass: rgba(249, 251, 231, 0.85);
+
+    /* Shape Definitions */
     --radius-large: 28px;
     --radius-medium: 16px;
+}
+
+/* --- DARK MODE CONFIGURATION --- */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* Warna Aksen tetap cerah agar kontras */
+        --primary-accent: #D7EE58; 
+        
+        /* Warna Header berubah jadi Terang (karena background gelap) */
+        --primary-dark: #E4E8CC;   
+        
+        /* Warna Tonal Button jadi gelap */
+        --secondary-accent: #2A2E1E; 
+
+        /* Background Gelap (Dark Grey dengan nuansa Olive) */
+        --surface-bg: #12140D;       
+        --container-bg: #1C1F16;     
+        
+        /* Text jadi Terang */
+        --text-primary: #E6E8D8;     
+        --text-secondary: #C3C7B5;   
+        
+        /* Outline jadi lebih gelap */
+        --outline-color: #444933;    
+
+        /* Header Gelap Transparan */
+        --header-bg-glass: rgba(18, 20, 13, 0.85);
+    }
+
+    /* Penyesuaian khusus bayangan di Dark Mode agar lebih terlihat */
+    .project-card, .credit-item, .about-content img {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+    }
 }
 
 html {
@@ -22,6 +64,7 @@ body {
     background-color: var(--surface-bg);
     color: var(--text-primary);
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transisi halus saat ganti mode */
 }
 
 /* --- General Layout --- */
@@ -52,14 +95,16 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 
 /* --- Header & Navigation --- */
 .main-header {
-    background-color: rgba(249, 251, 231, 0.85);
+    /* MENGGUNAKAN VARIABLE BARU AGAR BISA DARK MODE */
+    background-color: var(--header-bg-glass);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--outline-color); /* Menggunakan outline color agar dinamis */
+    transition: background-color 0.3s ease;
 }
 
 .main-header .nav-container {
@@ -127,6 +172,7 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 }
 .wavy-divider .shape-fill {
     fill: var(--surface-bg);
+    transition: fill 0.3s ease;
 }
 
 /* --- Hero Section --- */
@@ -137,6 +183,7 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
     text-align: center;
     min-height: 100vh;
     background-color: var(--container-bg);
+    transition: background-color 0.3s ease;
 }
 
 #hero .subtitle {
@@ -163,7 +210,8 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 
 .m3-button.filled {
     background-color: var(--primary-accent);
-    color: #2E3500;
+    /* Teks tombol tetap gelap karena aksen Lime tetap cerah di dark mode */
+    color: #2E3500; 
     box-shadow: 0 4px 15px rgba(191, 214, 62, 0.4);
 }
 .m3-button.filled:hover {
@@ -197,6 +245,7 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
    min-height: 100vh;
    display: flex;
    align-items: center;
+   transition: background-color 0.3s ease;
 }
 #about .about-content {
     display: grid;
@@ -205,30 +254,27 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
     align-items: center;
 }
 
-/* --- PERBAIKAN GAMBAR DI SINI --- */
-/* Kita hapus aturan #about img yang lama dan gunakan yang baru ini */
 .about-content img {
-    width: 250px;          /* Ukuran kotak */
-    height: 250px;         /* Pastikan sama agar jadi persegi */
-    object-fit: cover;     /* Gambar tidak gepeng */
-    border-radius: 24px;   /* Sudut melengkung (rounded) */
-    margin: 0 auto;        /* Tengah secara horizontal */
-    display: block;        /* Agar margin auto berfungsi */
-    box-shadow: 0 12px 24px rgba(130, 150, 24, 0.2); /* Bayangan lime gelap */
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 24px;
+    margin: 0 auto;
+    display: block;
+    box-shadow: 0 12px 24px rgba(130, 150, 24, 0.2);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Efek Hover */
 .about-content img:hover {
-    transform: scale(1.03); /* Sedikit membesar */
-    box-shadow: 0 16px 32px rgba(191, 214, 62, 0.4); /* Bayangan lebih terang & besar */
+    transform: scale(1.03);
+    box-shadow: 0 16px 32px rgba(191, 214, 62, 0.4);
 }
-/* --- AKHIR PERBAIKAN GAMBAR --- */
 
 
 /* --- Projects Section --- */
 #projects {
     background-color: var(--container-bg);
+    transition: background-color 0.3s ease;
 }
 .project-grid {
     display: grid;
@@ -286,12 +332,13 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
 }
 .project-card.eol .project-info h3 {
     text-decoration: line-through;
-    color: #777;
+    color: var(--text-secondary); /* Menggunakan variabel agar terlihat di dark mode */
 }
 
 /* --- Credits Section --- */
 #credits {
     background: var(--surface-bg);
+    transition: background-color 0.3s ease;
 }
 .credits-container {
     max-width: 800px;
@@ -322,9 +369,11 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
     text-align: center;
     padding: 4rem 0;
     position: relative;
+    transition: background-color 0.3s ease;
 }
 .main-footer .wavy-divider .shape-fill {
     fill: var(--primary-accent);
+    transition: fill 0.3s ease;
 }
 
 .footer-social-links a {
@@ -377,10 +426,9 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
         flex-direction: column;
         text-align: center;
     }
-    /* Perbaikan responsif untuk gambar */
     .about-content img {
         width: 200px;
         height: 200px;
-        margin-bottom: 2rem; /* Jarak di bawah gambar saat di mobile */
+        margin-bottom: 2rem;
     }
 }

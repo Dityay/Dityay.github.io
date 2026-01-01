@@ -20,7 +20,6 @@
             --text-secondary: #737865;   
             --outline-color: #DCE775;    
             --header-bg-glass: rgba(249, 251, 231, 0.85);
-            --radius-large: 28px;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -37,7 +36,6 @@
             }
         }
 
-        /* --- 2. SETUP FONT PROPHECY --- */
         @font-face {
             font-family: 'ProphecyType';
             src: url('./assets/fonts/PROPHECYTYPE.ttf') format('truetype');
@@ -53,7 +51,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 3. SPLASH SCREEN (FIXED TEXT STYLE) --- */
+        /* --- SPLASH SCREEN FIX --- */
         #prophecy-splash {
             position: fixed;
             top: 0; left: 0;
@@ -67,34 +65,31 @@
             transition: opacity 1s ease, visibility 1s;
         }
 
+        /* Pointer-events: none penting agar tombol di bawah bisa diklik */
         #prophecy-splash.fade-out {
             opacity: 0;
             visibility: hidden;
-            pointer-events: none;
+            pointer-events: none; 
         }
 
         #sineWrapper {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Ini yang bikin elemen di dalamnya (teks & gambar) di tengah horizontal */
+            align-items: center;
             will-change: transform;
         }
 
         #textContainer {
             font-family: 'ProphecyType', serif;
-            font-size: clamp(24px, 5vw, 32px); /* Ukuran font responsif */
-            text-align: center; /* Teks rata tengah jika lebih dari 1 baris */
+            font-size: clamp(24px, 5vw, 32px);
+            text-align: center;
             line-height: 1.2;
-            margin-bottom: 30px; /* Jarak antara teks dan gambar */
-            padding: 0 20px; /* Padding agar tidak mepet layar di HP */
-            
-            /* FIX WARNA: KEMBALI KE BIRU ASLI DELTARUNE */
+            margin-bottom: 30px;
+            padding: 0 20px;
             color: transparent;
             background: linear-gradient(to bottom, #4488ff, #2266cc);
             -webkit-background-clip: text;
             background-clip: text;
-            
-            /* Texture background diset via JS */
             background-size: 256px 256px;
             animation: scrollBg 30s linear infinite;
         }
@@ -113,10 +108,8 @@
 
         #output canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         #bgCanvas { opacity: 0.3; }
-        #ghost2 { opacity: 0.15; }
-        #ghost1 { opacity: 0.3; }
 
-        /* --- 4. WEB CONTENT STYLING (LIME ACCENT TETAP SAMA) --- */
+        /* --- WEB CONTENT STYLING --- */
         .main-header {
             background-color: var(--header-bg-glass);
             backdrop-filter: blur(10px);
@@ -153,6 +146,7 @@
             border-radius: 50px 50px 50px 15px;
             font-family: 'Lexend', sans-serif; font-weight: 700;
             text-decoration: none; transition: 0.3s;
+            cursor: pointer;
         }
 
         .filled {
@@ -160,7 +154,6 @@
             color: #2E3500;
             box-shadow: 0 4px 15px rgba(191, 214, 62, 0.4);
         }
-        .filled:hover { transform: translateY(-5px); background-color: var(--primary-dark); color: #fff; }
 
         .tonal {
             background-color: var(--secondary-accent);
@@ -183,7 +176,7 @@
 
     <div id="prophecy-splash">
         <div id="sineWrapper">
-            <div id="textContainer">Loading...</div>
+            <div id="textContainer">THE PROPHECY WHISPERS...</div>
             <div id="output">
                 <canvas id="bgCanvas" width="512" height="256"></canvas>
                 <canvas id="ghost2" width="512" height="256"></canvas>
@@ -222,43 +215,60 @@
         </section>
     </main>
 
-    <footer class="main-footer">
-        <p>© 2026 Ditya. All rights reserved.</p>
-    </footer>
-
     <script>
         const presets = {
             'initial-1': { text: 'THE PROPHECY WHISPERS \n AMONG THE SHADOWS.', y: 20 },
-            'heroes-1': { text: 'THREE HEROES APPEAR \n AT WORLDS END.', y: 10 }
+            'heroes-1': { text: 'THREE HEROES APPEAR \n AT WORLDS END.', y: 10 },
+            'main-1': { text: 'A WORLD BASKED IN PUREST LIGHT. \n BENEATH IT GREW ETERNAL NIGHT.', y: 15 }
         };
 
         let maskImg = new Image(), blueTex = new Image(), textTex = new Image(), bgTex = new Image();
         let scrollPos = 0, isActive = true;
+        let currentPreset = {}; // Penting didefinisikan global
 
-        const mainCanvas = document.getElementById('mainPanel'), mctx = mainCanvas.getContext('2d');
-        const g1ctx = document.getElementById('ghost1').getContext('2d'), g2ctx = document.getElementById('ghost2').getContext('2d');
+        const mctx = document.getElementById('mainPanel').getContext('2d');
+        const g1ctx = document.getElementById('ghost1').getContext('2d');
+        const g2ctx = document.getElementById('ghost2').getContext('2d');
         const bgctx = document.getElementById('bgCanvas').getContext('2d');
 
         async function init() {
-            const key = Object.keys(presets)[Math.floor(Math.random() * 2)];
-            document.getElementById('textContainer').innerHTML = presets[key].text.replace('\n', '<br>');
+            // Pilih preset
+            const keys = Object.keys(presets);
+            const key = keys[Math.floor(Math.random() * keys.length)];
+            currentPreset = presets[key]; // Assign ke variabel global
 
-            await Promise.all([
-                loadImg(maskImg, `./assets/base-panels/${key}.png`),
-                loadImg(blueTex, `./assets/depth/depth-blue.png`),
-                loadImg(textTex, `./assets/depth/depth-text.png`),
-                loadImg(bgTex, `./assets/depth/depth-yetdarker-new.png`)
-            ]);
+            document.getElementById('textContainer').innerHTML = currentPreset.text.replace('\n', '<br>');
 
-            // Set texture background untuk teks (agar birunya bertekstur)
-            document.getElementById('textContainer').style.backgroundImage = `url('${textTex.src}')`;
-            
-            requestAnimationFrame(loop);
-            setTimeout(() => {
-                const splash = document.getElementById('prophecy-splash');
-                splash.classList.add('fade-out');
-                setTimeout(() => { splash.style.display = 'none'; isActive = false; }, 1000);
-            }, 4000);
+            try {
+                // Tambahkan crossOrigin anonymous untuk mencegah Tainted Canvas
+                maskImg.crossOrigin = "Anonymous";
+                blueTex.crossOrigin = "Anonymous";
+                textTex.crossOrigin = "Anonymous";
+                bgTex.crossOrigin = "Anonymous";
+
+                await Promise.all([
+                    loadImg(maskImg, `./assets/base-panels/${key}.png`),
+                    loadImg(blueTex, `./assets/depth/depth-blue.png`),
+                    loadImg(textTex, `./assets/depth/depth-text.png`),
+                    loadImg(bgTex, `./assets/depth/depth-yetdarker-new.png`)
+                ]);
+
+                document.getElementById('textContainer').style.backgroundImage = `url('${textTex.src}')`;
+                requestAnimationFrame(loop);
+
+                setTimeout(() => {
+                    const splash = document.getElementById('prophecy-splash');
+                    splash.classList.add('fade-out');
+                    setTimeout(() => { 
+                        splash.style.display = 'none'; // Benar-benar dihilangkan dari DOM
+                        isActive = false; 
+                    }, 1500);
+                }, 4000);
+
+            } catch (e) {
+                console.error("Gagal load gambar:", e);
+                document.getElementById('prophecy-splash').style.display = 'none';
+            }
         }
 
         function loadImg(img, src) { return new Promise(r => { img.onload = r; img.src = src; }); }
@@ -267,7 +277,6 @@
             const temp = document.createElement('canvas');
             temp.width = 512; temp.height = 256;
             const tctx = temp.getContext('2d');
-            tctx.imageSmoothingEnabled = false;
             
             const s = offset % 256;
             for(let x = -s; x < 512; x += 256) tctx.drawImage(texture, x, 0, 256, 256);
@@ -278,19 +287,22 @@
             
             let drawW = 256;
             let drawH = (mask.height / mask.width) * drawW;
+            // Gunakan currentPreset.y yang sudah diassign di init()
             mt.drawImage(mask, (512-drawW)/2, (256-drawH)/2 - (currentPreset.y || 0), drawW, drawH);
 
-            const texData = tctx.getImageData(0,0,512,256);
-            const maskData = mt.getImageData(0,0,512,256);
-            const res = tctx.createImageData(512,256);
+            try {
+                const texData = tctx.getImageData(0,0,512,256);
+                const maskData = mt.getImageData(0,0,512,256);
+                const res = tctx.createImageData(512,256);
 
-            for (let i = 0; i < maskData.data.length; i += 4) {
-                if (maskData.data[i] > 30) {
-                    res.data[i] = texData.data[i]; res.data[i+1] = texData.data[i+1];
-                    res.data[i+2] = texData.data[i+2]; res.data[i+3] = 255;
+                for (let i = 0; i < maskData.data.length; i += 4) {
+                    if (maskData.data[i] > 30) {
+                        res.data[i] = texData.data[i]; res.data[i+1] = texData.data[i+1];
+                        res.data[i+2] = texData.data[i+2]; res.data[i+3] = 255;
+                    }
                 }
-            }
-            tctx.putImageData(res, 0, 0);
+                tctx.putImageData(res, 0, 0);
+            } catch (e) { console.error("Canvas error:", e); }
             return temp;
         }
 
@@ -303,8 +315,8 @@
 
             const frame = createMaskedCanvas(blueTex, maskImg, scrollPos);
             mctx.clearRect(0,0,512,256); mctx.drawImage(frame, 0, 0);
-            g1ctx.clearRect(0,0,512,256); g1ctx.setTransform(1,0,0,1,gOff,gOff); g1ctx.drawImage(frame, 0,0);
-            g2ctx.clearRect(0,0,512,256); g2ctx.setTransform(1,0,0,1,gOff*2,gOff*2); g2ctx.drawImage(frame, 0,0);
+            g1ctx.clearRect(0,0,512,256); g1ctx.drawImage(frame, gOff, gOff);
+            g2ctx.clearRect(0,0,512,256); g2ctx.drawImage(frame, gOff*2, gOff*2);
 
             bgctx.clearRect(0,0,512,256);
             for(let x = -(scrollPos%256); x < 512; x += 256) bgctx.drawImage(bgTex, x, 0, 256, 256);

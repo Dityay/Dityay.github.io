@@ -9,21 +9,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
+        /* --- 1. CSS VARIABLES (LIME MATERIAL EXPRESSIVE) --- */
+        :root {
+            --primary-accent: #BFD63E;   
+            --primary-dark: #829618;     
+            --secondary-accent: #F0F4C3; 
+            --surface-bg: #F9FBE7;       
+            --container-bg: #ffffff;     
+            --text-primary: #3E4232;     
+            --text-secondary: #737865;   
+            --outline-color: #DCE775;    
+            --header-bg-glass: rgba(249, 251, 231, 0.85);
+            --radius-large: 28px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-accent: #D7EE58; 
+                --primary-dark: #E4E8CC;   
+                --secondary-accent: #2A2E1E; 
+                --surface-bg: #12140D;       
+                --container-bg: #1C1F16;     
+                --text-primary: #E6E8D8;     
+                --text-secondary: #C3C7B5;   
+                --outline-color: #444933;    
+                --header-bg-glass: rgba(18, 20, 13, 0.85);
+            }
+        }
+
+        /* --- 2. SETUP FONT PROPHECY --- */
         @font-face {
             font-family: 'ProphecyType';
             src: url('./assets/fonts/PROPHECYTYPE.ttf') format('truetype');
             font-display: swap;
         }
 
-        body, html {
+        body {
             margin: 0; padding: 0;
-            background-color: #000;
-            color: white;
+            background-color: var(--surface-bg);
+            color: var(--text-primary);
             font-family: 'Roboto', sans-serif;
-            overflow: hidden;
+            transition: background-color 0.3s ease;
+            overflow-x: hidden;
         }
 
-        /* SPLASH SCREEN */
+        /* --- 3. SPLASH SCREEN (LIME THEME) --- */
         #prophecy-splash {
             position: fixed;
             top: 0; left: 0;
@@ -34,7 +64,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            transition: opacity 1.5s ease, visibility 1.5s;
+            transition: opacity 1s ease, visibility 1s;
         }
 
         #prophecy-splash.fade-out {
@@ -43,27 +73,18 @@
             pointer-events: none;
         }
 
-        #sineWrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            will-change: transform;
-        }
-
         #textContainer {
             font-family: 'ProphecyType', serif;
-            font-size: clamp(20px, 5vw, 32px);
+            font-size: 32px;
             text-align: center;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: transparent;
+            /* Gradasi Lime bukan Biru */
+            background: linear-gradient(to bottom, var(--primary-accent), var(--primary-dark));
             -webkit-background-clip: text;
             background-clip: text;
-            background-size: 256px 256px;
+            margin-bottom: 20px;
+            width: 80vw;
+            max-width: 450px;
             animation: scrollBg 30s linear infinite;
         }
 
@@ -74,43 +95,84 @@
 
         #output {
             position: relative;
-            width: 512px;
-            height: 256px;
-            max-width: 95vw;
-        }
-
-        canvas {
-            position: absolute;
-            width: 100%; height: 100%;
-            top: 0; left: 0;
+            width: 512px; height: 256px;
+            transform: scale(0.8);
             image-rendering: pixelated;
         }
 
-        #bgCanvas { opacity: 0.3; z-index: 1; filter: blur(2px); }
-        #ghost2 { opacity: 0.15; z-index: 2; }
-        #ghost1 { opacity: 0.3; z-index: 3; }
-        #mainPanel { z-index: 4; }
+        #output canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        #bgCanvas { opacity: 0.3; }
+        #ghost2 { opacity: 0.15; }
+        #ghost1 { opacity: 0.3; }
 
-        /* HERO CONTENT */
-        .main-header { position: fixed; top:0; width:100%; z-index:100; background: rgba(0,0,0,0.8); }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 70px; }
-        .logo a { font-family: 'Lexend', sans-serif; font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; }
-        nav ul { display: flex; list-style: none; gap: 20px; padding: 0; }
-        nav a { color: #ccc; text-decoration: none; }
+        /* --- 4. WEB CONTENT STYLING --- */
+        .main-header {
+            background-color: var(--header-bg-glass);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--outline-color);
+        }
 
-        #hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
-        h1 { font-family: 'Lexend', sans-serif; font-size: clamp(2.5rem, 8vw, 4rem); margin: 0; }
-        .m3-button { padding: 12px 24px; border-radius: 100px; text-decoration: none; font-weight: 500; display: inline-block; margin: 10px; }
-        .filled { background: #d0bcff; color: #381e72; }
-        .tonal { background: #4a4458; color: #e8def8; }
+        .nav-container {
+            display: flex; justify-content: space-between;
+            align-items: center; padding: 1rem 2rem;
+        }
+
+        .logo a {
+            font-family: 'Lexend', sans-serif; font-weight: 700; font-size: 1.75rem;
+            color: var(--primary-dark); text-decoration: none;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a { color: var(--text-secondary); text-decoration: none; font-weight: 500; }
+        nav a:hover { color: var(--primary-dark); }
+
+        #hero {
+            min-height: 100vh; display: flex; align-items: center;
+            justify-content: center; text-align: center;
+            background-color: var(--container-bg);
+        }
+
+        h1 { font-family: 'Lexend', sans-serif; font-size: 4rem; color: var(--primary-dark); margin: 0; }
+        .subtitle { font-size: 1.5rem; color: var(--text-secondary); margin: 1.5rem 0; }
+
+        .m3-button {
+            display: inline-block; padding: 1rem 2rem;
+            border-radius: 50px 50px 50px 15px;
+            font-family: 'Lexend', sans-serif; font-weight: 700;
+            text-decoration: none; transition: 0.3s;
+        }
+
+        .filled {
+            background-color: var(--primary-accent);
+            color: #2E3500;
+            box-shadow: 0 4px 15px rgba(191, 214, 62, 0.4);
+        }
+        .filled:hover { transform: translateY(-5px); background-color: var(--primary-dark); color: #fff; }
+
+        .tonal {
+            background-color: var(--secondary-accent);
+            color: var(--primary-dark);
+            margin-left: 1rem;
+        }
+
+        .wavy-divider {
+            position: absolute; bottom: 0; width: 100%; line-height: 0;
+        }
+        .shape-fill { fill: var(--primary-accent); }
+
+        .main-footer {
+            background-color: var(--primary-accent);
+            color: #2E3500; text-align: center; padding: 3rem 0;
+        }
     </style>
 </head>
 <body>
 
     <div id="prophecy-splash">
         <div id="sineWrapper">
-            <div id="textContainer"></div>
+            <div id="textContainer">Loading...</div>
             <div id="output">
                 <canvas id="bgCanvas" width="512" height="256"></canvas>
                 <canvas id="ghost2" width="512" height="256"></canvas>
@@ -123,33 +185,52 @@
     <header class="main-header">
         <div class="nav-container container">
             <div class="logo"><a href="#">Ditya</a></div>
-            <nav><ul><li><a href="#">Home</a></li><li><a href="#">About</a></li><li><a href="#">Devices</a></li></ul></nav>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Devices</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <main><section id="hero"><div class="container"><h1>Hello, I'm Ditya</h1><p>Android Developer & Custom ROM Enthusiast</p><a href="#" class="filled m3-button">View Devices</a><a href="#" class="tonal m3-button">GitHub</a></div></section></main>
+    <main>
+        <section id="hero">
+            <div class="container">
+                <h1>Hello, I'm Ditya</h1>
+                <p class="subtitle">A passionate Android Developer exploring the world of custom ROMs.</p>
+                <div class="hero-social-links">
+                    <a href="#" class="m3-button filled">View Devices</a>
+                    <a href="#" class="m3-button tonal">GitHub</a>
+                </div>
+            </div>
+            <div class="wavy-divider">
+                <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path></svg>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <p>© 2026 Ditya. All rights reserved.</p>
+    </footer>
 
     <script>
         const presets = {
-            'initial-1': { text: 'The prophecy, which whispers \n among the shadows.', y: 20 },
-            'heroes-1': { text: 'But lo, on hopes and dreams they send. \n Three heroes at the world\'s end.', y: 10 },
-            'main-1': { text: 'A world basked in purest light. \n Beneath it grew eternal night.', y: 15 }
+            'initial-1': { text: 'THE PROPHECY WHISPERS \n AMONG THE SHADOWS.', y: 20 },
+            'heroes-1': { text: 'THREE HEROES APPEAR \n AT WORLDS END.', y: 10 }
         };
 
         let maskImg = new Image(), blueTex = new Image(), textTex = new Image(), bgTex = new Image();
-        let scrollPos = 0, isActive = true, currentPreset = {};
+        let scrollPos = 0, isActive = true;
 
         const mainCanvas = document.getElementById('mainPanel'), mctx = mainCanvas.getContext('2d');
         const g1ctx = document.getElementById('ghost1').getContext('2d'), g2ctx = document.getElementById('ghost2').getContext('2d');
         const bgctx = document.getElementById('bgCanvas').getContext('2d');
 
         async function init() {
-            const keys = Object.keys(presets);
-            const key = keys[Math.floor(Math.random() * keys.length)];
-            currentPreset = presets[key];
-
-            const txtBox = document.getElementById('textContainer');
-            txtBox.innerHTML = currentPreset.text.replace(/\n/g, '<br>');
+            const key = Object.keys(presets)[Math.floor(Math.random() * 2)];
+            document.getElementById('textContainer').innerHTML = presets[key].text.replace('\n', '<br>');
 
             await Promise.all([
                 loadImg(maskImg, `./assets/base-panels/${key}.png`),
@@ -158,54 +239,41 @@
                 loadImg(bgTex, `./assets/depth/depth-yetdarker-new.png`)
             ]);
 
-            txtBox.style.backgroundImage = `url('${textTex.src}')`;
             requestAnimationFrame(loop);
-
             setTimeout(() => {
-                document.getElementById('prophecy-splash').classList.add('fade-out');
-                isActive = false;
-            }, 5000);
+                const splash = document.getElementById('prophecy-splash');
+                splash.classList.add('fade-out');
+                setTimeout(() => { splash.style.display = 'none'; isActive = false; }, 1000);
+            }, 4000);
         }
 
-        function loadImg(img, src) {
-            return new Promise(resolve => { img.onload = resolve; img.onerror = resolve; img.src = src; });
-        }
+        function loadImg(img, src) { return new Promise(r => { img.onload = r; img.src = src; }); }
 
         function createMaskedCanvas(texture, mask, offset) {
-            const canvasSize = 256;
             const temp = document.createElement('canvas');
             temp.width = 512; temp.height = 256;
             const tctx = temp.getContext('2d');
+            
+            const s = offset % 256;
+            for(let x = -s; x < 512; x += 256) tctx.drawImage(texture, x, 0, 256, 256);
 
-            // 1. Gambar tekstur biru
-            const s = offset % canvasSize;
-            for(let x = -s; x < 512; x += canvasSize) {
-                for(let y = 0; y < 256; y += canvasSize) {
-                    tctx.drawImage(texture, x, y, canvasSize, canvasSize);
-                }
-            }
-            const texData = tctx.getImageData(0, 0, 512, 256);
-
-            // 2. Gambar mask ke canvas pembantu
             const mTemp = document.createElement('canvas');
             mTemp.width = 512; mTemp.height = 256;
             const mt = mTemp.getContext('2d');
-            const dx = (512 - canvasSize) / 2;
-            const dy = (256 - canvasSize) / 2 - (currentPreset.y || 0);
-            mt.drawImage(mask, dx, dy, canvasSize, canvasSize);
-            const maskData = mt.getImageData(0, 0, 512, 256);
+            
+            // Fix Gepeng
+            let drawW = 256;
+            let drawH = (mask.height / mask.width) * drawW;
+            mt.drawImage(mask, (512-drawW)/2, (256-drawH)/2, drawW, drawH);
 
-            // 3. Gabungkan pixel
-            const res = tctx.createImageData(512, 256);
+            const texData = tctx.getImageData(0,0,512,256);
+            const maskData = mt.getImageData(0,0,512,256);
+            const res = tctx.createImageData(512,256);
+
             for (let i = 0; i < maskData.data.length; i += 4) {
-                const brightness = (maskData.data[i] + maskData.data[i+1] + maskData.data[i+2]) / 3;
-                if (brightness > 30) { // Threshold lebih rendah agar lebih sensitif
-                    res.data[i] = texData.data[i];
-                    res.data[i+1] = texData.data[i+1];
-                    res.data[i+2] = texData.data[i+2];
-                    res.data[i+3] = 255;
-                } else {
-                    res.data[i+3] = 0;
+                if (maskData.data[i] > 30) {
+                    res.data[i] = texData.data[i]; res.data[i+1] = texData.data[i+1];
+                    res.data[i+2] = texData.data[i+2]; res.data[i+3] = 255;
                 }
             }
             tctx.putImageData(res, 0, 0);
@@ -216,21 +284,16 @@
             if(!isActive) return;
             scrollPos += 1;
             const t = performance.now() / 1000;
-            const sine = Math.sin(t * 1.5) * 8;
-            const gOff = Math.sin(t * 2.5) * 3;
-
-            document.getElementById('sineWrapper').style.transform = `translateY(${sine}px)`;
+            const gOff = Math.sin(t * 2) * 4;
+            document.getElementById('sineWrapper').style.transform = `translateY(${Math.sin(t*1.5)*10}px)`;
 
             const frame = createMaskedCanvas(blueTex, maskImg, scrollPos);
-            
             mctx.clearRect(0,0,512,256); mctx.drawImage(frame, 0, 0);
             g1ctx.clearRect(0,0,512,256); g1ctx.drawImage(frame, gOff, gOff);
             g2ctx.clearRect(0,0,512,256); g2ctx.drawImage(frame, gOff*2, gOff*2);
 
             bgctx.clearRect(0,0,512,256);
-            const bgs = (scrollPos * 0.5) % 256;
-            for(let x = -bgs; x < 512; x += 256) bgctx.drawImage(bgTex, x, 0, 256, 256);
-
+            for(let x = -(scrollPos%256); x < 512; x += 256) bgctx.drawImage(bgTex, x, 0, 256, 256);
             requestAnimationFrame(loop);
         }
         window.onload = init;

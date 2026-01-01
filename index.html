@@ -53,7 +53,7 @@
             overflow-x: hidden;
         }
 
-        /* --- 3. SPLASH SCREEN (LIME THEME) --- */
+        /* --- 3. SPLASH SCREEN (FIXED TEXT STYLE) --- */
         #prophecy-splash {
             position: fixed;
             top: 0; left: 0;
@@ -73,18 +73,29 @@
             pointer-events: none;
         }
 
+        #sineWrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Ini yang bikin elemen di dalamnya (teks & gambar) di tengah horizontal */
+            will-change: transform;
+        }
+
         #textContainer {
             font-family: 'ProphecyType', serif;
-            font-size: 32px;
-            text-align: center;
+            font-size: clamp(24px, 5vw, 32px); /* Ukuran font responsif */
+            text-align: center; /* Teks rata tengah jika lebih dari 1 baris */
+            line-height: 1.2;
+            margin-bottom: 30px; /* Jarak antara teks dan gambar */
+            padding: 0 20px; /* Padding agar tidak mepet layar di HP */
+            
+            /* FIX WARNA: KEMBALI KE BIRU ASLI DELTARUNE */
             color: transparent;
-            /* Gradasi Lime bukan Biru */
-            background: linear-gradient(to bottom, var(--primary-accent), var(--primary-dark));
+            background: linear-gradient(to bottom, #4488ff, #2266cc);
             -webkit-background-clip: text;
             background-clip: text;
-            margin-bottom: 20px;
-            width: 80vw;
-            max-width: 450px;
+            
+            /* Texture background diset via JS */
+            background-size: 256px 256px;
             animation: scrollBg 30s linear infinite;
         }
 
@@ -105,7 +116,7 @@
         #ghost2 { opacity: 0.15; }
         #ghost1 { opacity: 0.3; }
 
-        /* --- 4. WEB CONTENT STYLING --- */
+        /* --- 4. WEB CONTENT STYLING (LIME ACCENT TETAP SAMA) --- */
         .main-header {
             background-color: var(--header-bg-glass);
             backdrop-filter: blur(10px);
@@ -239,6 +250,9 @@
                 loadImg(bgTex, `./assets/depth/depth-yetdarker-new.png`)
             ]);
 
+            // Set texture background untuk teks (agar birunya bertekstur)
+            document.getElementById('textContainer').style.backgroundImage = `url('${textTex.src}')`;
+            
             requestAnimationFrame(loop);
             setTimeout(() => {
                 const splash = document.getElementById('prophecy-splash');
@@ -253,6 +267,7 @@
             const temp = document.createElement('canvas');
             temp.width = 512; temp.height = 256;
             const tctx = temp.getContext('2d');
+            tctx.imageSmoothingEnabled = false;
             
             const s = offset % 256;
             for(let x = -s; x < 512; x += 256) tctx.drawImage(texture, x, 0, 256, 256);
@@ -261,10 +276,9 @@
             mTemp.width = 512; mTemp.height = 256;
             const mt = mTemp.getContext('2d');
             
-            // Fix Gepeng
             let drawW = 256;
             let drawH = (mask.height / mask.width) * drawW;
-            mt.drawImage(mask, (512-drawW)/2, (256-drawH)/2, drawW, drawH);
+            mt.drawImage(mask, (512-drawW)/2, (256-drawH)/2 - (currentPreset.y || 0), drawW, drawH);
 
             const texData = tctx.getImageData(0,0,512,256);
             const maskData = mt.getImageData(0,0,512,256);
@@ -289,8 +303,8 @@
 
             const frame = createMaskedCanvas(blueTex, maskImg, scrollPos);
             mctx.clearRect(0,0,512,256); mctx.drawImage(frame, 0, 0);
-            g1ctx.clearRect(0,0,512,256); g1ctx.drawImage(frame, gOff, gOff);
-            g2ctx.clearRect(0,0,512,256); g2ctx.drawImage(frame, gOff*2, gOff*2);
+            g1ctx.clearRect(0,0,512,256); g1ctx.setTransform(1,0,0,1,gOff,gOff); g1ctx.drawImage(frame, 0,0);
+            g2ctx.clearRect(0,0,512,256); g2ctx.setTransform(1,0,0,1,gOff*2,gOff*2); g2ctx.drawImage(frame, 0,0);
 
             bgctx.clearRect(0,0,512,256);
             for(let x = -(scrollPos%256); x < 512; x += 256) bgctx.drawImage(bgTex, x, 0, 256, 256);

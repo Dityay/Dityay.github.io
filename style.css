@@ -432,3 +432,60 @@ a { color: var(--primary-dark); text-decoration: none; font-weight: 500;}
         margin-bottom: 2rem;
     }
 }
+/* Styling untuk Splash Screen */
+#prophecy-splash {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: black;
+    z-index: 9999; /* Pastikan paling atas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease, visibility 1s;
+    overflow: hidden;
+}
+
+#prophecy-splash.fade-out {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Base style dari generator sebelumnya */
+#overlayWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#textContainer {
+    font-family: 'ProphecyType', serif; /* Pastikan font terpasang */
+    font-size: 32px;
+    text-align: center;
+    color: transparent;
+    background: linear-gradient(to bottom, #4488ff, #2266cc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    margin-bottom: 20px;
+    width: 80vw;
+    max-width: 450px;
+}
+
+#output {
+    position: relative;
+    width: 512px;
+    height: 256px;
+    transform: scale(0.8); /* Sesuaikan ukuran jika terlalu besar di mobile */
+}
+
+#output canvas {
+    position: absolute;
+    top: 0; left: 0;
+    image-rendering: pixelated;
+}
+
+#background { opacity: 0.5; z-index: 0; }
+#ghostIcon2 { opacity: 0.2; z-index: 1; }
+#ghostIcon { opacity: 0.4; z-index: 2; }
+#panel { z-index: 3; }

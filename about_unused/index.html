@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oops! - Ditya</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Lexend:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Reset & Base Style */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            overflow: hidden; /* Mencegah scroll saat overlay aktif */
+        }
+
+        /* Dark Overlay - Muncul Permanen */
+        .dark-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeIn 1s ease;
+        }
+
+        .dark-overlay h2 {
+            font-family: 'Lexend', sans-serif;
+            font-size: clamp(1.4rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: #f5f5f5;
+            text-align: center;
+            max-width: 80%;
+            line-height: 1.4;
+            margin-bottom: 20px;
+        }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        /* Konten Utama (Tersembunyi di balik overlay) */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .gone-text {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        h1 { font-family: 'Lexend', sans-serif; font-size: 3rem; color: #bfd63e; }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="oops.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="darkOverlay" class="dark-overlay">
+        <h2>What are you trying to find?</h2>
+        <p style="color: #666; font-size: 0.9rem;">(Click anywhere to play audio)</p>
+    </div>
+
+    <header class="main-header" style="padding: 20px; opacity: 0.3;">
+        <div class="nav-container container">
+            <div class="logo"><strong>???</strong></div>
+        </div>
+    </header>
+
+    <main>
+        <section id="gone">
+            <div class="container">
+                <div class="gone-text">
+                    <h1>Ooh! 404</h1>
+                    <h3>"But... What's that supposed to mean?"</h3>
+                    <p>"Something is missing... or maybe someone?"</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        
+        // Fungsi untuk memutar musik
+        function startExperience() {
+            music.play().catch(e => console.log("Playback blocked by browser"));
+            // Opsional: Kamu bisa hilangkan teks instruksi klik setelah diklik
+            document.querySelector('.dark-overlay p').style.display = 'none';
+        }
+
+        // Karena browser melarang autoplay suara, 
+        // musik akan jalan saat user klik di mana saja.
+        window.addEventListener('click', startExperience, { once: true });
+        
+        // Coba autoplay (beberapa browser memperbolehkan jika muted atau setting tertentu)
+        window.onload = () => {
+            startExperience();
+        };
+    </script>
+
+</body>
+</html>

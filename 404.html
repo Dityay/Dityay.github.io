@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Dogcheck - External Assets</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dog {
+            min-width: 320px;
+            max-width: 100%;
+            min-height: 320px;
+            max-height: 100%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .dog img {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            /* Membuat pixel art tetap tajam */
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        .dog2 {
+            opacity: 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="center">
+        <div class="dog" id="dog_sleep">
+            <img class="dog1" src="https://deltarune.com/assets/images/dog-sleep.png" alt="Sleeping dog">
+            <img class="dog2" src="https://deltarune.com/assets/images/dog-sleep.gif" alt="Sleeping dog">
+        </div>
+
+        <div class="dog hidden" id="dog_maraca">
+            <img class="dog1" src="https://deltarune.com/assets/images/dog-maraca.png" alt="Maraca dog">
+            <img class="dog2" src="https://deltarune.com/assets/images/dog-maraca.gif" alt="Maraca dog">
+        </div>
+    </div>
+
+    <script>
+        var maraca = false;
+
+        // Audio Setup dengan URL Absolut dari deltarune.com
+        var results = new Howl({
+            src: ['oops.wav', 'oops.mp3'],
+            volume: 0.5,
+            loop: true
+        });
+
+        var baci = new Howl({
+            src: ['https://deltarune.com/assets/audio/baci_perugina2.ogg', 'https://deltarune.com/assets/audio/baci_perugina2.mp3'],
+            volume: 0.5,
+            loop: true
+        });
+
+        $(function() {
+            // Peluang 5% untuk mendapatkan anjing maraka
+            if (Math.random() >= 0.95) {
+                $('#dog_sleep').addClass('hidden');
+                $('#dog_maraca').removeClass('hidden');
+                maraca = true;
+            }
+        });
+
+        // Logika Klik: Play Musik + Ganti ke GIF
+        $(document).on('click', '.dog:not(.playing)', function() {
+            if (maraca) {
+                baci.play();
+            } else {
+                results.play();
+            }
+            $(this).addClass('playing');
+            $(this).find('.dog1').css('opacity', 0);
+            $(this).find('.dog2').css('opacity', 1);
+        });
+
+        // Logika Klik Lagi: Pause Musik + Kembali ke Static Image
+        $(document).on('click', '.dog.playing', function() {
+            if (maraca) {
+                baci.pause();
+            } else {
+                results.pause();
+            }
+            $(this).removeClass('playing');
+            $(this).find('.dog1').css('opacity', 1);
+            $(this).find('.dog2').css('opacity', 0);
+        });
+    </script>
+</body>
+</html>

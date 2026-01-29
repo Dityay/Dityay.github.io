@@ -122,16 +122,18 @@
             src: ['tenna_battle.ogg', 'tenna_battle.mp3'],
             volume: 0.5,
             loop: true,
-            onload: updateLoadingStatus,
-            onloaderror: updateLoadingStatus
+            preload: true,
+            html5: true,
+            onload: updateLoadingStatus
         });
 
         var baci = new Howl({
             src: ['ch4_extra_boss.ogg', 'ch4_extra_boss.mp3'],
             volume: 0.5,
             loop: true,
-            onload: updateLoadingStatus,
-            onloaderror: updateLoadingStatus
+            preload: true,
+            html5: true,
+            onload: updateLoadingStatus
         });
 
         $(function() {

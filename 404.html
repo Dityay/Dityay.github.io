@@ -9,6 +9,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 
     <style>
+        /* Loading Overlay Style */
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            font-family: 'Courier New', Courier, monospace;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Main Styles */
         body {
             background-color: #fff;
             margin: 0;
@@ -40,12 +70,11 @@
             width: 100%;
             object-fit: contain;
             image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
         }
 
         .dog2 {
             opacity: 0;
+            transition: opacity 0.1s;
         }
 
         .hidden {
@@ -54,6 +83,11 @@
     </style>
 </head>
 <body>
+
+    <div id="loading-overlay">
+        <div class="spinner"></div>
+        <div id="loading-text">LOADING ASSETS... (0/2)</div>
+    </div>
 
     <div id="center">
         <div class="dog" id="dog_sleep">
@@ -69,17 +103,35 @@
 
     <script>
         var maraca = false;
+        var loadedCount = 0;
+        const totalAssets = 2;
 
+        function updateLoadingStatus() {
+            loadedCount++;
+            document.getElementById('loading-text').innerText = `LOADING ASSETS... (${loadedCount}/${totalAssets})`;
+            
+            if (loadedCount >= totalAssets) {
+                const overlay = document.getElementById('loading-overlay');
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+            }
+        }
+
+        // Audio Setup
         var results = new Howl({
             src: ['tenna_battle.ogg', 'tenna_battle.mp3'],
             volume: 0.5,
-            loop: true
+            loop: true,
+            onload: updateLoadingStatus,
+            onloaderror: updateLoadingStatus
         });
 
         var baci = new Howl({
             src: ['ch4_extra_boss.ogg', 'ch4_extra_boss.mp3'],
             volume: 0.5,
-            loop: true
+            loop: true,
+            onload: updateLoadingStatus,
+            onloaderror: updateLoadingStatus
         });
 
         $(function() {

@@ -6,36 +6,68 @@
     <title>...</title>
     <style>
         body {
-            background-color: #0a0a0a;
+            background-color: #000000;
             height: 100vh;
             margin: 0;
             overflow: hidden;
             font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #ominous-img {
+            width: 300px;
+            cursor: pointer;
+            image-rendering: pixelated;
+            z-index: 10;
+            transition: opacity 2s ease-out;
+        }
+
+        .fade-away {
+            opacity: 0;
+            pointer-events: none;
         }
 
         .floating-text {
             position: absolute;
-            color: #7a0000;
+            color: #600000;
             font-size: 0.85rem;
-            font-weight: normal;
             white-space: nowrap;
             user-select: none;
             pointer-events: none;
-            animation: fadeInOut 4s forwards;
+            z-index: 5;
+            animation: moveUpFade 3s forwards;
         }
 
-        @keyframes fadeInOut {
-            0% { opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
+        @keyframes moveUpFade {
+            0% { 
+                opacity: 0; 
+                transform: translateY(0); 
+            }
+            20% { 
+                opacity: 1; 
+            }
+            80% { 
+                opacity: 1; 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-30px); 
+            }
         }
     </style>
 </head>
 <body>
 
+    <img src="ominous.webp" id="ominous-img" alt="?">
+    <audio id="bg-music" src="h.mp3" loop></audio>
+
     <script>
         const messages = ["It's okay not to smile", "Good. Keep smiling."];
+        const img = document.getElementById('ominous-img');
+        const audio = document.audio = document.getElementById('bg-music');
+        let started = false;
 
         function createText() {
             const textElement = document.createElement('div');
@@ -55,10 +87,17 @@
 
             setTimeout(() => {
                 textElement.remove();
-            }, 4000);
+            }, 3000);
         }
 
-        setInterval(createText, 800);
+        img.addEventListener('click', () => {
+            if (!started) {
+                audio.play();
+                img.classList.add('fade-away');
+                setInterval(createText, 600);
+                started = true;
+            }
+        });
     </script>
 
 </body>

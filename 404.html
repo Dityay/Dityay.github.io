@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Continuous Random Text</title>
+    <title>...</title>
     <style>
         body {
-            background-color: #0a0a0a; /* Hitam pekat agar merah gelap lebih kontras */
+            background-color: #0a0a0a;
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            font-family: 'Courier New', Courier, monospace; /* Font monospaced agar lebih estetik */
+            font-family: 'Courier New', Courier, monospace;
         }
 
         .floating-text {
             position: absolute;
-            color: #7a0000; /* Merah gelap yang lebih redup */
-            font-size: 0.9rem; /* Ukuran teks lebih kecil */
+            color: #7a0000;
+            font-size: 0.85rem;
             font-weight: normal;
             white-space: nowrap;
             user-select: none;
-            pointer-events: none; /* Agar tidak mengganggu klik mouse */
-            animation: fadeInOut 4s forwards; /* Animasi muncul lalu hilang */
+            pointer-events: none;
+            animation: fadeInOut 4s forwards;
         }
 
         @keyframes fadeInOut {
@@ -41,10 +41,10 @@
             const textElement = document.createElement('div');
             textElement.className = 'floating-text';
             
-            // Pilih teks acak
-            textElement.innerText = messages[Math.floor(Math.random() * messages.length)];
+            const selectedText = messages[Math.floor(Math.random() * messages.length)];
+            textElement.innerText = selectedText;
+            document.title = selectedText;
 
-            // Tentukan posisi acak (dengan margin 10% agar tidak terlalu mepet pinggir)
             const x = Math.random() * (window.innerWidth - 150);
             const y = Math.random() * (window.innerHeight - 30);
 
@@ -53,13 +53,11 @@
 
             document.body.appendChild(textElement);
 
-            // Hapus elemen dari DOM setelah animasi selesai agar tidak memberatkan browser
             setTimeout(() => {
                 textElement.remove();
             }, 4000);
         }
 
-        // Munculkan teks baru setiap 800 milidetik (0.8 detik)
         setInterval(createText, 800);
     </script>
 

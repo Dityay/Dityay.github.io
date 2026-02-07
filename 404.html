@@ -1,170 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[[HyperlinkBlocked]]</title>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-
+    <title>Continuous Random Text</title>
     <style>
-        /* Loading Overlay Style */
-        #loading-overlay {
-            position: fixed;
-            inset: 0;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            font-family: 'Courier New', Courier, monospace;
-            transition: opacity 0.8s ease, visibility 0.8s;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #000;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Main Styles */
         body {
-            background-color: #fff;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: #0a0a0a; /* Hitam pekat agar merah gelap lebih kontras */
             height: 100vh;
+            margin: 0;
             overflow: hidden;
+            font-family: 'Courier New', Courier, monospace; /* Font monospaced agar lebih estetik */
         }
 
-        #center {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .dog {
-            min-width: 320px;
-            max-width: 100%;
-            min-height: 320px;
-            max-height: 100%;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .dog img {
+        .floating-text {
             position: absolute;
-            height: 100%;
-            width: 100%;
-            object-fit: contain;
-            image-rendering: pixelated;
+            color: #7a0000; /* Merah gelap yang lebih redup */
+            font-size: 0.9rem; /* Ukuran teks lebih kecil */
+            font-weight: normal;
+            white-space: nowrap;
+            user-select: none;
+            pointer-events: none; /* Agar tidak mengganggu klik mouse */
+            animation: fadeInOut 4s forwards; /* Animasi muncul lalu hilang */
         }
 
-        .dog2 {
-            opacity: 0;
-            transition: opacity 0.1s;
-        }
-
-        .hidden {
-            display: none;
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div id="loading-overlay">
-        <div class="spinner"></div>
-        <div id="loading-text">LOADING ASSETS... (0/2)</div>
-    </div>
-
-    <div id="center">
-        <div class="dog" id="dog_sleep">
-            <img class="dog1" src="kris.png" alt="welovekris">
-            <img class="dog2" src="kris4.gif" alt="welovekris">
-        </div>
-
-        <div class="dog hidden" id="dog_maraca">
-            <img class="dog1" src="gerson.png" alt="I'm Old!">
-            <img class="dog2" src="gerson.gif" alt="I'm Old!">
-        </div>
-    </div>
-
     <script>
-        var maraca = false;
-        var loadedCount = 0;
-        const totalAssets = 2;
+        const messages = ["It's okay not to smile", "Good. Keep smiling."];
 
-        function updateLoadingStatus() {
-            loadedCount++;
-            document.getElementById('loading-text').innerText = `LOADING ASSETS... (${loadedCount}/${totalAssets})`;
+        function createText() {
+            const textElement = document.createElement('div');
+            textElement.className = 'floating-text';
             
-            if (loadedCount >= totalAssets) {
-                const overlay = document.getElementById('loading-overlay');
-                overlay.style.opacity = '0';
-                overlay.style.visibility = 'hidden';
-            }
+            // Pilih teks acak
+            textElement.innerText = messages[Math.floor(Math.random() * messages.length)];
+
+            // Tentukan posisi acak (dengan margin 10% agar tidak terlalu mepet pinggir)
+            const x = Math.random() * (window.innerWidth - 150);
+            const y = Math.random() * (window.innerHeight - 30);
+
+            textElement.style.left = x + 'px';
+            textElement.style.top = y + 'px';
+
+            document.body.appendChild(textElement);
+
+            // Hapus elemen dari DOM setelah animasi selesai agar tidak memberatkan browser
+            setTimeout(() => {
+                textElement.remove();
+            }, 4000);
         }
 
-        // Audio Setup
-        var results = new Howl({
-            src: ['tenna_battle.ogg', 'tenna_battle.mp3'],
-            volume: 0.5,
-            loop: true,
-            preload: true,
-            html5: true,
-            onload: updateLoadingStatus
-        });
-
-        var baci = new Howl({
-            src: ['ch4_extra_boss.ogg', 'ch4_extra_boss.mp3'],
-            volume: 0.5,
-            loop: true,
-            preload: true,
-            html5: true,
-            onload: updateLoadingStatus
-        });
-
-        $(function() {
-            if (Math.random() >= 0.95) {
-                $('#dog_sleep').addClass('hidden');
-                $('#dog_maraca').removeClass('hidden');
-                maraca = true;
-            }
-        });
-
-        $(document).on('click', '.dog:not(.playing)', function() {
-            if (maraca) {
-                baci.play();
-            } else {
-                results.play();
-            }
-            $(this).addClass('playing');
-            $(this).find('.dog1').css('opacity', 0);
-            $(this).find('.dog2').css('opacity', 1);
-        });
-
-        $(document).on('click', '.dog.playing', function() {
-            if (maraca) {
-                baci.pause();
-            } else {
-                results.pause();
-            }
-            $(this).removeClass('playing');
-            $(this).find('.dog1').css('opacity', 1);
-            $(this).find('.dog2').css('opacity', 0);
-        });
+        // Munculkan teks baru setiap 800 milidetik (0.8 detik)
+        setInterval(createText, 800);
     </script>
+
 </body>
 </html>

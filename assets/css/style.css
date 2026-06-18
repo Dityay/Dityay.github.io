@@ -21,19 +21,31 @@
     --accent-hover: #004da7;
 }
 
-* {
+*, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-body {
+html, body {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     background-color: var(--bg);
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
     transition: background-color 0.3s cubic-bezier(0.2, 0, 0, 1);
     overflow-x: hidden;
-    min-height: 100vh;
+    position: relative;
+}
+
+#app {
+width: 100%;
+max-width: 100%;
+margin: 0 auto;
+overflow-x: hidden;
 }
 
 .orb {
@@ -83,6 +95,7 @@ nav {
     align-items: center;
     padding: 24px 6%;
     background-color: transparent;
+    width: 100%;
 }
 
 .nav-logo {
@@ -139,6 +152,7 @@ nav {
 .page {
     display: none;
     padding: 20px 6%;
+    width: 100%;
 }
 
 .page.active {
@@ -162,6 +176,7 @@ nav {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
     gap: 24px;
+    width: 100%;
 }
 
 .glass {
@@ -234,7 +249,8 @@ nav {
 }
 
 .rom-detail-banner {
-    height: 510px;
+    width: 100%;
+    height: 340px;
     border-radius: var(--radius-m3);
     background-size: cover;
     background-position: center;
@@ -297,6 +313,14 @@ nav {
     margin-bottom: 30px;
 }
 
+.rom-description-container p {
+    font-size: 1rem !important;
+    font-weight: 400;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    color: var(--text);
+}
+
 .rom-description-container h3 {
     font-family: 'Syne', sans-serif;
     font-size: 1.3rem;
@@ -318,8 +342,10 @@ nav {
 }
 
 .rom-description-container li {
+    font-size: 0.95rem;
     margin-bottom: 6px;
     color: var(--muted);
+    line-height: 1.6;
 }
 
 .rom-description-container blockquote {
@@ -328,12 +354,13 @@ nav {
     padding: 12px 20px;
     margin: 15px 0;
     border-radius: 0 12px 12px 0;
-    font-style: italic;
 }
 
 .rom-description-container blockquote p {
-    margin: 0;
+    font-size: 1rem !important;
+    font-style: italic;
     color: var(--muted);
+    margin: 0;
 }
 
 .screenshot-item {
@@ -350,16 +377,6 @@ nav {
     transform: scale(1.04);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     border-color: var(--accent);
-}
-
-@media (max-width: 600px) {
-    .rom-detail-banner {
-        height: 180px;
-        padding: 20px;
-    }
-    .rom-banner-title {
-        font-size: 1.6rem;
-    }
 }
 
 @keyframes m3Pop {
@@ -391,4 +408,90 @@ footer {
     font-family: 'Syne', sans-serif;
     font-weight: 600;
     font-size: 0.9rem;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .orb {
+        display: none !important;
+    }
+
+    nav {
+        padding: 16px 5%;
+        width: 100%;
+    }
+
+    .nav-logo {
+        font-size: 1.3rem;
+    }
+
+    .btn-dl {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+
+    .page {
+        padding: 12px 3%;
+    }
+
+    .section-label {
+        font-size: 1.8rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        width: 100%;
+    }
+
+    .rom-card {
+        padding: 20px;
+    }
+
+    .detail-container {
+        padding: 16px 12px;
+        border-radius: 16px;
+    }
+
+    .rom-detail-banner {
+        width: 100% !important;
+        box-sizing: border-box;
+        display: flex !important;
+        height: 200px;
+        padding: 20px;
+        border-radius: 16px;
+        margin-bottom: 24px;
+    }
+
+    .rom-banner-title {
+        font-size: 1.5rem;
+    }
+
+    .rom-description-container p,
+    .rom-description-container blockquote p {
+        font-size: 0.95rem !important;
+    }
+
+    .rom-description-container h3 {
+        font-size: 1.2rem;
+    }
+
+    .rom-description-container h4 {
+        font-size: 1.05rem;
+    }
+
+    .screenshot-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
+
+    .screenshot-item {
+        border-radius: 12px;
+    }
+
+    .modal-content {
+        padding: 24px;
+        border-radius: 24px;
+        width: 95%;
+    }
 }

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Butterscotch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div id="app">
+        <nav>
+            <div class="nav-logo" onclick="navigateHome()">Butterscotch</div>
+            <div class="nav-controls">
+                <button class="btn-dl primary nav-btn" onclick="openDonateModal()">Donate</button>
+                <button id="theme-toggle" class="btn-dl secondary nav-btn">Theme</button>
+            </div>
+        </nav>
+
+        <div id="page-home" class="page active">
+            <div class="section-header" style="margin-top: 40px;">
+                <div class="section-label" style="margin: 0; padding: 0;">
+                    <span>Available ROMs</span>
+                </div>
+                <div class="filter-controls" id="home-device-filter-container"></div>
+            </div>
+
+            <div class="cards-grid" id="cards-container"></div>
+
+        </div>
+
+        <div id="page-detail" class="page">
+            <div class="detail-container">
+                <div class="back-btn" onclick="navigateHome()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg>
+                    Back
+                </div>
+                <div id="detail-content"></div>
+            </div>
+            <footer>Butterscotch . <span class="footer-year-d"></span></footer>
+        </div>
+    </div>
+
+    <div id="md-modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="md-content"></div>
+        </div>
+    </div>
+
+    <div id="dl-warning-modal" class="modal">
+        <div class="modal-content glass" style="text-align: center;">
+            <span class="close-modal" onclick="closeWarningModal()">&times;</span>
+            <h2 style="color: var(--accent); margin-bottom: 15px; font-family: 'Syne', sans-serif;">Reminder</h2>
+            <p style="margin-bottom: 10px;">You are about to <strong>leave</strong> this site to download the ROM.</p>
+            <p style="margin-bottom: 10px;">You may need to <strong>disable Ad-block</strong> to proceed.</p>
+            <p style="margin-bottom: 20px;">If you have trouble proceeding with the link you may watch the video guide: <br>
+                <a href="https://youtu.be/rsJsWvPC0qI?si=MBHHkhuJkhrdNxqs" target="_blank" style="color: var(--accent); text-decoration: underline;">Watch Video Guide</a>
+            </p>
+            <p style="margin-bottom: 10px;">DO NOT <strong>MIRROR</strong> nor <strong>SHARE</strong> the DIRECT download link.</p>
+            <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
+                <button id="proceed-btn" class="btn-dl primary disabled" disabled>
+                    Proceed (<span id="countdown-timer">5</span>s)
+                </button>
+                <button class="btn-dl secondary" onclick="openDonateModal()">
+                    Support / Donate
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="donate-modal" class="modal">
+        <div class="modal-content glass" style="text-align: center; max-width: 400px;">
+            <span class="close-modal" onclick="closeDonateModal()">&times;</span>
+            <h2 style="color: var(--accent); margin-bottom: 20px; font-family: 'Syne', sans-serif;">Support the Project</h2>
+            <p style="margin-bottom: 20px; color: var(--muted); font-size: 0.9rem;">If you like my work, consider supporting to keep the servers running and motivate further development.</p>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <a href="https://saweria.co/ryanistr" target="_blank" rel="noopener" class="btn-dl primary" style="justify-content: center;">Saweria</a>
+                <a href="https://sociabuzz.com/ryanistr/tribe" target="_blank" rel="noopener" class="btn-dl primary" style="justify-content: center;">Sociobuzz</a>
+                <a href="https://www.paypal.com/paypalme/ryanistr" target="_blank" rel="noopener" class="btn-dl primary" style="justify-content: center;">PayPal</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="reader-modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal" onclick="closeReaderModal()">&times;</span>
+            <h2 id="reader-title" style="color: var(--accent); margin-bottom: 15px; font-family: 'Syne', sans-serif;">Loading...</h2>
+            <div id="reader-content" style="line-height: 1.6;">
+                <div style="text-align: center; color: var(--muted);">Loading content...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/init-data.js"></script>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

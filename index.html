@@ -19,8 +19,9 @@
         <nav>
             <div class="nav-logo" onclick="navigateHome()">Butterscotch</div>
             <div class="nav-controls">
-
-                <button id="theme-toggle" class="btn-dl secondary nav-btn">Theme</button>
+                <a href="https://t.me/dtyaa_ajh" target="_blank" class="btn-dl secondary nav-btn" style="text-decoration: none;">
+                    Telegram
+                </a>
             </div>
         </nav>
 
@@ -33,7 +34,6 @@
             </div>
 
             <div class="cards-grid" id="cards-container"></div>
-
         </div>
 
         <div id="page-detail" class="page">
@@ -47,7 +47,7 @@
                 </div>
                 <div id="detail-content"></div>
             </div>
-            <footer>Butterscotch . <span class="footer-year-d"></span></footer>
+
         </div>
     </div>
 
@@ -57,29 +57,6 @@
             <div id="md-content"></div>
         </div>
     </div>
-
-    <div id="dl-warning-modal" class="modal">
-        <div class="modal-content glass" style="text-align: center;">
-            <span class="close-modal" onclick="closeWarningModal()">&times;</span>
-            <h2 style="color: var(--accent); margin-bottom: 15px; font-family: 'Syne', sans-serif;">Reminder</h2>
-            <p style="margin-bottom: 10px;">You are about to <strong>leave</strong> this site to download the ROM.</p>
-            <p style="margin-bottom: 10px;">You may need to <strong>disable Ad-block</strong> to proceed.</p>
-            <p style="margin-bottom: 20px;">If you have trouble proceeding with the link you may watch the video guide: <br>
-                <a href="https://youtu.be/rsJsWvPC0qI?si=MBHHkhuJkhrdNxqs" target="_blank" style="color: var(--accent); text-decoration: underline;">Watch Video Guide</a>
-            </p>
-            <p style="margin-bottom: 10px;">DO NOT <strong>MIRROR</strong> nor <strong>SHARE</strong> the DIRECT download link.</p>
-            <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <button id="proceed-btn" class="btn-dl primary disabled" disabled>
-                    Proceed (<span id="countdown-timer">5</span>s)
-                </button>
-                <button class="btn-dl secondary" onclick="openDonateModal()">
-                    Support / Donate
-                </button>
-            </div>
-        </div>
-    </div>
-
-
 
     <div id="reader-modal" class="modal">
         <div class="modal-content glass">
@@ -92,7 +69,6 @@
     </div>
 
     <script src="assets/js/init-data.js"></script>
-
     <script src="assets/js/script.js"></script>
 </body>
 </html>

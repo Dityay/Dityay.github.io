@@ -1,19 +1,35 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Set Tahun di Footer
     const year = new Date().getFullYear();
-    if (document.getElementById('footer-year')) document.getElementById('footer-year').textContent = year;
+    if(document.getElementById('footer-year')) document.getElementById('footer-year').textContent = year;
     document.querySelectorAll('.footer-year-d').forEach(el => el.textContent = year);
 
-    const themeToggle = document.getElementById('theme-toggle');
-    themeToggle.addEventListener('click', () => {
-        const html = document.documentElement;
-        const currentTheme = html.getAttribute('data-theme');
-        html.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
-    });
+    // ==========================================
+    // LOGIKA TEMA OTOMATIS MENGIKUTI SISTEM
+    // ==========================================
+    const htmlElement = document.documentElement;
+    const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
+    // Fungsi untuk menerapkan tema
+    function applySystemTheme(e) {
+        if (e.matches) {
+            htmlElement.setAttribute('data-theme', 'dark');
+        } else {
+            htmlElement.setAttribute('data-theme', 'light');
+        }
+    }
+
+    // 1. Cek dan terapkan tema saat website pertama kali dimuat
+    applySystemTheme(systemThemeMedia);
+
+    // 2. Pasang pendengar (listener) agar berubah real-time jika user mengganti tema sistemnya
+    systemThemeMedia.addEventListener('change', applySystemTheme);
+    // ==========================================
+
+    // Render Cards
     renderROMCards();
     handleRouting();
 });
-
 function renderROMCards() {
     const container = document.getElementById('cards-container');
     if (!container || !window.romData) return;

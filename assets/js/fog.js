@@ -4,6 +4,7 @@ window.romData = [
         name: "MyUI 7",
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 15 (Hotfix)",
+        buildDate: "2026-03-26",
         downloadUrl: "https://drive.google.com/file/d/1OmNmmazHOZxB_R6jJfEcipuuLVtdPOVD/view?usp=drive_link",
         banner: "assets/roms/fog/myui/banner.jpg",
         screenshots: [
@@ -13,13 +14,14 @@ window.romData = [
             "assets/roms/fog/myui/4.jpg",
             "assets/roms/fog/myui/5.jpg"
         ],
-        description: "### Notes:\n\n- CN variant (dirty flash from Global is NOT recommended)\n- ONLY use erofs supported kernel (this ROM is EROFS)\n- Install playstore from App Center (or https://t.me/bscotchsdump/100)\n- Some features requires chinese Lenovo account\n- Let the ROM settle for about 10mins or more after first boot\n- Flashing may take a while please be patient (about 10mins more or less)\n\n### Flash Instructions\n**PLEASE FOLLOW THESE STEPS CAREFULLY!**\n- Use [OrangeFox](https://t.me/Redmi10CUpdates/1089) for flashing\n- Flash [this kernel](https://t.me/bscotchsdump/243) first\n- Reboot recovery\n- Flash the ROM file\n- Flash [FRP Remover](https://t.me/bscotchsdump/256) (just in case)\n- Format Data\n- Reboot\n\n### Credits: \n- [가온누리](https://www.pixiv.net/en/users/92722352) for artwork\n- [@ZetLinkUwU](https://t.me/ZetLinkUwU) for RIL fix\n- [@reiryuki](https://t.me/reiryuki) and [@KanagawaYamadaVTeacher](https://t.me/KanagawaYamadaVTeacher) for dolby fix\n- [@panzzxz](https://t.me/panzzxz) for lag fix\n- [@Damarrr25](https://t.me/Damarrr25)"
+        description: "### Notes:\n\n- CN variant (dirty flash from Global is NOT recommended)\n- ONLY use erofs supported kernel (this ROM is EROFS)\n- Install playstore from App Center (or https://t.me/bscotchsdump/100)\n- Some features requires chinese Lenovo account\n- Let the ROM settle for about 10mins or more after first boot\n- Flashing may take a while please be patient (about 10mins more or less)\n\n### Flash Instructions\n**PLEASE FOLLOW THESE STEPS CAREFULLY!**\n- Use [OrangeFox](https://t.me/Redmi10CUpdates/1089) for flashing\n- Flash [this kernel](https://t.me/bscotchsdump/243) first\n- Reboot recovery\n- Flash the ROM file\n- Flash [FRP Remover](https://t.me/bscotchsdump/256) (just in case)\n- Format Data\n- Reboot\n\n### Credits: \n- [가온누리](https://www.pixiv.net/en/users/92722352) for artwork\n- [@ZetLinkUwU](https://t.me/ZetLinkUwU) for RIL fix\n- [@reiryuki](https://t.me/reiryuki) and [@KanagawaYamadaVTeacher](https://t.me/KanagawaYamadaVTeacher) for dolby fix\n- [@panzzxz](https://t.me/panzzxz) for lag fix\n- [@Damarrr25](https://t.me/Damarrr25) for help"
     },
 {
     id: 2,
     name: "HyperOS 2 Lite",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 14 (Hotfix 2)",
+    buildDate: "2026-04-26",
     downloadUrl: "https://drive.google.com/file/d/1jkkBCXp5j5Hyne23dPzfgqPQ0ujFS7Vb/view?usp=sharing",
     banner: "assets/roms/fog/h2cn_lisa/banner.jpg",
     screenshots: [
@@ -36,6 +38,7 @@ window.romData = [
     name: "HyperOS 3 Lite",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 15 (Initial)",
+    buildDate: "2026-05-15",
     downloadUrl: "https://drive.google.com/file/d/1P737P5KHpl8J7WRJYRdrAUFpCMqM7Jjb/view?usp=sharing",
     banner: "assets/roms/fog/h3cn_socrates/banner.jpg",
     screenshots: [
@@ -51,6 +54,7 @@ window.romData = [
     name: "NothingOS 4.1",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 16 (Initial)",
+    buildDate: "2026-05-26",
     downloadUrl: "https://drive.google.com/file/d/1oAET8kS9tbrvFre2QlrvHAeOXZGPP0-J/view?usp=sharing",
     banner: "assets/roms/fog/nothing/banner.jpg",
     screenshots: [
@@ -66,6 +70,7 @@ window.romData = [
     name: "MIUI 12 EEA",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 11 (Initial)",
+    buildDate: "2026-06-09",
     downloadUrl: "https://drive.google.com/file/d/1ZffdDADyv_BHYEqzgHdA0fJi7R1VX7m1/view?usp=sharing",
     banner: "assets/roms/fog/mi12sweet/banner.jpg",
     screenshots: [
@@ -74,14 +79,15 @@ window.romData = [
         "assets/roms/fog/mi12sweet/3.jpg",
         "assets/roms/fog/mi12sweet/4.jpg"
     ],
-    description: "### NotesK\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process completed\n- Erasing FRP partition is not recommended (if youre going to do so)\n- Non rooted by default\n- NFC Working for rain\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @Romeo_13card for testing\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)\n- [トキアライキTOKIARAIき](https://www.pixiv.net/en/users/4767426) for artwork"
+    description: "### Notes\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process completed\n- Erasing FRP partition is not recommended (if youre going to do so)\n- Non rooted by default\n- NFC Working for rain\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @Romeo_13card for testing\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)\n- [トキアライキTOKIARAIき](https://www.pixiv.net/en/users/4767426) for artwork"
 },
 {
     id: 6,
-    name: "MIUI 12.5",
+    name: "MIUI 12.5 CN",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 11 (Initial)",
-    downloadUrl: "1225",
+    buildDate: "2026-06-19",
+    downloadUrl: "placeholder",
     banner: "assets/roms/fog/mi125/banner.png",
     screenshots: [
         "assets/roms/fog/mi125/1.jpg",

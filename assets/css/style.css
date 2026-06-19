@@ -1,24 +1,35 @@
 :root {
-    --bg: #0f131a;
-    --surface: #171c24;
-    --surface-cards: #202732;
-    --border: #3d4756;
-    --text: #e2e7f0;
-    --muted: #94a3b8;
-    --accent: #a3c7ff;
-    --accent-hover: #7eb0ff;
+    /* LATAR BELAKANG DARK MODE (Nuansa Espresso/Coklat Super Gelap) */
+    --bg: #14110e;
+    --surface: #1e1915;
+    --surface-cards: #29211a;
+    --border: #42362b;
+
+    /* TEKS DARK MODE (Putih Krem) */
+    --text: #eadecf;
+    --muted: #a39486;
+
+    /* AKSEN BUTTERSCOTCH */
+    --accent: #ffb75e;
+    --accent-hover: #e09d4c;
+
     --radius-m3: 28px;
 }
 
 [data-theme="light"] {
-    --bg: #f8fafc;
-    --surface: #f1f5f9;
-    --surface-cards: #dbeafe;
-    --border: #cbd5e1;
-    --text: #0f172a;
-    --muted: #475569;
-    --accent: #005bc5;
-    --accent-hover: #004da7;
+    /* LATAR BELAKANG LIGHT MODE (Nuansa Oat/Vanilla) */
+    --bg: #fffbf7;
+    --surface: #f5ece2;
+    --surface-cards: #fcefdc;
+    --border: #dcd0c3;
+
+    /* TEKS LIGHT MODE (Coklat Kopi Pekat) */
+    --text: #2d241c;
+    --muted: #6e5f52;
+
+    /* AKSEN BUTTERSCOTCH */
+    --accent: #c46c0b;
+    --accent-hover: #9c5507;
 }
 
 *, *::before, *::after {
@@ -27,18 +38,80 @@
     padding: 0;
 }
 
-html, body {
+html {
+    background-color: var(--bg);
+    transition: background-color 0.3s cubic-bezier(0.2, 0, 0, 1);
+}
+
+body {
     width: 100%;
     max-width: 100%;
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    background-color: var(--bg);
+    background-color: transparent;
     color: var(--text);
     font-family: 'DM Sans', sans-serif;
-    transition: background-color 0.3s cubic-bezier(0.2, 0, 0, 1);
     overflow-x: hidden;
     position: relative;
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    pointer-events: none;
+    background-size: 50px 50px;
+    background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    opacity: 0.25;
+    animation: moveGrid 20s linear infinite;
+}
+
+@keyframes moveGrid {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 1225px 1225px;
+    }
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -3; /* Ditaruh di belakang grid pertama */
+    pointer-events: none;
+
+    /* Ukuran kotak grid kedua dibikin 2x lipat lebih besar */
+    background-size: 100px 100px;
+
+    background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+
+    /* Dibuat lebih pudar sedikit agar tidak terlalu ramai */
+    opacity: 0.15;
+
+    /* Animasi dengan durasi lebih lama biar geraknya santai */
+    animation: moveGridLarge 35s linear infinite;
+}
+
+@keyframes moveGridLarge {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -1225px -1225px;
+    }
 }
 
 #app {

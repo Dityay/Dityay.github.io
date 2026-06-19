@@ -1,4 +1,4 @@
-window.romData = [
+window.fogData = [
     {
         id: 1,
         name: "MyUI 7",
@@ -31,7 +31,7 @@ window.romData = [
         "assets/roms/fog/h2cn_lisa/4.jpg",
         "assets/roms/fog/h2cn_lisa/5.jpg"
     ],
-    description: "### Changes\n- Fixed device spoof caused several features to stop working\n- Removed HyperAI\n- Unlimited Google Photos backups\n- Lite Mode disabled by default\n- LMK optimizations to prevent oom (OutOfMemory)\n- Some optimizations\n\n### Notes\n- THIS JUST A REPOST BECAUSE THERE'S A PROBLEM WITH PREVIOUS LINK\n- Shipped with KernelSU Next 3.0.0 (i dont have time to update it yet) and Orangefox\n- Not recommended to change kernel\n\n### Known Issues\n- Maybe NFC for rain\n\n### Flash Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @crazyguidesformi, @kashis_cringey_stuffs, Useful collection for mods\n- whoever made this artwork\n- @Romeo_13card for Orangfox build"
+    description: "### Changes\n- Fixed device spoof caused several features to stop working\n- Removed HyperAI\n- Unlimited Google Photos backups\n- Lite Mode disabled by default\n- LMK optimizations to prevent oom (OutOfMemory)\n- Some optimizations\n\n### Notes\n- Shipped with KernelSU Next 3.0.0 (i dont have time to update it yet) and Orangefox\n- Not recommended to change kernel\n\n### Known Issues\n- Maybe NFC for rain\n\n### Flash Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @crazyguidesformi, @kashis_cringey_stuffs, Useful collection for mods\n- whoever made this artwork\n- @Romeo_13card for Orangfox build"
 },
 {
     id: 3,
@@ -79,14 +79,14 @@ window.romData = [
         "assets/roms/fog/mi12sweet/3.jpg",
         "assets/roms/fog/mi12sweet/4.jpg"
     ],
-    description: "### Notes\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process completed\n- Erasing FRP partition is not recommended (if youre going to do so)\n- Non rooted by default\n- NFC Working for rain\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @Romeo_13card for testing\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)\n- [トキアライキTOKIARAIき](https://www.pixiv.net/en/users/4767426) for artwork"
+    description: "### Notes\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process completed\n- Erasing FRP partition is **not recommended** (if you're going to do so)\n- Non rooted by default\n- NFC Working for rain\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @Romeo_13card for testing\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)\n- [トキアライキTOKIARAIき](https://www.pixiv.net/en/users/4767426) for artwork"
 },
 {
     id: 6,
     name: "MIUI 12.5 CN",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 11 (Initial)",
-    buildDate: "2026-06-19",
+    buildDate: "2026-06-24",
     downloadUrl: "placeholder",
     banner: "assets/roms/fog/mi125/banner.png",
     screenshots: [
@@ -94,8 +94,9 @@ window.romData = [
         "assets/roms/fog/mi125/2.jpg",
         "assets/roms/fog/mi125/3.jpg",
         "assets/roms/fog/mi125/4.jpg",
-        "assets/roms/fog/mi125/5.jpg"
+        "assets/roms/fog/mi125/5.jpg",
+        "assets/roms/fog/mi125/6.jpg"
     ],
-    description: "# ''Let’s turn around and watch the sun, before it goes down completely.''\n### Notes:\n\n- Erasing FRP partition is **not recommended** (if youre going to do so)\n- Non rooted by default\n- NFC Working for rain\nShipped with Stock Kernel + TWRP 3.6\n\n### Credits: \n- [nebbeli](https://x.com/nebbeli) for this amazing artwork"
+    description: "# ''Let’s turn around and watch the sun, before it goes down completely.''\n### Notes:\n\n- Erasing FRP partition is **not recommended** (if you're going to do so)\n- Non rooted by default\n- NFC Working for rain\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits: \n- [nebbeli](https://x.com/nebbeli) for this amazing artwork"
 }
 ];

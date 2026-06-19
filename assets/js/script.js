@@ -27,10 +27,10 @@ function renderROMCards() {
 
     container.innerHTML = window.romData.map(rom => `
     <div class="rom-card glass" onclick="viewDetail(${rom.id})">
-    <h3 style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--accent); letter-spacing: -0.5px;">${rom.name}</h3>
+    <h3 style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--accent); letter-spacing: -0.5px; line-height: 1.2;">${rom.name}</h3>
     <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 4px;">Device: <span style="color: var(--text); font-weight: 500;">${rom.device}</span></p>
     <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 24px;">Version: <span style="color: var(--text); font-weight: 500;">${rom.version}</span></p>
-    <button class="btn-dl primary" style="width: 100%;">Get ROM</button>
+    <button class="btn-dl primary" style="width: 100%; margin-top: auto;">Get ROM</button>
     </div>
     `).join('');
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found | Butterscotch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="assets/css/style.css?v=4" />
+</head>
+<body>
+
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div id="app" style="display: flex; flex-direction: column; min-height: 100vh;">
+        
+        <nav>
+            <a href="/" class="nav-logo" style="text-decoration: none;">Butterscotch</a>
+        </nav>
+
+        <div class="page active" style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <h1 style="font-family: 'Syne', sans-serif; font-size: 8rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 10px;">404</h1>
+            <h2 style="font-family: 'Syne', sans-serif; font-size: 2rem; color: var(--text); margin-bottom: 16px;">Oops! You're Lost</h2>
+            <p style="color: var(--muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 40px; line-height: 1.6;">
+                The ROM or page you are looking for doesn't exist, has been removed, or the link is broken.
+            </p>
+            <a href="/" class="btn-dl primary" style="padding: 16px 32px; font-size: 1.1rem;">
+                Back to Home
+            </a>
+        </div>
+
+        <footer style="margin-top: auto;">Butterscotch . <span id="footer-year">2026</span></footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Set Tahun Otomatis di Footer
+            document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+            // Logika Tema Otomatis Mengikuti Sistem
+            const htmlElement = document.documentElement;
+            const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+            function applySystemTheme(e) {
+                if (e.matches) {
+                    htmlElement.setAttribute('data-theme', 'dark');
+                } else {
+                    htmlElement.setAttribute('data-theme', 'light');
+                }
+            }
+
+            applySystemTheme(systemThemeMedia);
+            systemThemeMedia.addEventListener('change', applySystemTheme);
+        });
+    </script>
+</body>
+</html>

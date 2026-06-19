@@ -5,92 +5,91 @@ window.romData = [
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 15 (Hotfix)",
         downloadUrl: "https://drive.google.com/file/d/1OmNmmazHOZxB_R6jJfEcipuuLVtdPOVD/view?usp=drive_link",
-        banner: "assets/roms/myui/banner.jpg",
+        banner: "assets/roms/fog/myui/banner.jpg",
         screenshots: [
-            "assets/roms/myui/1.jpg",
-            "assets/roms/myui/2.jpg",
-            "assets/roms/myui/3.jpg",
-            "assets/roms/myui/4.jpg",
-            "assets/roms/myui/5.jpg"
+            "assets/roms/fog/myui/1.jpg",
+            "assets/roms/fog/myui/2.jpg",
+            "assets/roms/fog/myui/3.jpg",
+            "assets/roms/fog/myui/4.jpg",
+            "assets/roms/fog/myui/5.jpg"
         ],
         description: "### Notes:\n\n- CN variant (dirty flash from Global is NOT recommended)\n- ONLY use erofs supported kernel (this ROM is EROFS)\n- Install playstore from App Center (or https://t.me/bscotchsdump/100)\n- Some features requires chinese Lenovo account\n- Let the ROM settle for about 10mins or more after first boot\n- Flashing may take a while please be patient (about 10mins more or less)\n\n### Flash Instructions\n**PLEASE FOLLOW THESE STEPS CAREFULLY!**\n- Use [OrangeFox](https://t.me/Redmi10CUpdates/1089) for flashing\n- Flash [this kernel](https://t.me/bscotchsdump/243) first\n- Reboot recovery\n- Flash the ROM file\n- Flash [FRP Remover](https://t.me/bscotchsdump/256) (just in case)\n- Format Data\n- Reboot\n\n### Credits: \n- [가온누리](https://www.pixiv.net/en/users/92722352) for artwork\n- [@ZetLinkUwU](https://t.me/ZetLinkUwU) for RIL fix\n- [@reiryuki](https://t.me/reiryuki) and [@KanagawaYamadaVTeacher](https://t.me/KanagawaYamadaVTeacher) for dolby fix\n- [@panzzxz](https://t.me/panzzxz) for lag fix\n- [@Damarrr25](https://t.me/Damarrr25)"
     },
-    {
-        id: 2,
-        name: "HyperOS 2 Lite",
-        device: "Xiaomi Redmi 10C (fog)",
-        version: "Android 14 (Hotfix 2)",
-        downloadUrl: "https://drive.google.com/file/d/1jkkBCXp5j5Hyne23dPzfgqPQ0ujFS7Vb/view?usp=sharing",
-        banner: "assets/roms/h2cn_lisa/banner.jpg",
-        screenshots: [
-            "assets/roms/h2cn_lisa/1.jpg",
-            "assets/roms/h2cn_lisa/2.jpg",
-            "assets/roms/h2cn_lisa/3.jpg",
-            "assets/roms/h2cn_lisa/4.jpg",
-            "assets/roms/h2cn_lisa/5.jpg"
-        ],
-        description: "### Changes\n- Fixed device spoof caused several features to stop working\n- Removed HyperAI\n- Unlimited Google Photos backups\n- Lite Mode disabled by default\n- LMK optimizations to prevent oom (OutOfMemory)\n- Some optimizations\n\n### Notes\n- THIS JUST A REPOST BECAUSE THERE'S A PROBLEM WITH PREVIOUS LINK\n- Shipped with KernelSU Next 3.0.0 (i dont have time to update it yet) and Orangefox\n- Not recommended to change kernel\n\n### Known Issues\n- Maybe NFC for rain\n\n### Flash Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @crazyguidesformi, @kashis_cringey_stuffs, Useful collection for mods\n- whoever made this artwork\n- @Romeo_13card for Orangfox build"
-    },
-    {
-        id: 3,
-        name: "HyperOS 3 Lite",
-        device: "Xiaomi Redmi 10C (fog)",
-        version: "Android 15",
-        downloadUrl: "https://drive.google.com/file/d/1P737P5KHpl8J7WRJYRdrAUFpCMqM7Jjb/view?usp=sharing",
-        banner: "assets/roms/h3cn_socrates/banner.jpg",
-        screenshots: [
-            "assets/roms/h3cn_socrates/1.jpg",
-            "assets/roms/h3cn_socrates/2.jpg",
-            "assets/roms/h3cn_socrates/3.jpg",
-            "assets/roms/h3cn_socrates/4.jpg"
-        ],
-        description: "### Notes\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process completed\n- Lite Mode, Device Spoof toggles are in developer options\n- Setup Wizard skipped\n- Do NOT change kernel (kernel locked)\n- Shipped with KernelSU Next (3.2.0-legacy) and OrangeFox\n\n### Known Issue\n- Maybe NFC for rain (not tested)\n\n### Flash Instructions\n- Use any custom recovery to flash the ROM (recommended to use orangefox by @Romeo_13card)\n- Format data\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @crazyguidesformi, @kashis_cringey_stuffs, Useful collection for mods\n- @Romeo_13card for Orangfox build\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)"
-    },
-    {
-        id: 4,
-        name: "NothingOS 4.1",
-        device: "Xiaomi Redmi 10C (fog)",
-        version: "Android 16",
-        downloadUrl: "https://drive.google.com/file/d/1oAET8kS9tbrvFre2QlrvHAeOXZGPP0-J/view?usp=sharing",
-        banner: "assets/roms/nothing/banner.jpg",
-        screenshots: [
-            "assets/roms/nothing/1.jpg",
-            "assets/roms/nothing/2.jpg",
-            "assets/roms/nothing/3.jpg",
-            "assets/roms/nothing/4.jpg"
-        ],
-        description: "### Notes\n- The ROM will perform dex2oat on the first boot\n- Kernel Locked\n- Includes ViperFx (in sounds settings)\n- Shipped with KernelSU Next (v3.2.0-legacy) and OrangeFox\n- NFC is working\n\n### Known Issues\n- Some UI elements might look weird due to originally only supporting 1080p\n- Dirac audio (requires 64 bit audio service)\n- Face Unlock\n- DT2W not working (blame Nothing)\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM (recommended to use orangefox by @Romeo_13card)\n- Format data\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed\n\n### Credits\n- [hori](https://www.pixiv.net/en/users/74658564) for background artwork\n- @Romeo_13card for testing and OrangeFox"
-    },
-    {
-        id: 5,
-        name: "MIUI 12 EEA",
-        device: "Xiaomi Redmi 10C (fog)",
-        version: "Android 11",
-        downloadUrl: "https://drive.google.com/file/d/1ZffdDADyv_BHYEqzgHdA0fJi7R1VX7m1/view?usp=sharing",
-        banner: "assets/roms/mi12sweet/banner.jpg",
-        screenshots: [
-            "assets/roms/mi12sweet/1.jpg",
-            "assets/roms/mi12sweet/2.jpg",
-            "assets/roms/mi12sweet/3.jpg",
-            "assets/roms/mi12sweet/4.jpg"
-        ],
-        description: "### NotesK\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process completed\n- Erasing FRP partition is not recommended (if youre going to do so)\n- Non rooted by default\n- NFC Working for rain\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @Romeo_13card for testing\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)\n- [トキアライキTOKIARAIき](https://www.pixiv.net/en/users/4767426) for artwork"
-    },
-    {
-        id: 6,
-        name: "MIUI 12.5",
-        device: "Xiaomi Redmi 10C (fog)",
-        version: "Android 11 (Initial)",
-        downloadUrl: "https://google.com",
-        banner: "assets/roms/mi125/banner.png",
-        screenshots: [
-            "assets/roms/mi125/1.jpg",
-            "assets/roms/mi125/2.jpg",
-            "assets/roms/mi125/3.jpg",
-            "assets/roms/mi125/4.jpg",
-            "assets/roms/mi125/5.jpg"
-        ],
-        description: "# ''Let’s turn around and watch the sun, before it goes down completely.''\n### Notes:\n\n- Erasing FRP partition is **not recommended** (if youre going to do so)\n- Non rooted by default\n- NFC Working for rain\nShipped with Stock Kernel + TWRP 3.6\n\n### Credits: \n- [nebbeli](https://x.com/nebbeli) for this amazing artwork"
-    }
+{
+    id: 2,
+    name: "HyperOS 2 Lite",
+    device: "Xiaomi Redmi 10C (fog)",
+    version: "Android 14 (Hotfix 2)",
+    downloadUrl: "https://drive.google.com/file/d/1jkkBCXp5j5Hyne23dPzfgqPQ0ujFS7Vb/view?usp=sharing",
+    banner: "assets/roms/fog/h2cn_lisa/banner.jpg",
+    screenshots: [
+        "assets/roms/fog/h2cn_lisa/1.jpg",
+        "assets/roms/fog/h2cn_lisa/2.jpg",
+        "assets/roms/fog/h2cn_lisa/3.jpg",
+        "assets/roms/fog/h2cn_lisa/4.jpg",
+        "assets/roms/fog/h2cn_lisa/5.jpg"
+    ],
+    description: "### Changes\n- Fixed device spoof caused several features to stop working\n- Removed HyperAI\n- Unlimited Google Photos backups\n- Lite Mode disabled by default\n- LMK optimizations to prevent oom (OutOfMemory)\n- Some optimizations\n\n### Notes\n- THIS JUST A REPOST BECAUSE THERE'S A PROBLEM WITH PREVIOUS LINK\n- Shipped with KernelSU Next 3.0.0 (i dont have time to update it yet) and Orangefox\n- Not recommended to change kernel\n\n### Known Issues\n- Maybe NFC for rain\n\n### Flash Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @crazyguidesformi, @kashis_cringey_stuffs, Useful collection for mods\n- whoever made this artwork\n- @Romeo_13card for Orangfox build"
+},
+{
+    id: 3,
+    name: "HyperOS 3 Lite",
+    device: "Xiaomi Redmi 10C (fog)",
+    version: "Android 15 (Initial)",
+    downloadUrl: "https://drive.google.com/file/d/1P737P5KHpl8J7WRJYRdrAUFpCMqM7Jjb/view?usp=sharing",
+    banner: "assets/roms/fog/h3cn_socrates/banner.jpg",
+    screenshots: [
+        "assets/roms/fog/h3cn_socrates/1.jpg",
+        "assets/roms/fog/h3cn_socrates/2.jpg",
+        "assets/roms/fog/h3cn_socrates/3.jpg",
+        "assets/roms/fog/h3cn_socrates/4.jpg"
+    ],
+    description: "### Notes\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process completed\n- Lite Mode, Device Spoof toggles are in developer options\n- Setup Wizard skipped\n- Do NOT change kernel (kernel locked)\n- Shipped with KernelSU Next (3.2.0-legacy) and OrangeFox\n\n### Known Issue\n- Maybe NFC for rain (not tested)\n\n### Flash Instructions\n- Use any custom recovery to flash the ROM (recommended to use orangefox by @Romeo_13card)\n- Format data\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @crazyguidesformi, @kashis_cringey_stuffs, Useful collection for mods\n- @Romeo_13card for Orangfox build\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)"
+},
+{
+    id: 4,
+    name: "NothingOS 4.1",
+    device: "Xiaomi Redmi 10C (fog)",
+    version: "Android 16 (Initial)",
+    downloadUrl: "https://drive.google.com/file/d/1oAET8kS9tbrvFre2QlrvHAeOXZGPP0-J/view?usp=sharing",
+    banner: "assets/roms/fog/nothing/banner.jpg",
+    screenshots: [
+        "assets/roms/fog/nothing/1.jpg",
+        "assets/roms/fog/nothing/2.jpg",
+        "assets/roms/fog/nothing/3.jpg",
+        "assets/roms/fog/nothing/4.jpg"
+    ],
+    description: "### Notes\n- The ROM will perform dex2oat on the first boot\n- Kernel Locked\n- Includes ViperFx (in sounds settings)\n- Shipped with KernelSU Next (v3.2.0-legacy) and OrangeFox\n- NFC is working\n\n### Known Issues\n- Some UI elements might look weird due to originally only supporting 1080p\n- Dirac audio (requires 64 bit audio service)\n- Face Unlock\n- DT2W not working (blame Nothing)\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM (recommended to use orangefox by @Romeo_13card)\n- Format data\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed\n\n### Credits\n- [hori](https://www.pixiv.net/en/users/74658564) for background artwork\n- @Romeo_13card for testing and OrangeFox"
+},
+{
+    id: 5,
+    name: "MIUI 12 EEA",
+    device: "Xiaomi Redmi 10C (fog)",
+    version: "Android 11 (Initial)",
+    downloadUrl: "https://drive.google.com/file/d/1ZffdDADyv_BHYEqzgHdA0fJi7R1VX7m1/view?usp=sharing",
+    banner: "assets/roms/fog/mi12sweet/banner.jpg",
+    screenshots: [
+        "assets/roms/fog/mi12sweet/1.jpg",
+        "assets/roms/fog/mi12sweet/2.jpg",
+        "assets/roms/fog/mi12sweet/3.jpg",
+        "assets/roms/fog/mi12sweet/4.jpg"
+    ],
+    description: "### NotesK\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process completed\n- Erasing FRP partition is not recommended (if youre going to do so)\n- Non rooted by default\n- NFC Working for rain\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits\n- @Romeo_13card for testing\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)\n- [トキアライキTOKIARAIき](https://www.pixiv.net/en/users/4767426) for artwork"
+},
+{
+    id: 6,
+    name: "MIUI 12.5",
+    device: "Xiaomi Redmi 10C (fog)",
+    version: "Android 11 (Initial)",
+    downloadUrl: "1225",
+    banner: "assets/roms/fog/mi125/banner.png",
+    screenshots: [
+        "assets/roms/fog/mi125/1.jpg",
+        "assets/roms/fog/mi125/2.jpg",
+        "assets/roms/fog/mi125/3.jpg",
+        "assets/roms/fog/mi125/4.jpg",
+        "assets/roms/fog/mi125/5.jpg"
+    ],
+    description: "# ''Let’s turn around and watch the sun, before it goes down completely.''\n### Notes:\n\n- Erasing FRP partition is **not recommended** (if youre going to do so)\n- Non rooted by default\n- NFC Working for rain\nShipped with Stock Kernel + TWRP 3.6\n\n### Credits: \n- [nebbeli](https://x.com/nebbeli) for this amazing artwork"
+}
 ];
-

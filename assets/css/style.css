@@ -191,6 +191,9 @@ nav {
     position: relative;
     overflow: hidden;
     transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .rom-card:hover {

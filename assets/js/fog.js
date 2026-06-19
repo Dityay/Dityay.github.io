@@ -97,6 +97,6 @@ window.fogData = [
         "assets/roms/fog/mi125/5.jpg",
         "assets/roms/fog/mi125/6.jpg"
     ],
-    description: "# ''Let’s turn around and watch the sun, before it goes down completely.''\n### Notes:\n\n- Erasing FRP partition is **not recommended** (if you're going to do so)\n- Non rooted by default\n- NFC Working for rain\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits: \n- [nebbeli](https://x.com/nebbeli) for this amazing artwork"
+    description: "# ''Let’s turn around and watch the sun, before it goes down completely.''\n### Notes:\n\n- Erasing FRP partition is **not recommended** (if you're going to do so)\n- Non rooted by default\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits: \n- [nebbeli](https://x.com/nebbeli) for this amazing artwork"
 }
 ];

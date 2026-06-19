@@ -69,9 +69,16 @@ function renderROMCards() {
         return;
     }
 
-    let filteredData = window.romData;
+    let filteredData = [...window.romData];
+
+    filteredData.sort((a, b) => {
+        const dateA = a.buildDate ? new Date(a.buildDate).getTime() : 0;
+        const dateB = b.buildDate ? new Date(b.buildDate).getTime() : 0;
+        return dateB - dateA;
+    });
+
     if (currentFilter !== 'All') {
-        filteredData = window.romData.filter(rom => rom.device === currentFilter);
+        filteredData = filteredData.filter(rom => rom.device === currentFilter);
     }
 
     const devicesToRender = currentFilter === 'All'
@@ -103,13 +110,20 @@ function renderROMCards() {
 
             if (rom.buildDate) {
                 const today = new Date();
+                today.setHours(0, 0, 0, 0);
                 const build = new Date(rom.buildDate);
-                const diffTime = today - build;
-                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                build.setHours(0, 0, 0, 0);
 
-                if (diffDays >= 0 && diffDays <= 14) {
-                    badgeHtml = `<span class="new-badge">NEW</span>`;
+                if (build > today) {
+                    badgeHtml = `<span class="new-badge">UPCOMING</span>`;
+                } else {
+                    const diffTime = today - build;
+                    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                    if (diffDays >= 0 && diffDays <= 14) {
+                        badgeHtml = `<span class="new-badge">NEW</span>`;
+                    }
                 }
+
                 displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
             }
 
@@ -138,13 +152,32 @@ function navigateHome() {
     if (window.location.hash) {
         history.pushState("", document.title, window.location.pathname + window.location.search);
     }
+
+    const detailContainer = document.querySelector('.detail-container');
+    if (detailContainer) {
+        detailContainer.style.background = '';
+    }
+
+    const backBtn = document.querySelector('.detail-container .back-btn');
+    if (backBtn) {
+        backBtn.style.display = '';
+    }
+
     document.getElementById('page-detail').classList.remove('active');
     document.getElementById('page-home').classList.add('active');
 }
 
-let activeDownloadUrl = "";
-
 function show404() {
+    const detailContainer = document.querySelector('.detail-container');
+    if (detailContainer) {
+        detailContainer.style.background = 'transparent';
+    }
+
+    const backBtn = document.querySelector('.detail-container .back-btn');
+    if (backBtn) {
+        backBtn.style.display = 'none';
+    }
+
     document.getElementById('detail-content').innerHTML = `
     <div style="text-align: center; padding: 60px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
     <h1 style="font-family: 'Syne', sans-serif; font-size: 8rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 10px;">404</h1>
@@ -157,8 +190,25 @@ function show404() {
     </button>
     </div>
     `;
+
     document.getElementById('page-home').classList.remove('active');
     document.getElementById('page-detail').classList.add('active');
+}
+
+function showUpcomingPopup() {
+    const modal = document.getElementById('md-modal');
+    const content = document.getElementById('md-content');
+
+    content.innerHTML = `
+    <div style="text-align: center; padding: 10px;">
+    <h2 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: var(--accent); margin-bottom: 15px;">Stay Tuned!</h2>
+    <p style="color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
+    This ROM is still in the development stage (Upcoming), and a download link is not yet available. Stay tuned for further updates!
+    </p>
+    <button class="btn-dl primary" onclick="closeModal()">Understand</button>
+    </div>
+    `;
+    modal.style.display = 'flex';
 }
 
 function viewDetail(id) {
@@ -169,8 +219,27 @@ function viewDetail(id) {
         return;
     }
 
+    const detailContainer = document.querySelector('.detail-container');
+    if (detailContainer) {
+        detailContainer.style.background = '';
+    }
+
+    const backBtn = document.querySelector('.detail-container .back-btn');
+    if (backBtn) {
+        backBtn.style.display = '';
+    }
+
     activeDownloadUrl = rom.downloadUrl;
     window.location.hash = `rom-${id}`;
+
+    let isUpcoming = false;
+    if (rom.buildDate) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const build = new Date(rom.buildDate);
+        build.setHours(0, 0, 0, 0);
+        isUpcoming = build > today;
+    }
 
     let markdownText = rom.description || "No description available.";
     markdownText = markdownText.replace(/^[ \t]+/gm, '');
@@ -202,6 +271,10 @@ function viewDetail(id) {
         `;
     }
 
+    let downloadButtonHtml = isUpcoming
+    ? `<button class="btn-dl secondary" onclick="showUpcomingPopup()" style="padding: 16px 32px; border-color: var(--accent);">Coming Soon</button>`
+    : `<button class="btn-dl primary" onclick="window.open(activeDownloadUrl, '_blank')" style="padding: 16px 32px;">Download ROM</button>`;
+
     document.getElementById('detail-content').innerHTML = `
     <div class="rom-detail-banner" style="background-image: url('${rom.banner}');">
     <div class="rom-banner-content">
@@ -220,9 +293,7 @@ function viewDetail(id) {
     </div>
     ${screenshotsHtml}
     <div style="margin-top: 35px;">
-    <button class="btn-dl primary" onclick="window.open(activeDownloadUrl, '_blank')" style="padding: 16px 32px;">
-    Download ROM
-    </button>
+    ${downloadButtonHtml}
     </div>
     </div>
     `;

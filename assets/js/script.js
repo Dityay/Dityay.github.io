@@ -1,16 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Set Tahun di Footer
     const year = new Date().getFullYear();
-    if(document.getElementById('footer-year')) document.getElementById('footer-year').textContent = year;
+    if (document.getElementById('footer-year')) document.getElementById('footer-year').textContent = year;
     document.querySelectorAll('.footer-year-d').forEach(el => el.textContent = year);
 
-    // ==========================================
-    // LOGIKA TEMA OTOMATIS MENGIKUTI SISTEM
-    // ==========================================
     const htmlElement = document.documentElement;
     const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // Fungsi untuk menerapkan tema
     function applySystemTheme(e) {
         if (e.matches) {
             htmlElement.setAttribute('data-theme', 'dark');
@@ -19,17 +14,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 1. Cek dan terapkan tema saat website pertama kali dimuat
     applySystemTheme(systemThemeMedia);
-
-    // 2. Pasang pendengar (listener) agar berubah real-time jika user mengganti tema sistemnya
     systemThemeMedia.addEventListener('change', applySystemTheme);
-    // ==========================================
 
-    // Render Cards
     renderROMCards();
     handleRouting();
 });
+
 function renderROMCards() {
     const container = document.getElementById('cards-container');
     if (!container || !window.romData) return;
@@ -61,7 +52,10 @@ function viewDetail(id) {
     activeDownloadUrl = rom.downloadUrl;
     window.location.hash = `rom-${id}`;
 
-    const markdownText = rom.description || "No description available.";
+    let markdownText = rom.description || "No description available.";
+
+    markdownText = markdownText.replace(/(^|\s)@([a-zA-Z0-9_]+)/g, '$1<a href="https://t.me/$2" target="_blank" class="rom-link">@$2</a>');
+
     let parsedDescriptionHtml = "";
 
     try {
@@ -118,45 +112,6 @@ function viewDetail(id) {
     document.getElementById('page-detail').classList.add('active');
 }
 
-function openDonateModal() {
-    document.getElementById('donate-modal').style.display = 'flex';
-}
-
-function closeDonateModal() {
-    document.getElementById('donate-modal').style.display = 'none';
-}
-
-function openWarningModal() {
-    const modal = document.getElementById('dl-warning-modal');
-    const proceedBtn = document.getElementById('proceed-btn');
-    const timerText = document.getElementById('countdown-timer');
-
-    modal.style.display = 'flex';
-    proceedBtn.disabled = true;
-    proceedBtn.classList.add('disabled');
-
-    let timeLeft = 5;
-    timerText.textContent = timeLeft;
-
-    const interval = setInterval(() => {
-        timeLeft--;
-        timerText.textContent = timeLeft;
-        if (timeLeft <= 0) {
-            clearInterval(interval);
-            proceedBtn.disabled = false;
-            proceedBtn.classList.remove('disabled');
-            proceedBtn.onclick = () => {
-                window.open(activeDownloadUrl, '_blank');
-                closeWarningModal();
-            };
-        }
-    }, 1000);
-}
-
-function closeWarningModal() {
-    document.getElementById('dl-warning-modal').style.display = 'none';
-}
-
 function handleRouting() {
     const hash = window.location.hash;
     if (hash && hash.startsWith('#rom-')) {
@@ -183,6 +138,11 @@ function openImageModal(imgSrc) {
 
 function closeReaderModal() {
     document.getElementById('reader-modal').style.display = 'none';
+}
+
+function closeModal() {
+    const mdModal = document.getElementById('md-modal');
+    if (mdModal) mdModal.style.display = 'none';
 }
 
 window.addEventListener('hashchange', () => {

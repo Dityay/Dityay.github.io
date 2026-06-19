@@ -363,6 +363,26 @@ nav {
     margin: 0;
 }
 
+.rom-description-container a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 2px 4px;
+    border-radius: 6px;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    background-color: transparent;
+}
+
+.rom-description-container a:hover {
+    color: #0f131a;
+    background-color: var(--accent);
+    text-decoration: none;
+}
+
+[data-theme="light"] .rom-description-container a:hover {
+    color: #ffffff;
+}
+
 .screenshot-item {
     width: 100%;
     aspect-ratio: 9 / 16;

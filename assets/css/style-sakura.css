@@ -1,14 +1,13 @@
 :root {
+    /* Latar Belakang Tetap Abu-Abu Gelap/Charcoal */
     --bg: #121212;
     --surface: #1a1a1a;
     --surface-cards: #242424;
     --border: #3a3a3a;
     --text: #f5f5f5;
     --muted: #9e9e9e;
-
-    --accent: #d4d4d4;
-    --accent-alt: #ffffff;
-
+    --accent: #e2a995;
+    --accent-alt: #cfa08f;
     --radius-m3: 28px;
 }
 
@@ -19,15 +18,51 @@
     --border: #ced4da;
     --text: #212529;
     --muted: #6c757d;
-
-    --accent: #495057;
-    --accent-alt: #212529;
+    --accent: #b76e79;
+    --accent-alt: #9c5c66;
 }
+
 
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+#leaf-container {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: -2;
+pointer-events: none;
+overflow: hidden;
+}
+
+.leaf {
+    position: absolute;
+    top: -100px;
+    background-color: var(--accent);
+
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M 4 20 C 4 10 14 4 20 4 C 20 14 10 20 4 20 Z'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M 4 20 C 4 10 14 4 20 4 C 20 14 10 20 4 20 Z'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
+    animation: fall linear infinite, sway ease-in-out infinite alternate;
+}
+
+@keyframes fall {
+    0% { top: -100px; }
+    100% { top: 110vh; }
+}
+
+@keyframes sway {
+    0% { transform: translateX(-25px) rotate(-20deg); }
+    100% { transform: translateX(25px) rotate(20deg); }
 }
 
 html {
@@ -47,6 +82,51 @@ body {
     overflow-x: hidden;
     position: relative;
 }
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    pointer-events: none;
+    background-size: 50px 50px;
+    background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    opacity: 0.55;
+    animation: moveGrid 20s linear infinite;
+}
+
+@keyframes moveGrid {
+    0% { background-position: 0 0; }
+    100% { background-position: 500px 500px; }
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -3;
+    pointer-events: none;
+    background-size: 70px 70px;
+    background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    opacity: 0.25;
+    animation: moveGridLarge 35s linear infinite;
+}
+
+@keyframes moveGridLarge {
+    0% { background-position: 0 0; }
+    100% { background-position: -500px -500px; }
+}
+
 
 #app {
 width: 100%;

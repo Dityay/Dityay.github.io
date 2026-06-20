@@ -27,6 +27,17 @@
     padding: 0;
 }
 
+#leaf-container {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: -2;
+pointer-events: none;
+overflow: hidden;
+}
+
 html {
     background-color: var(--bg);
     transition: background-color 0.3s cubic-bezier(0.2, 0, 0, 1);

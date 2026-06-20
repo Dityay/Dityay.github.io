@@ -7,15 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
 
-    const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-mono.css"]');
+    const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-sakura.css"]');
 
     if (cssLink) {
         if (date === 24 && month === 6 && year === 2026) {
-            if (!cssLink.href.includes('style-mono.css')) {
-                cssLink.href = 'assets/css/style-mono.css?v=1';
+            if (!cssLink.href.includes('style-sakura.css')) {
+                cssLink.href = 'assets/css/style-sakura.css?v=1';
             }
         } else {
-            if (cssLink.href.includes('style-mono.css')) {
+            if (cssLink.href.includes('style-sakura.css')) {
                 cssLink.href = 'assets/css/style.css?v=19';
             }
         }
@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderDeviceFilters();
     renderROMCards();
     handleRouting();
+    createLeaves();
 });
 
 function renderDeviceFilters() {
@@ -355,6 +356,39 @@ function closeModal() {
 window.addEventListener('hashchange', () => {
     handleRouting();
 });
+
+function createLeaves() {
+    let container = document.getElementById('leaf-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'leaf-container';
+        document.body.prepend(container);
+    }
+
+    const leafCount = 50;
+
+    for (let i = 0; i < leafCount; i++) {
+        const leaf = document.createElement('div');
+        leaf.classList.add('leaf');
+
+        const size = Math.random() * 30 + 20;
+        const leftPos = Math.random() * 100;
+        const fallDuration = Math.random() * 10 + 10;
+        const swayDuration = Math.random() * 3 + 2;
+        const delay = Math.random() * 100;
+        const opacity = Math.random() * 0.25 + 0.1;
+
+        leaf.style.width = `${size}px`;
+        leaf.style.height = `${size}px`;
+        leaf.style.left = `${leftPos}vw`;
+        leaf.style.opacity = opacity;
+        leaf.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
+
+        leaf.style.animationDelay = `-${delay}s, -${delay}s`;
+
+        container.appendChild(leaf);
+    }
+}
 
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {

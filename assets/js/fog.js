@@ -86,7 +86,7 @@ window.fogData = [
     name: "MIUI 12.5 CN",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 11 (Initial)",
-    buildDate: "2026-12-25",
+    buildDate: "2026-06-24",
     downloadUrl: "https://drive.google.com/file/d/1RMKxfs8JtJzwEtqnF63ecqUDQq6CaVvy/view?usp=sharing",
     banner: "assets/roms/fog/mi125/banner.png",
     screenshots: [
@@ -97,6 +97,6 @@ window.fogData = [
         "assets/roms/fog/mi125/5.jpg",
         "assets/roms/fog/mi125/6.jpg"
     ],
-    description: "# ''Let’s turn around and watch the sun, before it goes down completely.''\n### Notes:\n\n- Non rooted by default\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits: \n- [nebbeli](https://x.com/nebbeli) for this amazing artwork"
+    description: "# ''Let’s turn around and watch the sun, before it goes down completely.''\n### Notes:\n\n\n- System will perform dex2oat in the first boot, device may heat up/lags a bit, you will be informed once the process complete\n- Non rooted by default\n- Shipped with Stock Kernel + TWRP 3.6\n\n### Flashing Instructions\n- Use any custom recovery to flash the ROM\n- Format data\n- Change boot slot to 'a' if not yet (in Reboot menu)\n- Reboot\n\nNOTE: Doing any \"Wipe\" is NOT needed.\n\n### Credits: \n- @kipasangin089, @Romeo_13card for testing\n- [nebbeli](https://x.com/nebbeli) for this amazing artwork"
 }
 ];

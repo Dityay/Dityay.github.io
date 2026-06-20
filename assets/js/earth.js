@@ -1,6 +1,6 @@
 window.earthData = [
     {
-        id: 31,
+        id: "earth_origin",
         name: "OriginOS 4",
         device: "Xiaomi Redmi 12C (earth)",
         version: "Android 14 (Hotfix)",

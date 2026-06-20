@@ -1,14 +1,33 @@
 let currentFilter = 'All';
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    const today = new Date();
+    const date = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+
+    const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-mono.css"]');
+
+    if (cssLink) {
+        if (date === 24 && month === 6 && year === 2026) {
+            if (!cssLink.href.includes('style-mono.css')) {
+                cssLink.href = 'assets/css/style-mono.css?v=1';
+            }
+        } else {
+            if (cssLink.href.includes('style-mono.css')) {
+                cssLink.href = 'assets/css/style.css?v=19';
+            }
+        }
+    }
     window.romData = [];
     if (window.fogData) window.romData = window.romData.concat(window.fogData);
     if (window.earthData) window.romData = window.romData.concat(window.earthData);
     if (window.galeData) window.romData = window.romData.concat(window.galeData);
 
-    const year = new Date().getFullYear();
-    if (document.getElementById('footer-year')) document.getElementById('footer-year').textContent = year;
-    document.querySelectorAll('.footer-year-d').forEach(el => el.textContent = year);
+    const currentYearStr = new Date().getFullYear();
+    if (document.getElementById('footer-year')) document.getElementById('footer-year').textContent = currentYearStr;
+    document.querySelectorAll('.footer-year-d').forEach(el => el.textContent = currentYearStr);
 
     const htmlElement = document.documentElement;
     const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
@@ -128,7 +147,7 @@ function renderROMCards() {
             }
 
             return `
-            <div class="rom-card glass" onclick="viewDetail(${rom.id})">
+            <div class="rom-card glass" onclick="viewDetail('${rom.id}')">
             <h3 style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--accent); letter-spacing: -0.5px; line-height: 1.2;">
             ${rom.name} ${badgeHtml}
             </h3>
@@ -212,7 +231,7 @@ function showUpcomingPopup() {
 }
 
 function viewDetail(id) {
-    const rom = window.romData.find(r => r.id === id);
+    const rom = window.romData.find(r => String(r.id) === String(id));
 
     if (!rom) {
         show404();
@@ -230,7 +249,8 @@ function viewDetail(id) {
     }
 
     activeDownloadUrl = rom.downloadUrl;
-    window.location.hash = `rom-${id}`;
+
+    window.location.hash = id;
 
     let isUpcoming = false;
     if (rom.buildDate) {
@@ -306,12 +326,8 @@ function handleRouting() {
     const hash = window.location.hash;
 
     if (hash) {
-        if (hash.startsWith('#rom-')) {
-            const romId = parseInt(hash.replace('#rom-', ''));
-            viewDetail(romId);
-        } else {
-            show404();
-        }
+        const romId = decodeURIComponent(hash.substring(1));
+        viewDetail(romId);
     } else {
         navigateHome();
     }

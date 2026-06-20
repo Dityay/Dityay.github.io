@@ -1,6 +1,6 @@
 window.galeData = [
     {
-        id: 21,
+        id: "gale_origin",
         name: "OriginOS 4",
         device: "Xiaomi Redmi 13C (gale)",
         version: "Android 14 (Initial)",

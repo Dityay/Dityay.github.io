@@ -148,7 +148,12 @@ function renderROMCards() {
             }
 
             return `
-            <div class="rom-card glass" onclick="viewDetail('${rom.id}')">
+            <div class="rom-card glass" onclick="viewDetail('${rom.id}')" style="padding: 0;">
+            <div style="width: 100%; height: 160px; background-image: url('${rom.banner}'); background-size: cover; background-position: center; border-radius: var(--radius-m3) var(--radius-m3) 0 0; position: relative;">
+            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--surface-cards), transparent);"></div>
+            </div>
+
+            <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
             <h3 style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--accent); letter-spacing: -0.5px; line-height: 1.2;">
             ${rom.name} ${badgeHtml}
             </h3>
@@ -156,6 +161,7 @@ function renderROMCards() {
             <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 4px;">Version: <span style="color: var(--text); font-weight: 500;">${rom.version}</span></p>
             <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 24px;">Build Date: <span style="color: var(--text); font-weight: 500;">${displayDate}</span></p>
             <button class="btn-dl primary" style="width: 100%; margin-top: auto;">Get ROM</button>
+            </div>
             </div>
             `;
         }).join('');
@@ -174,14 +180,10 @@ function navigateHome() {
     }
 
     const detailContainer = document.querySelector('.detail-container');
-    if (detailContainer) {
-        detailContainer.style.background = '';
-    }
+    if (detailContainer) detailContainer.style.background = '';
 
     const backBtn = document.querySelector('.detail-container .back-btn');
-    if (backBtn) {
-        backBtn.style.display = '';
-    }
+    if (backBtn) backBtn.style.display = '';
 
     document.getElementById('page-detail').classList.remove('active');
     document.getElementById('page-home').classList.add('active');
@@ -189,14 +191,10 @@ function navigateHome() {
 
 function show404() {
     const detailContainer = document.querySelector('.detail-container');
-    if (detailContainer) {
-        detailContainer.style.background = 'transparent';
-    }
+    if (detailContainer) detailContainer.style.background = 'transparent';
 
     const backBtn = document.querySelector('.detail-container .back-btn');
-    if (backBtn) {
-        backBtn.style.display = 'none';
-    }
+    if (backBtn) backBtn.style.display = 'none';
 
     document.getElementById('detail-content').innerHTML = `
     <div style="text-align: center; padding: 60px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -231,6 +229,33 @@ function showUpcomingPopup() {
     modal.style.display = 'flex';
 }
 
+function parseMarkdown(text) {
+    if (!text) return "";
+    let safeText = text.replace(/^[ \t]+/gm, '');
+    safeText = safeText.replace(/(^|\s)@([a-zA-Z0-9_]+)/g, '$1<a href="https://t.me/$2" target="_blank" class="rom-link">@$2</a>');
+
+    try {
+        if (window.marked && window.marked.parse) {
+            return window.marked.parse(safeText);
+        } else if (typeof window.marked === 'function') {
+            return window.marked(safeText);
+        } else {
+            return safeText.replace(/\n/g, '<br>');
+        }
+    } catch (e) {
+        console.error("Marked parse error:", e);
+        return safeText.replace(/\n/g, '<br>');
+    }
+}
+
+window.switchTab = function(tabId) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+    document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active');
+    document.getElementById(`tab-${tabId}`).classList.add('active');
+};
+
 function viewDetail(id) {
     const rom = window.romData.find(r => String(r.id) === String(id));
 
@@ -240,17 +265,12 @@ function viewDetail(id) {
     }
 
     const detailContainer = document.querySelector('.detail-container');
-    if (detailContainer) {
-        detailContainer.style.background = '';
-    }
+    if (detailContainer) detailContainer.style.background = '';
 
     const backBtn = document.querySelector('.detail-container .back-btn');
-    if (backBtn) {
-        backBtn.style.display = '';
-    }
+    if (backBtn) backBtn.style.display = '';
 
     activeDownloadUrl = rom.downloadUrl;
-
     window.location.hash = id;
 
     let isUpcoming = false;
@@ -262,34 +282,20 @@ function viewDetail(id) {
         isUpcoming = build > today;
     }
 
-    let markdownText = rom.description || "No description available.";
-    markdownText = markdownText.replace(/^[ \t]+/gm, '');
-    markdownText = markdownText.replace(/(^|\s)@([a-zA-Z0-9_]+)/g, '$1<a href="https://t.me/$2" target="_blank" class="rom-link">@$2</a>');
-
-    let parsedDescriptionHtml = "";
-    try {
-        if (window.marked && window.marked.parse) {
-            parsedDescriptionHtml = window.marked.parse(markdownText);
-        } else if (typeof window.marked === 'function') {
-            parsedDescriptionHtml = window.marked(markdownText);
-        } else {
-            parsedDescriptionHtml = markdownText.replace(/\n/g, '<br>');
-        }
-    } catch (e) {
-        console.error("Marked parse error:", e);
-        parsedDescriptionHtml = markdownText.replace(/\n/g, '<br>');
-    }
+    let descHtml = parseMarkdown(rom.description);
+    let notesHtml = parseMarkdown(rom.notes);
+    let flashHtml = parseMarkdown(rom.flashInstruction);
+    let creditsHtml = parseMarkdown(rom.credits);
 
     let screenshotsHtml = "";
     if (rom.screenshots && rom.screenshots.length > 0) {
         screenshotsHtml = `
-        <div class="screenshot-section">
-        <h2 class="screenshot-title">Screenshots</h2>
-        <div class="screenshot-grid">
+        <div class="screenshot-grid" style="margin-top: 20px;">
         ${rom.screenshots.map(src => `<img src="${src}" class="screenshot-item" alt="Screenshot" onclick="openImageModal('${src}')">`).join('')}
         </div>
-        </div>
         `;
+    } else {
+        screenshotsHtml = "<p style='color: var(--muted); font-style: italic; margin-top: 20px;'>No screenshots available.</p>";
     }
 
     let downloadButtonHtml = isUpcoming
@@ -302,6 +308,7 @@ function viewDetail(id) {
     <h1 class="rom-banner-title">${rom.name}</h1>
     </div>
     </div>
+
     <div style="padding: 10px 5px;">
     <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 8px;">
     Device: <span style="color: var(--accent); font-weight: 700;">${rom.device}</span>
@@ -309,18 +316,46 @@ function viewDetail(id) {
     <p style="font-size: 1rem; color: var(--muted); margin-bottom: 25px;">
     Version: <span style="color: var(--text); font-weight: 600;">${rom.version}</span>
     </p>
-    <div class="rom-description-container">
-    ${parsedDescriptionHtml}
-    </div>
-    ${screenshotsHtml}
-    <div style="margin-top: 35px;">
-    ${downloadButtonHtml}
-    </div>
-    </div>
-    `;
 
-    document.getElementById('page-home').classList.remove('active');
-    document.getElementById('page-detail').classList.add('active');
+    <div class="rom-info-tabs">
+    <button class="tab-btn active" onclick="switchTab('desc')">Details</button>
+    <button class="tab-btn" onclick="switchTab('flash')">Installation</button>
+    <button class="tab-btn" onclick="switchTab('screens')">Screenshots</button>
+    </div>
+
+    <div class="rom-description-container">
+    <div id="tab-desc" class="tab-content active">
+    ${descHtml}
+
+    ${notesHtml ? `
+        <div style="margin-top: 20px;">
+        <h3 style="color: var(--accent); font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-bottom: 10px;">Notes</h3>
+        ${notesHtml}
+        </div>` : ''}
+
+        <div style="margin-top: 30px;">
+        <h3 style="color: var(--accent); font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-bottom: 10px;">Credits</h3>
+        ${creditsHtml}
+        </div>
+        </div>
+
+        <div id="tab-flash" class="tab-content">
+        ${flashHtml}
+        </div>
+
+        <div id="tab-screens" class="tab-content">
+        ${screenshotsHtml}
+        </div>
+        </div>
+
+        <div style="margin-top: 35px; border-top: 1px solid var(--border); padding-top: 25px;">
+        ${downloadButtonHtml}
+        </div>
+        </div>
+        `;
+
+        document.getElementById('page-home').classList.remove('active');
+        document.getElementById('page-detail').classList.add('active');
 }
 
 function handleRouting() {
@@ -450,7 +485,6 @@ async function loadAnnouncement() {
             const now = new Date();
             let activeMessages = [];
 
-            // Looping untuk mengecek setiap blok pengumuman
             blocks.forEach(block => {
                 const lines = block.trim().split('\n');
 
@@ -463,14 +497,12 @@ async function loadAnnouncement() {
                     const endDate = new Date(endDateStr);
                     endDate.setHours(23, 59, 59, 999);
 
-                    // Jika hari ini masuk dalam rentang tanggal blok ini
                     if (now >= startDate && now <= endDate && messageText.length > 0) {
                         activeMessages.push(messageText);
                     }
                 }
             });
 
-            // Jika ada pengumuman yang aktif hari ini
             if (activeMessages.length > 0) {
                 let finalHtml = "";
 
@@ -482,7 +514,6 @@ async function loadAnnouncement() {
                         parsedMessage = msg.replace(/\n/g, '<br>');
                     }
 
-                    // Tambahkan garis putus-putus JIKA ada lebih dari 1 pengumuman yg aktif bersamaan
                     if (index > 0) {
                         finalHtml += `<hr style="border:0; border-top:1px dashed var(--border); margin: 12px 0;">`;
                     }
@@ -492,7 +523,6 @@ async function loadAnnouncement() {
                 textContainer.innerHTML = finalHtml;
                 banner.classList.remove('hidden');
 
-                // Banner hanya disembunyikan pakai CSS class (hilang saat di-reload)
                 closeBtn.onclick = () => {
                     banner.classList.add('hidden');
                 };

@@ -12,6 +12,10 @@ window.galeData = [
             "assets/roms/gale/origin/2.jpg",
             "assets/roms/gale/origin/3.jpg"
         ],
-        description: "### Notes\n- ONLY FLASH FROM MIUI 14/HOS 1 OR AOSP!!!\n- ENG PRELOADER IS NOT INCLUDED\n- App transition animation disabled\n- Do NOT enable live blur, your cpu cant handle and will froze\n- If dark mode glitched, run this command in terminal su -c resetprop debug.hwui.force_dark false (im lazy to include it)\n### Known Issues\n- SIM Card restarting, use [this](https://t.me/DroidProjectCommunity/269578) module to fix\n- MTP dead, you can use adb commands or ADB Explorer app from your PC\n- Broken home screen layout caused by screen resolution\n### Special Thanks\n- @Damarrr25 for teaching ports\n- @note11shype for base and some help\n- @JanDimple for testing (as always)\n- @klikajatolol for Vivo hals"
+
+        description: "### Known Issues\n- SIM Card restarting, use [this](https://t.me/DroidProjectCommunity/269578) module to fix\n- MTP dead, you can use adb commands or ADB Explorer app from your PC\n- Broken home screen layout caused by screen resolution",
+        notes: "- ONLY FLASH FROM MIUI 14/HOS 1 OR AOSP!!!\n- ENG PRELOADER IS NOT INCLUDED\n- App transition animation disabled\n- Do NOT enable live blur, your cpu cant handle and will froze\n- If dark mode glitched, run this command in terminal `su -c resetprop debug.hwui.force_dark false` (im lazy to include it)",
+        flashInstruction: "### Flashing Steps\n1. Reboot to custom recovery (TWRP/OrangeFox)\n2. Wipe Dalvik, Cache, Data\n3. Format Data (Type 'yes')\n4. Flash the ROM zip file\n5. Reboot to system",
+        credits: "- @Damarrr25 for teaching ports\n- @note11shype for base and some help\n- @JanDimple for testing (as always)\n- @klikajatolol for Vivo hals"
     }
 ];

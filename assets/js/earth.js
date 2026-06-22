@@ -14,6 +14,10 @@ window.earthData = [
             "assets/roms/earth/origin/4.jpg",
             "assets/roms/earth/origin/5.jpg"
         ],
-        description: "### Changes\n- Default CPU governor is powersave\n- Return app transition animations\n- Fixed home screen layout\n- Removed AOD option\n- Fixed dead sensor\n- Reduce swappiness to 125\n- Fixed random reboot\n- Added viperfx (open from sounds settings)\n- Permissive SELinux\n### Known Issues\n- EXFAT SDCARD IS NOT SUPPORTED.\n- Do NOT enable live blur, our vendor/cpu doesnt support it\n- MTP dead, you can use adb commands or ADB Explorer app from your PC (every originos port has this issue)\n### Special Thanks\n- @Damarrr25 for help\n- @panzzxz for sensor fixing clue\n- @kiellzz1 for this BEST banner\n- @note11shype for base and some help\n- Dadobye for Vivo hals"
+
+        description: "### Changes\n- Default CPU governor is powersave\n- Return app transition animations\n- Fixed home screen layout\n- Removed AOD option\n- Fixed dead sensor\n- Reduce swappiness to 125\n- Fixed random reboot\n- Added viperfx (open from sounds settings)\n- Permissive SELinux",
+        notes: "### Known Issues\n- EXFAT SDCARD IS NOT SUPPORTED.\n- Do NOT enable live blur, our vendor/cpu doesnt support it\n- MTP dead, you can use adb commands or ADB Explorer app from your PC (every originos port has this issue)",
+        flashInstruction: "### Flashing Steps\n1. Reboot to custom recovery (TWRP/OrangeFox)\n2. Wipe Dalvik, Cache, Data\n3. Format Data (Type 'yes')\n4. Flash the ROM zip file\n5. Reboot to system",
+        credits: "- @Damarrr25 for help\n- @panzzxz for sensor fixing clue\n- @kiellzz1 for this BEST banner\n- @note11shype for base and some help\n- Dadobye for Vivo hals"
     }
 ];

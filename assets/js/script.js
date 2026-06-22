@@ -390,7 +390,6 @@ function createLeaves() {
         container.appendChild(leaf);
     }
 }
-
 async function loadAnnouncement() {
     const banner = document.getElementById('announcement-banner');
     const textContainer = document.getElementById('announcement-text');
@@ -402,32 +401,54 @@ async function loadAnnouncement() {
         const response = await fetch('assets/announcement.txt?t=' + new Date().getTime());
 
         if (response.ok) {
-            const text = await response.text();
+            const rawText = await response.text();
 
-            const announcement = text.trim().replace(/\n/g, '<br>');
+            const lines = rawText.replace(/\r/g, '').split('\n');
 
-            if (announcement.length > 0) {
-                const hiddenAnnouncement = localStorage.getItem('hiddenAnnouncement');
+            if (lines.length >= 3) {
+                const startDateStr = lines[0].trim();
+                const endDateStr = lines[1].trim();
 
-                if (hiddenAnnouncement !== announcement) {
+                const messageText = lines.slice(2).join('\n').trim();
 
-                    textContainer.innerHTML = announcement;
-                    banner.classList.remove('hidden');
+                const now = new Date();
+                const startDate = new Date(startDateStr);
+                const endDate = new Date(endDateStr);
 
-                    closeBtn.onclick = () => {
-                        banner.classList.add('hidden');
+                endDate.setHours(23, 59, 59, 999);
 
-                        localStorage.setItem('hiddenAnnouncement', announcement);
-                    };
+                if (now >= startDate && now <= endDate && messageText.length > 0) {
+
+                    const announcementId = "info-" + startDateStr;
+                    const hiddenAnnouncement = localStorage.getItem('hiddenAnnouncement');
+
+                    if (hiddenAnnouncement !== announcementId) {
+
+                        let parsedMessage = "";
+                        if (window.marked && typeof window.marked.parse === 'function') {
+                            parsedMessage = window.marked.parse(messageText);
+                        } else {
+                            parsedMessage = messageText.replace(/\n/g, '<br>');
+                        }
+
+                        textContainer.innerHTML = parsedMessage;
+                        banner.classList.remove('hidden');
+
+                        closeBtn.onclick = () => {
+                            banner.classList.add('hidden');
+                            localStorage.setItem('hiddenAnnouncement', announcementId);
+                        };
+                    }
+                }
+                else if (now > endDate) {
+                    localStorage.removeItem('hiddenAnnouncement');
                 }
             }
         }
     } catch (error) {
-
-        console.log("No announcement");
+        console.log("Cek pengumuman: File tidak ada atau gagal dimuat.");
     }
 }
-
 
 
 window.onclick = function(event) {

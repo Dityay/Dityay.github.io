@@ -626,14 +626,28 @@ footer {
     letter-spacing: 0.5px;
 }
 
-.banner-content p {
+.banner-content p,
+.banner-content ul {
     margin: 0;
     font-size: 0.95rem;
     color: var(--text);
     line-height: 1.5;
 }
 
-.banner-content p a {
+.banner-content ul {
+    padding-left: 18px;
+}
+
+.banner-content li {
+    margin-bottom: 4px;
+}
+
+.banner-content li:last-child {
+    margin-bottom: 0;
+}
+
+.banner-content a,
+.banner-content a:visited {
     color: var(--accent);
     text-decoration: underline;
     text-decoration-color: var(--border);
@@ -641,7 +655,7 @@ footer {
     transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
 }
 
-.banner-content p a:hover {
+.banner-content a:hover {
     color: var(--text);
     text-decoration-color: var(--text);
 }

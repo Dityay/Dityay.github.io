@@ -584,12 +584,24 @@ footer {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-
-.banner-content p {
+.banner-content p,
+.banner-content ul {
     margin: 0;
     font-size: 0.95rem;
     color: var(--text);
     line-height: 1.5;
+}
+
+.banner-content ul {
+    padding-left: 30px;
+}
+
+.banner-content li {
+    margin-bottom: 4px;
+}
+
+.banner-content li:last-child {
+    margin-bottom: 0;
 }
 
 .banner-content a,
@@ -605,12 +617,6 @@ footer {
     color: var(--text);
     text-decoration-color: var(--text);
 }
-
-.banner-content p a:hover {
-    color: var(--text);
-    text-decoration-color: var(--text);
-}
-
 .close-btn {
     background: none;
     border: none;

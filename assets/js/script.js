@@ -10,9 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-sakura.css"]');
 
     if (cssLink) {
-        if (date === 24 && month === 6 && year === 2026) {
+        if (date >= 22 && month === 6 && year === 2026) {
             if (!cssLink.href.includes('style-sakura.css')) {
                 cssLink.href = 'assets/css/style-sakura.css?v=1';
+                createLeaves();
             }
         } else {
             if (cssLink.href.includes('style-sakura.css')) {
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderDeviceFilters();
     renderROMCards();
     handleRouting();
-    createLeaves();
+    loadAnnouncement();
 });
 
 function renderDeviceFilters() {
@@ -389,6 +390,45 @@ function createLeaves() {
         container.appendChild(leaf);
     }
 }
+
+async function loadAnnouncement() {
+    const banner = document.getElementById('announcement-banner');
+    const textContainer = document.getElementById('announcement-text');
+    const closeBtn = document.getElementById('close-banner');
+
+    if (!banner || !textContainer || !closeBtn) return;
+
+    try {
+        const response = await fetch('assets/announcement.txt?t=' + new Date().getTime());
+
+        if (response.ok) {
+            const text = await response.text();
+
+            const announcement = text.trim().replace(/\n/g, '<br>');
+
+            if (announcement.length > 0) {
+                const hiddenAnnouncement = localStorage.getItem('hiddenAnnouncement');
+
+                if (hiddenAnnouncement !== announcement) {
+
+                    textContainer.innerHTML = announcement;
+                    banner.classList.remove('hidden');
+
+                    closeBtn.onclick = () => {
+                        banner.classList.add('hidden');
+
+                        localStorage.setItem('hiddenAnnouncement', announcement);
+                    };
+                }
+            }
+        }
+    } catch (error) {
+
+        console.log("No announcement");
+    }
+}
+
+
 
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {

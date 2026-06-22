@@ -549,6 +549,81 @@ footer {
     font-size: 0.9rem;
     width: 100%;
 }
+.banner {
+    background-color: var(--surface-cards);
+    color: var(--text);
+    padding: 14px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+    margin: 20px auto 40px auto;
+    max-width: 800px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    border-left: 5px solid var(--accent);
+}
+
+.banner.hidden {
+    display: none;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.banner-badge {
+    background-color: var(--accent);
+    color: var(--bg);
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    font-family: 'Syne', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.banner-content p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.banner-content a,
+.banner-content a:visited {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    font-weight: 700;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.banner-content a:hover {
+    color: var(--text);
+    text-decoration-color: var(--text);
+}
+
+.banner-content p a:hover {
+    color: var(--text);
+    text-decoration-color: var(--text);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0 0 0 15px;
+}
+
+.close-btn:hover {
+    color: var(--accent);
+}
 
 @media (max-width: 768px) {
     .orb { display: none !important; }

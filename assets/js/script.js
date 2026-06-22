@@ -435,7 +435,7 @@ function createLeaves() {
     setInterval(() => {
         wind.targetX = (Math.random() - 0.5) * 12;
         wind.targetY = 2 + Math.random() * 0.1;
-    }, 1500);
+    }, 5000);
 
     requestAnimationFrame(animateLeaves);
 }

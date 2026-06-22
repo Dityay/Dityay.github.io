@@ -449,8 +449,8 @@ async function loadAnnouncement() {
 
             const now = new Date();
             let activeMessages = [];
-            let activeIds = [];
 
+            // Looping untuk mengecek setiap blok pengumuman
             blocks.forEach(block => {
                 const lines = block.trim().split('\n');
 
@@ -463,46 +463,39 @@ async function loadAnnouncement() {
                     const endDate = new Date(endDateStr);
                     endDate.setHours(23, 59, 59, 999);
 
+                    // Jika hari ini masuk dalam rentang tanggal blok ini
                     if (now >= startDate && now <= endDate && messageText.length > 0) {
                         activeMessages.push(messageText);
-                        activeIds.push(startDateStr);
                     }
                 }
             });
 
+            // Jika ada pengumuman yang aktif hari ini
             if (activeMessages.length > 0) {
+                let finalHtml = "";
 
-                const compositeId = "info-" + activeIds.join('-');
-                const hiddenAnnouncement = localStorage.getItem('hiddenAnnouncement');
+                activeMessages.forEach((msg, index) => {
+                    let parsedMessage = "";
+                    if (window.marked && typeof window.marked.parse === 'function') {
+                        parsedMessage = window.marked.parse(msg);
+                    } else {
+                        parsedMessage = msg.replace(/\n/g, '<br>');
+                    }
 
-                if (hiddenAnnouncement !== compositeId) {
-                    let finalHtml = "";
+                    // Tambahkan garis putus-putus JIKA ada lebih dari 1 pengumuman yg aktif bersamaan
+                    if (index > 0) {
+                        finalHtml += `<hr style="border:0; border-top:1px dashed var(--border); margin: 12px 0;">`;
+                    }
+                    finalHtml += parsedMessage;
+                });
 
-                    activeMessages.forEach((msg, index) => {
-                        let parsedMessage = "";
-                        if (window.marked && typeof window.marked.parse === 'function') {
-                            parsedMessage = window.marked.parse(msg);
-                        } else {
-                            parsedMessage = msg.replace(/\n/g, '<br>');
-                        }
+                textContainer.innerHTML = finalHtml;
+                banner.classList.remove('hidden');
 
-                        if (index > 0) {
-                            finalHtml += `<hr style="border:0; border-top:1px dashed var(--border); margin: 12px 0;">`;
-                        }
-                        finalHtml += parsedMessage;
-                    });
-
-                    textContainer.innerHTML = finalHtml;
-                    banner.classList.remove('hidden');
-
-                    closeBtn.onclick = () => {
-                        banner.classList.add('hidden');
-                        localStorage.setItem('hiddenAnnouncement', compositeId);
-                    };
-                }
-            } else {
-
-                localStorage.removeItem('hiddenAnnouncement');
+                // Banner hanya disembunyikan pakai CSS class (hilang saat di-reload)
+                closeBtn.onclick = () => {
+                    banner.classList.add('hidden');
+                };
             }
         }
     } catch (error) {

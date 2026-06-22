@@ -664,20 +664,57 @@ footer {
 
 @media (max-width: 768px) {
     .orb { display: none !important; }
-    nav { padding: 16px 5%; width: 100%; }
-    .nav-logo { font-size: 1.3rem; }
-    .btn-dl { padding: 10px 20px; font-size: 0.85rem; }
-    .page { padding: 12px 3%; }
-    .section-label { font-size: 1.8rem; }
-    .cards-grid { grid-template-columns: 1fr; gap: 16px; width: 100%; }
-    .rom-card { padding: 20px; }
+
+    nav { padding: 12px 5%; width: 100%; }
+    .nav-logo { font-size: 1.2rem; }
+    .btn-dl { padding: 10px 16px; font-size: 0.85rem; }
+
+    .page { padding: 12px 4%; }
+    .section-label { font-size: 1.4rem; }
+
+    .filter-controls { gap: 8px; margin-top: 10px; }
+    .filter-btn { padding: 6px 14px; font-size: 0.85rem; }
+
+    .banner {
+        padding: 14px;
+        margin: 10px auto 25px auto;
+        align-items: flex-start;
+        position: relative;
+    }
+    .banner-content { gap: 10px; align-items: flex-start; }
+    .banner-badge { font-size: 0.65rem; padding: 3px 8px; }
+    .banner-content p, .banner-content ul { font-size: 0.85rem; line-height: 1.4; }
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 0;
+        font-size: 20px;
+    }
+
+    .cards-grid { grid-template-columns: 1fr; gap: 14px; width: 100%; }
+    .rom-card { padding: 16px; border-radius: 20px; }
+
+    #cards-container h2 { font-size: 1.25rem !important; margin-bottom: 8px !important; }
+    .rom-card h3 { font-size: 1.2rem !important; margin-bottom: 8px !important; }
+    .rom-card p { font-size: 0.85rem !important; margin-bottom: 4px !important; }
+    .new-badge { font-size: 0.6rem; padding: 2px 6px; transform: translateY(-2px); }
+
     .detail-container { padding: 16px 12px; border-radius: 16px; }
-    .rom-detail-banner { width: 100% !important; box-sizing: border-box; display: flex !important; height: 200px; padding: 20px; border-radius: 16px; margin-bottom: 24px; }
-    .rom-banner-title { font-size: 1.5rem; }
-    .rom-description-container p, .rom-description-container blockquote p { font-size: 0.95rem !important; }
-    .rom-description-container h3 { font-size: 1.2rem; }
-    .rom-description-container h4 { font-size: 1.05rem; }
-    .screenshot-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; }
-    .screenshot-item { border-radius: 12px; }
-    .modal-content { padding: 24px; border-radius: 24px; width: 95%; }
+    .rom-detail-banner {
+        width: 100% !important;
+        box-sizing: border-box;
+        height: 160px;
+        padding: 16px;
+        border-radius: 16px;
+        margin-bottom: 20px;
+    }
+    .rom-banner-title { font-size: 1.3rem; }
+    .rom-description-container p, .rom-description-container blockquote p { font-size: 0.9rem !important; }
+    .rom-description-container h3 { font-size: 1.1rem; }
+    .rom-description-container h4 { font-size: 1rem; }
+
+    .screenshot-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
+    .screenshot-item { border-radius: 10px; }
+    .modal-content { padding: 20px; border-radius: 20px; width: 92%; }
 }

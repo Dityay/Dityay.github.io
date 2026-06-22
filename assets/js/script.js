@@ -1,7 +1,6 @@
 let currentFilter = 'All';
 
 document.addEventListener("DOMContentLoaded", () => {
-
     const today = new Date();
     const date = today.getDate();
     const month = today.getMonth() + 1;
@@ -358,6 +357,12 @@ window.addEventListener('hashchange', () => {
     handleRouting();
 });
 
+let leafParticles = [];
+let wind = {
+    currentX: 0, targetX: 0,
+    currentY: 2, targetY: 2
+};
+
 function createLeaves() {
     let container = document.getElementById('leaf-container');
     if (!container) {
@@ -366,30 +371,68 @@ function createLeaves() {
         document.body.prepend(container);
     }
 
-    const leafCount = 20;
+    const leafCount = 10;
 
     for (let i = 0; i < leafCount; i++) {
         const leaf = document.createElement('div');
         leaf.classList.add('leaf');
 
-        const size = Math.random() * 30 + 20;
-        const leftPos = Math.random() * 100;
-        const fallDuration = Math.random() * 10 + 10;
-        const swayDuration = Math.random() * 3 + 2;
-        const delay = Math.random() * 100;
-        const opacity = Math.random() * 0.25 + 0.1;
+        const size = Math.random() * 30 + 30;
 
         leaf.style.width = `${size}px`;
         leaf.style.height = `${size}px`;
-        leaf.style.left = `${leftPos}vw`;
-        leaf.style.opacity = opacity;
-        leaf.style.animationDuration = `${fallDuration}s, ${swayDuration}s`;
-
-        leaf.style.animationDelay = `-${delay}s, -${delay}s`;
+        leaf.style.opacity = Math.random() * 0.3 + 0.1;
 
         container.appendChild(leaf);
+
+        leafParticles.push({
+            el: leaf,
+            x: Math.random() * window.innerWidth,
+                           y: Math.random() * window.innerHeight - window.innerHeight,
+                           size: size,
+                           mass: size / 20,
+                           flutter: Math.random() * Math.PI * 2,
+                           flutterSpeed: 0.02 + Math.random() * 0.03,
+                           baseRotation: 45
+        });
     }
+
+    setInterval(() => {
+        wind.targetX = (Math.random() - 0.5) * 12;
+        wind.targetY = 2 + Math.random() * 0.1;
+    }, 1500);
+
+    requestAnimationFrame(animateLeaves);
 }
+
+function animateLeaves() {
+    wind.currentX += (wind.targetX - wind.currentX) * 0.01;
+    wind.currentY += (wind.targetY - wind.currentY) * 0.01;
+
+    leafParticles.forEach(p => {
+        let vx = wind.currentX * p.mass;
+        let vy = wind.currentY * p.mass;
+
+        p.x += vx;
+        p.y += vy;
+        p.flutter += p.flutterSpeed;
+
+        let angle = Math.atan2(vy, vx) * (180 / Math.PI);
+        let sway = Math.sin(p.flutter) * 15;
+
+        if (p.y > window.innerHeight + 50) {
+            p.y = -50;
+            p.x = Math.random() * window.innerWidth;
+        }
+        if (p.x > window.innerWidth + 50) p.x = -50;
+        if (p.x < -50) p.x = window.innerWidth + 50;
+
+        p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0) rotate(${angle + p.baseRotation + sway}deg)`;
+    });
+
+    requestAnimationFrame(animateLeaves);
+}
+
 async function loadAnnouncement() {
     const banner = document.getElementById('announcement-banner');
     const textContainer = document.getElementById('announcement-text');
@@ -402,54 +445,70 @@ async function loadAnnouncement() {
 
         if (response.ok) {
             const rawText = await response.text();
+            const blocks = rawText.replace(/\r/g, '').split('===');
 
-            const lines = rawText.replace(/\r/g, '').split('\n');
+            const now = new Date();
+            let activeMessages = [];
+            let activeIds = [];
 
-            if (lines.length >= 3) {
-                const startDateStr = lines[0].trim();
-                const endDateStr = lines[1].trim();
+            blocks.forEach(block => {
+                const lines = block.trim().split('\n');
 
-                const messageText = lines.slice(2).join('\n').trim();
+                if (lines.length >= 3) {
+                    const startDateStr = lines[0].trim();
+                    const endDateStr = lines[1].trim();
+                    const messageText = lines.slice(2).join('\n').trim();
 
-                const now = new Date();
-                const startDate = new Date(startDateStr);
-                const endDate = new Date(endDateStr);
+                    const startDate = new Date(startDateStr);
+                    const endDate = new Date(endDateStr);
+                    endDate.setHours(23, 59, 59, 999);
 
-                endDate.setHours(23, 59, 59, 999);
-
-                if (now >= startDate && now <= endDate && messageText.length > 0) {
-
-                    const announcementId = "info-" + startDateStr;
-                    const hiddenAnnouncement = localStorage.getItem('hiddenAnnouncement');
-
-                    if (hiddenAnnouncement !== announcementId) {
-
-                        let parsedMessage = "";
-                        if (window.marked && typeof window.marked.parse === 'function') {
-                            parsedMessage = window.marked.parse(messageText);
-                        } else {
-                            parsedMessage = messageText.replace(/\n/g, '<br>');
-                        }
-
-                        textContainer.innerHTML = parsedMessage;
-                        banner.classList.remove('hidden');
-
-                        closeBtn.onclick = () => {
-                            banner.classList.add('hidden');
-                            localStorage.setItem('hiddenAnnouncement', announcementId);
-                        };
+                    if (now >= startDate && now <= endDate && messageText.length > 0) {
+                        activeMessages.push(messageText);
+                        activeIds.push(startDateStr);
                     }
                 }
-                else if (now > endDate) {
-                    localStorage.removeItem('hiddenAnnouncement');
+            });
+
+            if (activeMessages.length > 0) {
+
+                const compositeId = "info-" + activeIds.join('-');
+                const hiddenAnnouncement = localStorage.getItem('hiddenAnnouncement');
+
+                if (hiddenAnnouncement !== compositeId) {
+                    let finalHtml = "";
+
+                    activeMessages.forEach((msg, index) => {
+                        let parsedMessage = "";
+                        if (window.marked && typeof window.marked.parse === 'function') {
+                            parsedMessage = window.marked.parse(msg);
+                        } else {
+                            parsedMessage = msg.replace(/\n/g, '<br>');
+                        }
+
+                        if (index > 0) {
+                            finalHtml += `<hr style="border:0; border-top:1px dashed var(--border); margin: 12px 0;">`;
+                        }
+                        finalHtml += parsedMessage;
+                    });
+
+                    textContainer.innerHTML = finalHtml;
+                    banner.classList.remove('hidden');
+
+                    closeBtn.onclick = () => {
+                        banner.classList.add('hidden');
+                        localStorage.setItem('hiddenAnnouncement', compositeId);
+                    };
                 }
+            } else {
+
+                localStorage.removeItem('hiddenAnnouncement');
             }
         }
     } catch (error) {
-        console.log("Cek pengumuman: File tidak ada atau gagal dimuat.");
+        console.log("No announcement.");
     }
 }
-
 
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {

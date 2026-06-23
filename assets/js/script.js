@@ -523,6 +523,26 @@ async function loadAnnouncement() {
                 textContainer.innerHTML = finalHtml;
                 banner.classList.remove('hidden');
 
+                setTimeout(() => {
+                    const bannerTextContainer = document.getElementById('banner-text');
+                    const expandBtn = document.getElementById('expand-btn');
+
+                    if (bannerTextContainer && expandBtn) {
+                        if (bannerTextContainer.scrollHeight > 50) {
+                            expandBtn.style.display = 'block';
+
+                            expandBtn.onclick = () => {
+                                bannerTextContainer.classList.toggle('expanded');
+                                if (bannerTextContainer.classList.contains('expanded')) {
+                                    expandBtn.textContent = 'View less';
+                                } else {
+                                    expandBtn.textContent = 'View more';
+                                }
+                            };
+                        }
+                    }
+                }, 50);
+
                 closeBtn.onclick = () => {
                     banner.classList.add('hidden');
                 };

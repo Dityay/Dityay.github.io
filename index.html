@@ -24,13 +24,21 @@
                 </a>
             </div>
         </nav>
+
+        <!-- Banner Announcement dengan Fitur Expand -->
         <div id="announcement-banner" class="banner hidden">
             <div class="banner-content">
                 <span class="banner-badge">Info</span>
-                <p id="announcement-text"></p>
+                <div class="banner-info">
+                    <div class="banner-text" id="banner-text">
+                        <div id="announcement-text"></div>
+                    </div>
+                    <button class="expand-btn" id="expand-btn">View more</button>
+                </div>
             </div>
             <button id="close-banner" class="close-btn" aria-label="Tutup Pengumuman">&times;</button>
         </div>
+
         <div id="page-home" class="page active">
             <div class="section-header" style="margin-top: 40px;">
                 <div class="section-label" style="margin: 0; padding: 0;">
@@ -53,7 +61,6 @@
                 </div>
                 <div id="detail-content"></div>
             </div>
-
         </div>
     </div>
 

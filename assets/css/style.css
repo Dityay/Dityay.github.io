@@ -821,4 +821,17 @@ footer {
     .screenshot-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px; }
     .screenshot-item { border-radius: 10px; }
     .modal-content { padding: 20px; border-radius: 20px; width: 92%; }
+
+    #detail-content > div[style*="text-align: center"] h1 {
+    font-size: 5rem !important;
+    }
+    #detail-content > div[style*="text-align: center"] h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 10px !important;
+    }
+    #detail-content > div[style*="text-align: center"] p {
+    font-size: 0.9rem !important;
+    margin-bottom: 25px !important;
+    padding: 0 10px;
+    }
 }

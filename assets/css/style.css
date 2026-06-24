@@ -841,19 +841,26 @@ footer {
     padding: 0 10px;
     }
     .glass {
-        backdrop-filter: blur(8px) !important;
-        -webkit-backdrop-filter: blur(8px) !important;
-        background: rgba(43, 33, 37, 0.7) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(30, 25, 21, 0.9) !important;
     }
 
     .detail-container {
-        backdrop-filter: blur(10px) !important;
-        -webkit-backdrop-filter: blur(10px) !important;
-        background: rgba(56, 40, 46, 0.75) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(41, 33, 26, 0.95) !important;
     }
 
     .banner {
-        backdrop-filter: blur(6px) !important;
-        -webkit-backdrop-filter: blur(6px) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(41, 33, 26, 0.95) !important;
+    }
+
+    .modal-content {
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        background: rgba(30, 25, 21, 0.75) !important;
     }
 }

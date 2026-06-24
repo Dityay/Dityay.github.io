@@ -120,13 +120,7 @@ overflow: hidden;
     position: absolute;
     top: 0;
     left: 0;
-    background-color: var(--accent);
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M 4 20 C 4 10 14 4 20 4 C 20 14 10 20 4 20 Z'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M 4 20 C 4 10 14 4 20 4 C 20 14 10 20 4 20 Z'/%3E%3C/svg%3E");
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    color: var(--accent);
     will-change: transform;
 }
 

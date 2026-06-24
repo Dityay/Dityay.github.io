@@ -406,7 +406,8 @@ function createLeaves() {
         document.body.prepend(container);
     }
 
-    const leafCount = 10;
+    const isMobile = window.innerWidth <= 768;
+    const leafCount = isMobile ? 4 : 10;
 
     for (let i = 0; i < leafCount; i++) {
         const leaf = document.createElement('div');
@@ -417,6 +418,8 @@ function createLeaves() {
         leaf.style.width = `${size}px`;
         leaf.style.height = `${size}px`;
         leaf.style.opacity = Math.random() * 0.3 + 0.1;
+
+        leaf.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" fill="currentColor"><path d="M 4 20 C 4 10 14 4 20 4 C 20 14 10 20 4 20 Z"/></svg>`;
 
         container.appendChild(leaf);
 
@@ -467,7 +470,6 @@ function animateLeaves() {
 
     requestAnimationFrame(animateLeaves);
 }
-
 async function loadAnnouncement() {
     const banner = document.getElementById('announcement-banner');
     const textContainer = document.getElementById('announcement-text');
@@ -493,8 +495,13 @@ async function loadAnnouncement() {
                     const endDateStr = lines[1].trim();
                     const messageText = lines.slice(2).join('\n').trim();
 
-                    const startDate = new Date(startDateStr);
-                    const endDate = new Date(endDateStr);
+                    const startStrFixed = startDateStr.replace(/-/g, '/');
+                    const endStrFixed = endDateStr.replace(/-/g, '/');
+
+                    const startDate = new Date(startStrFixed);
+                    startDate.setHours(0, 0, 0, 0);
+
+                    const endDate = new Date(endStrFixed);
                     endDate.setHours(23, 59, 59, 999);
 
                     if (now >= startDate && now <= endDate && messageText.length > 0) {

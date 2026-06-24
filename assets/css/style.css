@@ -843,13 +843,13 @@ footer {
     .glass {
         backdrop-filter: blur(8px) !important;
         -webkit-backdrop-filter: blur(8px) !important;
-        background: rgba(46, 37, 40, 0.7) !important;
+        background: rgba(43, 33, 37, 0.7) !important;
     }
 
     .detail-container {
         backdrop-filter: blur(10px) !important;
         -webkit-backdrop-filter: blur(10px) !important;
-        background: rgba(46, 37, 40, 0.75) !important;
+        background: rgba(56, 40, 46, 0.75) !important;
     }
 
     .banner {

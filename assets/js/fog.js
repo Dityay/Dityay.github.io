@@ -107,7 +107,7 @@ window.fogData = [
         "assets/roms/fog/mi125/5.jpg",
         "assets/roms/fog/mi125/6.jpg"
     ],
-    description: "# \"Let’s turn around and watch the sun, before it goes down completely.\"\n### Notes\n- **Not recommended** to use any custom kernel; any issues you're facing by using them will not be given support\n- Non rooted by default\n- Shipped with Stock Kernel + TWRP 3.6\n- NFC working in rain\n- If you have trouble with GMS **(This device is not play protect certified)**, flash [this](https://t.me/bsctsupport/6969) module",
+    description: "# \"Let’s turn around and watch the sun, before it goes down completely.\"\n### Notes\n- **Not recommended** to use any custom kernel; any issues you're facing by using them will not be given support\n- Non rooted by default\n- Shipped with Stock Kernel + TWRP 3.6\n- NFC working in rain",
     flashInstruction: "### Installation\n- Use any custom recovery to flash the ROM\n- Format data\n- Reboot\n\n## PS: Doing any \"Wipe\" is NOT needed.",
     credits: "- @kipasangin089, @Romeo_13card for testing\n- [nebbeli](https://x.com/nebbeli) for this amazing artwork\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)"
 }

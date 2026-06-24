@@ -677,6 +677,12 @@ footer {
     width: 100%;
 }
 
+.glass, .detail-container, .modal-content, .banner {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform, backdrop-filter;
+}
+
 @media (max-width: 768px) {
     .orb { display: none !important; }
 
@@ -750,5 +756,21 @@ footer {
     font-size: 0.9rem !important;
     margin-bottom: 25px !important;
     padding: 0 10px;
+    }
+    .glass {
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        background: rgba(46, 37, 40, 0.7) !important;
+    }
+
+    .detail-container {
+        backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
+        background: rgba(46, 37, 40, 0.75) !important;
+    }
+
+    .banner {
+        backdrop-filter: blur(6px) !important;
+        -webkit-backdrop-filter: blur(6px) !important;
     }
 }

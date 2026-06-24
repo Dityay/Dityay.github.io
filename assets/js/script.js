@@ -365,7 +365,7 @@ function createLeaves() {
         document.body.prepend(container);
     }
 
-    const leafCount = 50;
+    const leafCount = 20;
 
     for (let i = 0; i < leafCount; i++) {
         const leaf = document.createElement('div');

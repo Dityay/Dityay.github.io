@@ -406,8 +406,7 @@ function createLeaves() {
         document.body.prepend(container);
     }
 
-    const isMobile = window.innerWidth <= 768;
-    const leafCount = isMobile ? 4 : 10;
+    const leafCount = 20;
 
     for (let i = 0; i < leafCount; i++) {
         const leaf = document.createElement('div');
@@ -442,7 +441,6 @@ function createLeaves() {
 
     requestAnimationFrame(animateLeaves);
 }
-
 function animateLeaves() {
     wind.currentX += (wind.targetX - wind.currentX) * 0.01;
     wind.currentY += (wind.targetY - wind.currentY) * 0.01;

@@ -5,5 +5,4 @@
 ===
 2026-06-25
 2026-06-30
-- <b>MIUI 12.5 CN</b> has been released for public, <a href="#fog_mi125cn">check it out</a>. Make sure you're reading the instructions correctly!
-- Also, <b>DELTARUNE Chapter 5</b> has been released! <a href="https://www.deltarune.com">check it out</a> if you're interested. 🌼
+- ...

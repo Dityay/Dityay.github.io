@@ -763,6 +763,40 @@ footer {
     will-change: transform, backdrop-filter;
 }
 
+footer a, footer a:visited {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    font-weight: 600;
+    padding: 2px 4px;
+    border-radius: 6px;
+    transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+    background-color: transparent;
+}
+
+footer a:hover {
+    color: #121212;
+    background-color: var(--accent);
+    text-decoration-color: transparent;
+}
+
+[data-theme="light"] footer a:hover {
+    color: #ffffff;
+}
+
+.footer-links {
+    margin: 15px 0;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-links .separator {
+    color: var(--border);
+    font-size: 0.8rem;
+}
+
 @media (max-width: 768px) {
     .orb { display: none !important; }
 

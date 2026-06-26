@@ -276,7 +276,7 @@ nav {
 
 .page {
     display: none;
-    padding: 20px 6%;
+    padding: 20px 6% 60px 6%;
     width: 100%;
 }
 
@@ -804,7 +804,6 @@ footer a:hover {
     .nav-logo { font-size: 1.2rem; }
     .btn-dl { padding: 10px 16px; font-size: 0.85rem; }
 
-    .page { padding: 12px 4%; }
     .section-label { font-size: 1.4rem; }
 
     .filter-controls { gap: 8px; margin-top: 10px; }

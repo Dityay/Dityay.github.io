@@ -86,7 +86,7 @@ body::before {
 
 @keyframes moveGrid {
     0% { background-position: 0 0; }
-    100% { background-position: 500px 500px; }
+    100% { background-position: -500px -500px; }
 }
 
 body::after {
@@ -108,7 +108,7 @@ body::after {
 
 @keyframes moveGridLarge {
     0% { background-position: 0 0; }
-    100% { background-position: -500px -500px; }
+    100% { background-position: 500px 500px; }
 }
 
 #app {

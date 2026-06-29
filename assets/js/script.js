@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-sakura.css"]');
 
     if (cssLink) {
-        if (date >= 22 && month === 6 && year === 2026) {
+        /*if (date >= 22 && month === 6 && year === 2026) {
             if (!cssLink.href.includes('style-sakura.css')) {
                 cssLink.href = 'assets/css/style-sakura.css?v=1';
                 createLeaves();
@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (cssLink.href.includes('style-sakura.css')) {
                 cssLink.href = 'assets/css/style.css?v=19';
             }
-        }
+        }*/
+        cssLink.href = 'assets/css/style.css?v=19';
     }
     window.romData = [];
     if (window.fogData) window.romData = window.romData.concat(window.fogData);

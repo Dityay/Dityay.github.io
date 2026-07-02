@@ -1,4 +1,5 @@
 let currentFilter = 'All';
+let activeDownloadUrl = '';
 
 document.addEventListener("DOMContentLoaded", () => {
     const today = new Date();
@@ -9,18 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-sakura.css"]');
 
     if (cssLink) {
-        /*if (date >= 22 && month === 6 && year === 2026) {
-            if (!cssLink.href.includes('style-sakura.css')) {
-                cssLink.href = 'assets/css/style-sakura.css?v=1';
-                createLeaves();
-            }
-        } else {
-            if (cssLink.href.includes('style-sakura.css')) {
-                cssLink.href = 'assets/css/style.css?v=19';
-            }
-        }*/
         cssLink.href = 'assets/css/style.css?v=19';
     }
+
     window.romData = [];
     if (window.fogData) window.romData = window.romData.concat(window.fogData);
     if (window.earthData) window.romData = window.romData.concat(window.earthData);
@@ -48,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderROMCards();
     handleRouting();
     loadAnnouncement();
+    createLeaves();
 });
 
 function renderDeviceFilters() {
@@ -230,6 +223,32 @@ function showUpcomingPopup() {
     modal.style.display = 'flex';
 }
 
+function showDownloadWarningPopup() {
+    const modal = document.getElementById('md-modal');
+    const content = document.getElementById('md-content');
+
+    content.innerHTML = `
+    <div style="text-align: center; padding: 10px;">
+    <h2 style="font-family: 'Syne', sans-serif; font-size: 1.6rem; color: #ff6b6b; margin-bottom: 10px;">Warning</h2>
+    <p style="color: var(--text); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; background: var(--surface); padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
+    <strong>Disclaimer:</strong> Flash at your own risk. I'm not responsible for bricked devices, dead SD cards, or thermonuclear war.
+    </p>
+    <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+    <button class="btn-dl secondary" onclick="closeModal()">Cancel</button>
+    <button class="btn-dl primary" onclick="proceedDownload()">I Understand</button>
+    </div>
+    </div>
+    `;
+    modal.style.display = 'flex';
+}
+
+function proceedDownload() {
+    closeModal();
+    if (activeDownloadUrl) {
+        window.open(activeDownloadUrl, '_blank');
+    }
+}
+
 function parseMarkdown(text) {
     if (!text) return "";
     let safeText = text.replace(/^[ \t]+/gm, '');
@@ -301,7 +320,7 @@ function viewDetail(id) {
 
     let downloadButtonHtml = isUpcoming
     ? `<button class="btn-dl secondary" onclick="showUpcomingPopup()" style="padding: 16px 32px; border-color: var(--accent);">Coming Soon</button>`
-    : `<button class="btn-dl primary" onclick="window.open(activeDownloadUrl, '_blank')" style="padding: 16px 32px;">Download ROM</button>`;
+    : `<button class="btn-dl primary" onclick="showDownloadWarningPopup()" style="padding: 16px 32px;">Download ROM</button>`;
 
     document.getElementById('detail-content').innerHTML = `
     <div class="rom-detail-banner" style="background-image: url('${rom.banner}');">
@@ -407,7 +426,7 @@ function createLeaves() {
         document.body.prepend(container);
     }
 
-    const leafCount = 20;
+    const leafCount = 10;
 
     for (let i = 0; i < leafCount; i++) {
         const leaf = document.createElement('div');

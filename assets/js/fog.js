@@ -110,5 +110,25 @@ window.fogData = [
     description: "# \"Let’s turn around and watch the sun, before it goes down completely.\"\n### Notes\n- **Not recommended** to use any custom kernel; any issues you're facing by using them will not be given support\n- Non rooted by default\n- Shipped with Stock Kernel + TWRP 3.6\n- NFC working in rain",
     flashInstruction: "### Installation\n- Use any custom recovery to flash the ROM\n- Format data\n- Reboot\n\n## PS: Doing any \"Wipe\" is NOT needed.",
     credits: "- @kipasangin089, @Romeo_13card for testing\n- [nebbeli](https://x.com/nebbeli) for this amazing artwork\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)"
+},
+{
+    id: "fog_delphinium",
+    name: "Delphinium",
+    device: "Xiaomi Redmi 10C (fog)",
+    version: "Android 16",
+    buildDate: "2026-07-01",
+    isPersonal: true,
+    downloadUrl: "https://google.com/",
+    banner: "assets/roms/fog/delphinium/banner.png",
+    screenshots: [
+        "assets/roms/fog/delphinium/1.jpg",
+        "assets/roms/fog/delphinium/2.jpg",
+        "assets/roms/fog/delphinium/3.jpg",
+        "assets/roms/fog/delphinium/4.jpg",
+        "assets/roms/fog/delphinium/5.jpg",
+        "assets/roms/fog/delphinium/6.jpg"
+    ],
+    description: "# \"Delphiniums grow tall and sturdy, rising upwards.\"",
+    credits: "- @fckmycmptr (alternoegraha) for base device sources\n- @dblenk9 for base/OG device tree\n- @CHRISL7 for vauxite kernel and @Teleg3_7 for fog adaptaion\n- @KitaujiQuartetNo1Euphonium for lot of helps"
 }
 ];

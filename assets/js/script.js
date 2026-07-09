@@ -76,14 +76,17 @@ function renderROMCards() {
     if (!window.romData || !Array.isArray(window.romData)) {
         container.innerHTML = `
         <div style="grid-column: 1 / -1; padding: 20px; background: rgba(255, 107, 107, 0.1); border: 2px dashed #ff6b6b; border-radius: 16px; text-align: center;">
-        <h3 style="color: #ff6b6b; font-family: 'Syne', sans-serif; margin-bottom: 10px;">⚠️ Data ROM Gagal Dimuat</h3>
-        <p style="color: var(--text);">Cek file data JS kamu. Pastikan strukturnya benar.</p>
+        <h3 style="color: #ff6b6b; font-family: 'Syne', sans-serif; margin-bottom: 10px;">⚠️ Failed to load ROM data.</h3>
+        <p style="color: var(--text);">Make sure your JS data format is correct.</p>
         </div>
         `;
         return;
     }
 
     let filteredData = [...window.romData];
+
+
+    filteredData = filteredData.filter(rom => !rom.isPersonal);
 
     filteredData.sort((a, b) => {
         const dateA = a.buildDate ? new Date(a.buildDate).getTime() : 0;
@@ -167,7 +170,6 @@ function renderROMCards() {
 
     container.innerHTML = htmlContent;
 }
-
 function navigateHome() {
     if (window.location.hash) {
         history.pushState("", document.title, window.location.pathname + window.location.search);
@@ -318,6 +320,20 @@ function viewDetail(id) {
         screenshotsHtml = "<p style='color: var(--muted); font-style: italic; margin-top: 20px;'>No screenshots available.</p>";
     }
 
+    let personalWarningHtml = "";
+    if (rom.isPersonal) {
+        personalWarningHtml = `
+        <div style="background: var(--surface-highest); border-left: 4px solid var(--accent); padding: 16px 20px; margin: 10px 5px 25px 5px; border-radius: 0 12px 12px 0;">
+        <h3 style="color: var(--accent); font-family: 'Syne', sans-serif; font-size: 1.2rem; margin-top: 0; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+        ⚠️ Personal Build
+        </h3>
+        <p style="color: var(--muted); font-size: 0.95rem; margin: 0; line-height: 1.6;">
+        This ROM is specifically compiled for personal use. It might contain experimental features, missing optimizations, or specific configurations tailored for the developer. You are free to download and flash it, but please proceed with caution.
+        </p>
+        </div>
+        `;
+    }
+
     let downloadButtonHtml = isUpcoming
     ? `<button class="btn-dl secondary" onclick="showUpcomingPopup()" style="padding: 16px 32px; border-color: var(--accent);">Coming Soon</button>`
     : `<button class="btn-dl primary" onclick="showDownloadWarningPopup()" style="padding: 16px 32px;">Download ROM</button>`;
@@ -336,6 +352,8 @@ function viewDetail(id) {
     <p style="font-size: 1rem; color: var(--muted); margin-bottom: 25px;">
     Version: <span style="color: var(--text); font-weight: 600;">${rom.version}</span>
     </p>
+
+    ${personalWarningHtml}
 
     <div class="rom-info-tabs">
     <button class="tab-btn active" onclick="switchTab('desc')">Details</button>

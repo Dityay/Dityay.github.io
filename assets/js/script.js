@@ -1,5 +1,7 @@
 let currentFilter = 'All';
 let activeDownloadUrl = '';
+let isSecretMode = false;
+let leavesCreated = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     const today = new Date();
@@ -7,11 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
 
-    const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-sakura.css"]');
-
-    if (cssLink) {
-        cssLink.href = 'assets/css/style.css?v=19';
-    }
 
     window.romData = [];
     if (window.fogData) window.romData = window.romData.concat(window.fogData);
@@ -36,18 +33,86 @@ document.addEventListener("DOMContentLoaded", () => {
     applySystemTheme(systemThemeMedia);
     systemThemeMedia.addEventListener('change', applySystemTheme);
 
+    const navLogo = document.querySelector('.nav-logo');
+    if (navLogo) {
+        navLogo.removeAttribute('onclick');
+        navLogo.addEventListener('click', () => {
+            isSecretMode = false;
+            window.location.hash = '';
+
+            updateThemeAndEffects();
+            navigateHome();
+        });
+    }
+
     renderDeviceFilters();
     renderROMCards();
-    handleRouting();
     loadAnnouncement();
-    createLeaves();
+    handleRouting();
 });
+
+function updateThemeAndEffects() {
+    const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-sakura.css"]');
+    if (!cssLink) return;
+
+    const todayDate = new Date();
+    todayDate.setHours(0, 0, 0, 0);
+    let hasNewPublicRom = false;
+
+    for (const rom of window.romData) {
+        if (!rom.isPersonal && rom.buildDate) {
+            const build = new Date(rom.buildDate);
+            build.setHours(0, 0, 0, 0);
+            const diffTime = todayDate - build;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays >= 0 && diffDays <= 14) {
+                hasNewPublicRom = true;
+                break;
+            }
+        }
+    }
+
+    let showLeaves = false;
+
+    if (isSecretMode) {
+        cssLink.href = 'assets/css/style-sakura.css?v=4';
+        showLeaves = true;
+    } else {
+        cssLink.href = 'assets/css/style.css?v=22';
+
+        if (hasNewPublicRom) {
+            showLeaves = true;
+        }
+    }
+
+    if (showLeaves) {
+        if (!leavesCreated) {
+            createLeaves();
+            leavesCreated = true;
+        } else {
+            const lc = document.getElementById('leaf-container');
+            if (lc) lc.style.display = 'block';
+        }
+    } else {
+        const lc = document.getElementById('leaf-container');
+        if (lc) lc.style.display = 'none';
+    }
+}
 
 function renderDeviceFilters() {
     const filterContainer = document.getElementById('home-device-filter-container');
     if (!filterContainer || !window.romData) return;
 
-    const devices = [...new Set(window.romData.map(rom => rom.device))];
+    let visibleData = window.romData;
+
+    if (isSecretMode) {
+        visibleData = visibleData.filter(rom => rom.isPersonal);
+    } else {
+        visibleData = visibleData.filter(rom => !rom.isPersonal);
+    }
+
+    const devices = [...new Set(visibleData.map(rom => rom.device))];
 
     let filterHtml = `<button class="filter-btn ${currentFilter === 'All' ? 'active' : ''}" onclick="setFilter('All')">All Devices</button>`;
 
@@ -85,8 +150,11 @@ function renderROMCards() {
 
     let filteredData = [...window.romData];
 
-
-    filteredData = filteredData.filter(rom => !rom.isPersonal);
+    if (isSecretMode) {
+        filteredData = filteredData.filter(rom => rom.isPersonal);
+    } else {
+        filteredData = filteredData.filter(rom => !rom.isPersonal);
+    }
 
     filteredData.sort((a, b) => {
         const dateA = a.buildDate ? new Date(a.buildDate).getTime() : 0;
@@ -141,6 +209,10 @@ function renderROMCards() {
                     }
                 }
 
+                if (rom.isPersonal) {
+                    badgeHtml += `<span class="new-badge" style="background-color: var(--muted); color: #fff;">PERSONAL</span>`;
+                }
+
                 displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
             }
 
@@ -165,14 +237,21 @@ function renderROMCards() {
     });
 
     if (filteredData.length === 0) {
-        htmlContent = `<div style="grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 40px 0;">No ROMs found for this device.</div>`;
+        htmlContent = `<div style="grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 40px 0;">No ROMs found for this category.</div>`;
     }
 
     container.innerHTML = htmlContent;
 }
-function navigateHome() {
-    if (window.location.hash) {
-        history.pushState("", document.title, window.location.pathname + window.location.search);
+
+function navigateHome(fromHash = false) {
+    if (!fromHash) {
+        if (isSecretMode) {
+            window.location.hash = 'personal';
+            return;
+        }
+        if (window.location.hash) {
+            history.pushState("", document.title, window.location.pathname + window.location.search);
+        }
     }
 
     const detailContainer = document.querySelector('.detail-container');
@@ -183,6 +262,9 @@ function navigateHome() {
 
     document.getElementById('page-detail').classList.remove('active');
     document.getElementById('page-home').classList.add('active');
+
+    renderDeviceFilters();
+    renderROMCards();
 }
 
 function show404() {
@@ -231,7 +313,7 @@ function showDownloadWarningPopup() {
 
     content.innerHTML = `
     <div style="text-align: center; padding: 10px;">
-    <h2 style="font-family: 'Syne', sans-serif; font-size: 1.6rem; color: #ff6b6b; margin-bottom: 10px;">Warning</h2>
+    <h2 style="font-family: 'Syne', sans-serif; font-size: 1.6rem; color: #ff6b6b; margin-bottom: 10px;">⚠️ Warning</h2>
     <p style="color: var(--text); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; background: var(--surface); padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
     <strong>Disclaimer:</strong> Flash at your own risk. I'm not responsible for bricked devices, dead SD cards, or thermonuclear war.
     </p>
@@ -399,11 +481,17 @@ function viewDetail(id) {
 function handleRouting() {
     const hash = window.location.hash;
 
-    if (hash) {
+    if (hash === '#personal') {
+        isSecretMode = true;
+        updateThemeAndEffects();
+        navigateHome(true);
+    } else if (hash) {
         const romId = decodeURIComponent(hash.substring(1));
         viewDetail(romId);
     } else {
-        navigateHome();
+        isSecretMode = false;
+        updateThemeAndEffects();
+        navigateHome(false);
     }
 }
 
@@ -479,6 +567,7 @@ function createLeaves() {
 
     requestAnimationFrame(animateLeaves);
 }
+
 function animateLeaves() {
     wind.currentX += (wind.targetX - wind.currentX) * 0.01;
     wind.currentY += (wind.targetY - wind.currentY) * 0.01;
@@ -506,6 +595,7 @@ function animateLeaves() {
 
     requestAnimationFrame(animateLeaves);
 }
+
 async function loadAnnouncement() {
     const banner = document.getElementById('announcement-banner');
     const textContainer = document.getElementById('announcement-text');

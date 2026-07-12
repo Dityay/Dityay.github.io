@@ -96,8 +96,8 @@ window.fogData = [
     name: "MIUI 12.5 CN",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 11 (Initial)",
-    buildDate: "2026-06-24",
-    downloadUrl: "https://drive.google.com/file/d/1RMKxfs8JtJzwEtqnF63ecqUDQq6CaVvy/view?usp=sharing",
+    buildDate: "2026-07-12",
+    downloadUrl: "https://drive.google.com/file/d/1ap-4_Y0xUBHxIhqRAkwNnCxZmq03ACe8/view?usp=sharing",
     banner: "assets/roms/fog/mi125/banner.png",
     screenshots: [
         "assets/roms/fog/mi125/1.jpg",
@@ -107,7 +107,7 @@ window.fogData = [
         "assets/roms/fog/mi125/5.jpg",
         "assets/roms/fog/mi125/6.jpg"
     ],
-    description: "# \"Let’s turn around and watch the sun, before it goes down completely.\"\n### Notes\n- **Not recommended** to use any custom kernel; any issues you're facing by using them will not be given support\n- Non rooted by default\n- Shipped with Stock Kernel + TWRP 3.6\n- NFC working in rain",
+    description: "# \"Let’s turn around and watch the sun, before it goes down completely.\"\n### Changes\n- Fixed system freeze caused by OOM\n- Fixed zygote binary fork process spamming crash (fixed overheat)\n- Other minor changes and under-the-hood optimizations\n### Notes\n- **Not recommended** to use any custom kernel; any issues you're facing by using them will not be given support\n- Non rooted by default\n- Shipped with Stock Kernel + TWRP 3.6\n- NFC working in rain",
     flashInstruction: "### Installation\n- Use any custom recovery to flash the ROM\n- Format data\n- Reboot\n\n## PS: Doing any \"Wipe\" is NOT needed.",
     credits: "- @kipasangin089, @Romeo_13card for testing\n- [nebbeli](https://x.com/nebbeli) for this amazing artwork\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)"
 },

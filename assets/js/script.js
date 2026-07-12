@@ -315,7 +315,12 @@ function showDownloadWarningPopup() {
     <div style="text-align: center; padding: 10px;">
     <h2 style="font-family: 'Syne', sans-serif; font-size: 1.6rem; color: #ff6b6b; margin-bottom: 10px;">⚠️ Warning</h2>
     <p style="color: var(--text); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; background: var(--surface); padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
-    <strong>Disclaimer:</strong> Flash at your own risk. I'm not responsible for bricked devices, dead SD cards, or thermonuclear war.
+     <strong>Your warranty is now void.</strong><br>
+     We are not responsible for bricked devices, dead SD cards,
+     thermonuclear war, or you getting fired because the alarm app failed. Please
+     do some research if you have any concerns about features included in this ROM
+     before flashing it! YOU are choosing to make these modifications, and if
+     you point the finger at us for messing up your device, we will laugh at you.
     </p>
     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
     <button class="btn-dl secondary" onclick="closeModal()">Cancel</button>

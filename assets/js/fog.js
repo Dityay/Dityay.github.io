@@ -95,7 +95,7 @@ window.fogData = [
     id: "fog_mi125cn",
     name: "MIUI 12.5 CN",
     device: "Xiaomi Redmi 10C (fog)",
-    version: "Android 11 (Initial)",
+    version: "Android 11 (Hotfix)",
     buildDate: "2026-07-12",
     downloadUrl: "https://drive.google.com/file/d/1ap-4_Y0xUBHxIhqRAkwNnCxZmq03ACe8/view?usp=sharing",
     banner: "assets/roms/fog/mi125/banner.png",

@@ -1,6 +1,7 @@
 let currentFilter = 'All';
 let activeDownloadUrl = '';
 let isSecretMode = false;
+let leavesCreated = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     const today = new Date();
@@ -275,6 +276,22 @@ function showUpcomingPopup() {
     modal.style.display = 'flex';
 }
 
+function showNukedPopup() {
+    const modal = document.getElementById('md-modal');
+    const content = document.getElementById('md-content');
+
+    content.innerHTML = `
+    <div style="text-align: center; padding: 10px;">
+    <h2 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: #ff6b6b; margin-bottom: 15px;">⛔ NUKED</h2>
+    <p style="color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
+    This ROM has been nuked (withdrawn/removed) and its details are no longer accessible.
+    </p>
+    <button class="btn-dl primary" onclick="closeModal()">Understand</button>
+    </div>
+    `;
+    modal.style.display = 'flex';
+}
+
 function showDownloadWarningPopup() {
     const modal = document.getElementById('md-modal');
     const content = document.getElementById('md-content');
@@ -343,6 +360,14 @@ function viewDetail(id) {
 
     if (!rom) {
         show404();
+        return;
+    }
+
+    const isNuked = !rom.downloadUrl || rom.downloadUrl.trim() === "";
+    if (isNuked) {
+        showNukedPopup();
+
+        window.location.hash = isSecretMode ? 'personal' : '';
         return;
     }
 

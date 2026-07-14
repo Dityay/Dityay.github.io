@@ -116,7 +116,7 @@ overflow-x: hidden;
 .orb-2 {
     width: 450px;
     height: 450px;
-    background: #364563; /* Diubah dari cokelat ke biru gelap agar serasi */
+    background: #364563;
     bottom: 10%;
     right: -100px;
     animation-delay: 2s;
@@ -192,7 +192,8 @@ nav {
 .btn-dl.primary {
     background-color: var(--accent);
     color: #14110e;
-    box-shadow: 0 4px 12px rgba(168, 199, 250, 0.2); /* Disesuaikan dengan warna aksen biru */
+    box-shadow: 0 4px 12px rgba(168, 199, 250, 0.2);
+
 }
 
 [data-theme="light"] .btn-dl.primary {
@@ -912,7 +913,6 @@ footer {
     padding: 0 10px;
     }
 
-    /* Penyesuaian warna overlay mobile agar senada dengan biru Material You */
     .glass {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;

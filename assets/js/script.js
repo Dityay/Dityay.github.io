@@ -133,7 +133,6 @@ function setFilter(device) {
     renderDeviceFilters();
     renderROMCards();
 }
-
 function renderROMCards() {
     const container = document.getElementById('cards-container');
     if (!container) return;
@@ -193,7 +192,24 @@ function renderROMCards() {
             let badgeHtml = "";
             let displayDate = "-";
 
-            if (rom.buildDate) {
+            const isNuked = !rom.downloadUrl || rom.downloadUrl.trim() === "";
+
+            let cardAction = `onclick="viewDetail('${rom.id}')"`;
+            let cursorStyle = "cursor: pointer;";
+            let imgFilter = "";
+            let btnText = "Get ROM";
+            let btnStyle = "width: 100%; margin-top: auto;";
+            let btnClass = "btn-dl primary";
+
+            if (isNuked) {
+                badgeHtml = `<span class="new-badge" style="background-color: #4a3e36; color: #b0a69d; text-decoration: line-through;">NUKED</span>`;
+                cardAction = "";
+                cursorStyle = "cursor: not-allowed;";
+                imgFilter = "filter: grayscale(100%) opacity(0.6);";
+                btnText = "Unavailable";
+                btnStyle = "width: 100%; margin-top: auto; opacity: 0.5; pointer-events: none;";
+                btnClass = "btn-dl secondary";
+            } else if (rom.buildDate) {
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
                 const build = new Date(rom.buildDate);
@@ -208,28 +224,31 @@ function renderROMCards() {
                         badgeHtml = `<span class="new-badge">NEW</span>`;
                     }
                 }
+            }
 
-                if (rom.isPersonal) {
-                    badgeHtml += `<span class="new-badge" style="background-color: var(--muted); color: #fff;">PERSONAL</span>`;
-                }
+            if (rom.isPersonal) {
+                badgeHtml += `<span class="new-badge" style="background-color: var(--muted); color: #fff;">PERSONAL</span>`;
+            }
 
+            if (rom.buildDate) {
+                const build = new Date(rom.buildDate);
                 displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
             }
 
             return `
-            <div class="rom-card glass" onclick="viewDetail('${rom.id}')" style="padding: 0;">
-            <div style="width: 100%; height: 160px; background-image: url('${rom.banner}'); background-size: cover; background-position: center; border-radius: var(--radius-m3) var(--radius-m3) 0 0; position: relative;">
+            <div class="rom-card glass" ${cardAction} style="padding: 0; ${cursorStyle}">
+            <div style="width: 100%; height: 160px; background-image: url('${rom.banner}'); background-size: cover; background-position: center; border-radius: var(--radius-m3) var(--radius-m3) 0 0; position: relative; ${imgFilter}">
             <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--surface-cards), transparent);"></div>
             </div>
 
             <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
-            <h3 style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: var(--accent); letter-spacing: -0.5px; line-height: 1.2;">
+            <h3 style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: ${isNuked ? 'var(--muted)' : 'var(--accent)'}; letter-spacing: -0.5px; line-height: 1.2;">
             ${rom.name} ${badgeHtml}
             </h3>
             <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 4px;">Device: <span style="color: var(--text); font-weight: 500;">${rom.device}</span></p>
             <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 4px;">Version: <span style="color: var(--text); font-weight: 500;">${rom.version}</span></p>
             <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 24px;">Build Date: <span style="color: var(--text); font-weight: 500;">${displayDate}</span></p>
-            <button class="btn-dl primary" style="width: 100%; margin-top: auto;">Get ROM</button>
+            <button class="${btnClass}" style="${btnStyle}">${btnText}</button>
             </div>
             </div>
             `;
@@ -306,31 +325,34 @@ function showUpcomingPopup() {
     `;
     modal.style.display = 'flex';
 }
-
 function showDownloadWarningPopup() {
     const modal = document.getElementById('md-modal');
     const content = document.getElementById('md-content');
 
     content.innerHTML = `
     <div style="text-align: center; padding: 10px;">
-    <h2 style="font-family: 'Syne', sans-serif; font-size: 1.6rem; color: #ff6b6b; margin-bottom: 10px;">⚠️ Warning</h2>
-    <p style="color: var(--text); font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; background: var(--surface); padding: 15px; border-radius: 12px; border: 1px solid var(--border);">
-     <strong>Your warranty is now void.</strong><br>
-     We are not responsible for bricked devices, dead SD cards,
-     thermonuclear war, or you getting fired because the alarm app failed. Please
-     do some research if you have any concerns about features included in this ROM
-     before flashing it! YOU are choosing to make these modifications, and if
-     you point the finger at us for messing up your device, we will laugh at you.
+    <h2 style="font-family: 'Syne', sans-serif; font-size: 1.6rem; color: #ff6b6b; margin-bottom: 15px;">
+    ⚠️ Warning
+    </h2>
+
+    <div style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 25px; background: var(--surface); padding: 18px; border-radius: 16px; border: 1px solid var(--border); text-align: left;">
+    <strong style="color: #ff6b6b; font-size: 1.05rem; display: block; margin-bottom: 8px;">
+    Your warranty is now void.
+    </strong>
+    <p style="margin: 0; color: var(--muted);">
+    We are not responsible for bricked devices, dead SD cards, thermonuclear war, or you getting fired because the alarm app failed. Please do some research if you have any concerns about features included in this ROM before flashing it! YOU are choosing to make these modifications, and if you point the finger at us for messing up your device, we will laugh at you.
     </p>
+    </div>
+
     <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
     <button class="btn-dl secondary" onclick="closeModal()">Cancel</button>
     <button class="btn-dl primary" onclick="proceedDownload()">I Understand</button>
     </div>
     </div>
     `;
+
     modal.style.display = 'flex';
 }
-
 function proceedDownload() {
     closeModal();
     if (activeDownloadUrl) {

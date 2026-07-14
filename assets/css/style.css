@@ -1,26 +1,26 @@
 :root {
-    --bg: #1c1815;
-    --surface: rgba(38, 32, 28, 0.4);
-    --surface-cards: rgba(48, 41, 36, 0.5);
-    --border: rgba(74, 62, 54, 0.2);
-    --grid-color: #40352e;
-    --text: #efece8;
-    --muted: #b0a69d;
-    --accent: #eaa156;
-    --accent-hover: #cf8b46;
+    --bg: #0f1419;
+    --surface: rgba(26, 32, 39, 0.4);
+    --surface-cards: rgba(33, 40, 48, 0.5);
+    --border: rgba(68, 71, 78, 0.2);
+    --grid-color: #2b343e;
+    --text: #e1e2e8;
+    --muted: #aeb0b7;
+    --accent: #a8c7fa;
+    --accent-hover: #82abf0;
     --radius-m3: 24px;
 }
 
 [data-theme="light"] {
-    --bg: #fbf8f5;
-    --surface: rgba(242, 236, 230, 0.5);
-    --surface-cards: rgba(247, 241, 235, 0.6);
-    --border: rgba(214, 204, 196, 0.3);
-    --grid-color: #ded5cd;
-    --text: #332b26;
-    --muted: #7a6b60;
-    --accent: #b86b25;
-    --accent-hover: #9c591c;
+    --bg: #f8f9ff;
+    --surface: rgba(240, 243, 249, 0.5);
+    --surface-cards: rgba(233, 236, 245, 0.6);
+    --border: rgba(196, 198, 208, 0.3);
+    --grid-color: #e0e4ef;
+    --text: #1a1c1e;
+    --muted: #5e6066;
+    --accent: #0b57d0;
+    --accent-hover: #0842a0;
 }
 
 [data-theme="light"] .modal {
@@ -28,14 +28,8 @@
 }
 
 [data-theme="light"] .modal-content {
-    background: rgba(252, 248, 245, 0.85);
+    background: rgba(240, 243, 249, 0.85);
     box-shadow: 0 24px 48px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
-}
-
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
 }
 
 *, *::before, *::after {
@@ -122,7 +116,7 @@ overflow-x: hidden;
 .orb-2 {
     width: 450px;
     height: 450px;
-    background: #8b4513;
+    background: #364563; /* Diubah dari cokelat ke biru gelap agar serasi */
     bottom: 10%;
     right: -100px;
     animation-delay: 2s;
@@ -198,7 +192,7 @@ nav {
 .btn-dl.primary {
     background-color: var(--accent);
     color: #14110e;
-    box-shadow: 0 4px 12px rgba(255, 183, 94, 0.2);
+    box-shadow: 0 4px 12px rgba(168, 199, 250, 0.2); /* Disesuaikan dengan warna aksen biru */
 }
 
 [data-theme="light"] .btn-dl.primary {
@@ -270,7 +264,7 @@ nav {
     background: var(--accent);
     color: #14110e;
     border-color: var(--accent);
-    box-shadow: 0 4px 12px rgba(255, 183, 94, 0.25);
+    box-shadow: 0 4px 12px rgba(168, 199, 250, 0.25);
 }
 
 [data-theme="light"] .filter-btn.active {
@@ -387,7 +381,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(20, 18, 24, 0.95) 5%, rgba(20, 18, 24, 0.2) 100%);
+    background: linear-gradient(to top, rgba(15, 20, 25, 0.95) 5%, rgba(15, 20, 25, 0.2) 100%);
     z-index: 1;
 }
 
@@ -918,34 +912,35 @@ footer {
     padding: 0 10px;
     }
 
+    /* Penyesuaian warna overlay mobile agar senada dengan biru Material You */
     .glass {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        background: rgba(30, 25, 21, 0.9) !important;
+        background: rgba(26, 32, 39, 0.9) !important;
     }
 
     .detail-container, .banner {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        background: rgba(41, 33, 26, 0.95) !important;
+        background: rgba(33, 40, 48, 0.95) !important;
     }
 
     .modal-content {
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
-        background: rgba(30, 25, 21, 0.85) !important;
+        background: rgba(26, 32, 39, 0.85) !important;
     }
 
     [data-theme="light"] .glass {
-        background: rgba(245, 236, 226, 0.9) !important;
+        background: rgba(240, 243, 249, 0.9) !important;
     }
 
     [data-theme="light"] .detail-container, [data-theme="light"] .banner {
-        background: rgba(252, 239, 220, 0.95) !important;
+        background: rgba(233, 236, 245, 0.95) !important;
     }
 
     [data-theme="light"] .modal-content {
-        background: rgba(245, 236, 226, 0.85) !important;
+        background: rgba(240, 243, 249, 0.85) !important;
     }
 
     footer {

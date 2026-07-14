@@ -79,7 +79,7 @@ window.fogData = [
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 11 (Initial)",
     buildDate: "2026-06-09",
-    downloadUrl: "https://drive.google.com/file/d/1ZffdDADyv_BHYEqzgHdA0fJi7R1VX7m1/view?usp=sharing",
+    downloadUrl: "",
     banner: "assets/roms/fog/mi12sweet/banner.jpg",
     screenshots: [
         "assets/roms/fog/mi12sweet/1.jpg",

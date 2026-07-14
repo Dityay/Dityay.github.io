@@ -1,14 +1,12 @@
 let currentFilter = 'All';
 let activeDownloadUrl = '';
 let isSecretMode = false;
-let leavesCreated = false;
 
 document.addEventListener("DOMContentLoaded", () => {
     const today = new Date();
     const date = today.getDate();
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
-
 
     window.romData = [];
     if (window.fogData) window.romData = window.romData.concat(window.fogData);
@@ -39,66 +37,16 @@ document.addEventListener("DOMContentLoaded", () => {
         navLogo.addEventListener('click', () => {
             isSecretMode = false;
             window.location.hash = '';
-
-            updateThemeAndEffects();
             navigateHome();
         });
     }
 
+    createLeaves();
     renderDeviceFilters();
     renderROMCards();
     loadAnnouncement();
     handleRouting();
 });
-
-function updateThemeAndEffects() {
-    const cssLink = document.querySelector('link[href*="style.css"]') || document.querySelector('link[href*="style-sakura.css"]');
-    if (!cssLink) return;
-
-    const todayDate = new Date();
-    todayDate.setHours(0, 0, 0, 0);
-    let hasNewPublicRom = false;
-
-    for (const rom of window.romData) {
-        if (!rom.isPersonal && rom.buildDate) {
-            const build = new Date(rom.buildDate);
-            build.setHours(0, 0, 0, 0);
-            const diffTime = todayDate - build;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-            if (diffDays >= 0 && diffDays <= 14) {
-                hasNewPublicRom = true;
-                break;
-            }
-        }
-    }
-
-    let showLeaves = false;
-
-    if (isSecretMode) {
-        cssLink.href = 'assets/css/style-sakura.css?v=4';
-        showLeaves = true;
-    } else {
-        cssLink.href = 'assets/css/style.css?v=22';
-
-        if (hasNewPublicRom) {
-            showLeaves = true;
-        }
-    }
-
-    if (showLeaves) {
-        if (!leavesCreated) {
-            createLeaves();
-            leavesCreated = true;
-        } else {
-            const lc = document.getElementById('leaf-container');
-            if (lc) lc.style.display = 'block';
-        }
-    } else {
-        const lc = document.getElementById('leaf-container');
-        if (lc) lc.style.display = 'none';
-    }
-}
 
 function renderDeviceFilters() {
     const filterContainer = document.getElementById('home-device-filter-container');
@@ -133,6 +81,7 @@ function setFilter(device) {
     renderDeviceFilters();
     renderROMCards();
 }
+
 function renderROMCards() {
     const container = document.getElementById('cards-container');
     if (!container) return;
@@ -325,6 +274,7 @@ function showUpcomingPopup() {
     `;
     modal.style.display = 'flex';
 }
+
 function showDownloadWarningPopup() {
     const modal = document.getElementById('md-modal');
     const content = document.getElementById('md-content');
@@ -353,6 +303,7 @@ function showDownloadWarningPopup() {
 
     modal.style.display = 'flex';
 }
+
 function proceedDownload() {
     closeModal();
     if (activeDownloadUrl) {
@@ -510,14 +461,12 @@ function handleRouting() {
 
     if (hash === '#personal') {
         isSecretMode = true;
-        updateThemeAndEffects();
         navigateHome(true);
     } else if (hash) {
         const romId = decodeURIComponent(hash.substring(1));
         viewDetail(romId);
     } else {
         isSecretMode = false;
-        updateThemeAndEffects();
         navigateHome(false);
     }
 }

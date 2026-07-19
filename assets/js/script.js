@@ -146,7 +146,6 @@ function renderROMCards() {
 
             let cardAction = `onclick="viewDetail('${rom.id}')"`;
             let cursorStyle = "cursor: pointer;";
-            let imgFilter = "";
             let btnText = "Get ROM";
             let btnStyle = "width: 100%; margin-top: auto;";
             let btnClass = "btn-dl primary";
@@ -155,10 +154,10 @@ function renderROMCards() {
                 badgeHtml = `<span class="new-badge" style="background-color: #4a3e36; color: #b0a69d; text-decoration: line-through;">NUKED</span>`;
                 cardAction = "";
                 cursorStyle = "cursor: not-allowed;";
-                imgFilter = "filter: grayscale(100%) opacity(0.6);";
                 btnText = "Unavailable";
                 btnStyle = "width: 100%; margin-top: auto; opacity: 0.5; pointer-events: none;";
                 btnClass = "btn-dl secondary";
+                displayDate = "Unavailable";
             } else if (rom.buildDate) {
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
@@ -167,7 +166,9 @@ function renderROMCards() {
 
                 if (build > today) {
                     badgeHtml = `<span class="new-badge">UPCOMING</span>`;
+                    displayDate = "Not yet announced";
                 } else {
+                    displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
                     const diffTime = today - build;
                     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                     if (diffDays >= 0 && diffDays <= 14) {
@@ -180,15 +181,14 @@ function renderROMCards() {
                 badgeHtml += `<span class="new-badge" style="background-color: var(--muted); color: #fff;">PERSONAL</span>`;
             }
 
-            if (rom.buildDate) {
-                const build = new Date(rom.buildDate);
-                displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-            }
+            let bannerContent = isNuked
+            ? `<div class="nuked-banner-noise" style="width: 100%; height: 100%;"></div>`
+            : `<div style="width: 100%; height: 100%; background-image: url('${rom.banner}'); background-size: cover; background-position: center;"></div><div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--surface-cards), transparent);"></div>`;
 
             return `
             <div class="rom-card glass" ${cardAction} style="padding: 0; ${cursorStyle}">
-            <div style="width: 100%; height: 160px; background-image: url('${rom.banner}'); background-size: cover; background-position: center; border-radius: var(--radius-m3) var(--radius-m3) 0 0; position: relative; ${imgFilter}">
-            <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--surface-cards), transparent);"></div>
+            <div style="width: 100%; height: 160px; border-radius: var(--radius-m3) var(--radius-m3) 0 0; position: relative; overflow: hidden;">
+            ${bannerContent}
             </div>
 
             <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
@@ -366,7 +366,6 @@ function viewDetail(id) {
     const isNuked = !rom.downloadUrl || rom.downloadUrl.trim() === "";
     if (isNuked) {
         showNukedPopup();
-
         window.location.hash = isSecretMode ? 'personal' : '';
         return;
     }
@@ -381,12 +380,15 @@ function viewDetail(id) {
     window.location.hash = id;
 
     let isUpcoming = false;
+    let displayDate = "-";
     if (rom.buildDate) {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         const build = new Date(rom.buildDate);
         build.setHours(0, 0, 0, 0);
         isUpcoming = build > today;
+
+        displayDate = isUpcoming ? "Just wait, mew~" : build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     }
 
     let descHtml = parseMarkdown(rom.description);
@@ -434,8 +436,11 @@ function viewDetail(id) {
     <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 8px;">
     Device: <span style="color: var(--accent); font-weight: 700;">${rom.device}</span>
     </p>
-    <p style="font-size: 1rem; color: var(--muted); margin-bottom: 25px;">
+    <p style="font-size: 1rem; color: var(--muted); margin-bottom: 8px;">
     Version: <span style="color: var(--text); font-weight: 600;">${rom.version}</span>
+    </p>
+    <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 25px;">
+    Build Date: <span style="color: var(--text); font-weight: 500;">${displayDate}</span>
     </p>
 
     ${personalWarningHtml}
@@ -520,9 +525,10 @@ window.addEventListener('hashchange', () => {
 });
 
 let leafParticles = [];
+let windTime = 0;
 let wind = {
-    currentX: 0, targetX: 0,
-    currentY: 2, targetY: 2
+    currentX: -4, targetX: -4,
+    currentY: 2.5, targetY: 2.5
 };
 
 function createLeaves() {
@@ -533,13 +539,13 @@ function createLeaves() {
         document.body.prepend(container);
     }
 
-    const leafCount = 10;
+    const leafCount = 15;
 
     for (let i = 0; i < leafCount; i++) {
         const leaf = document.createElement('div');
         leaf.classList.add('leaf');
 
-        const size = Math.random() * 30 + 30;
+        const size = Math.random() * 25 + 25;
 
         leaf.style.width = `${size}px`;
         leaf.style.height = `${size}px`;
@@ -551,30 +557,31 @@ function createLeaves() {
 
         leafParticles.push({
             el: leaf,
-            x: Math.random() * window.innerWidth,
+            x: window.innerWidth * Math.random() + (window.innerWidth * 0.2),
                            y: Math.random() * window.innerHeight - window.innerHeight,
                            size: size,
                            mass: size / 20,
                            flutter: Math.random() * Math.PI * 2,
-                           flutterSpeed: 0.02 + Math.random() * 0.03,
+                           flutterSpeed: 0.02 + Math.random() * 0.02,
                            baseRotation: 45
         });
     }
-
-    setInterval(() => {
-        wind.targetX = (Math.random() - 0.5) * 12;
-        wind.targetY = 2 + Math.random() * 0.1;
-    }, 5000);
 
     requestAnimationFrame(animateLeaves);
 }
 
 function animateLeaves() {
-    wind.currentX += (wind.targetX - wind.currentX) * 0.01;
-    wind.currentY += (wind.targetY - wind.currentY) * 0.01;
+    windTime += 0.015;
+
+    wind.targetX = -4.5 + Math.sin(windTime) * 3;
+    wind.targetY = 2.5 + Math.cos(windTime * 0.8) * 1.5;
+
+    wind.currentX += (wind.targetX - wind.currentX) * 0.05;
+    wind.currentY += (wind.targetY - wind.currentY) * 0.05;
 
     leafParticles.forEach(p => {
-        let vx = wind.currentX * p.mass;
+        let swoop = Math.sin(p.flutter) * 1.5;
+        let vx = wind.currentX * p.mass + swoop;
         let vy = wind.currentY * p.mass;
 
         p.x += vx;
@@ -582,14 +589,17 @@ function animateLeaves() {
         p.flutter += p.flutterSpeed;
 
         let angle = Math.atan2(vy, vx) * (180 / Math.PI);
-        let sway = Math.sin(p.flutter) * 15;
+        let sway = Math.sin(p.flutter) * 20;
 
-        if (p.y > window.innerHeight + 50) {
-            p.y = -50;
-            p.x = Math.random() * window.innerWidth;
+        if (p.y > window.innerHeight + 50 || p.x < -50) {
+            if (Math.random() > 0.5) {
+                p.y = -50;
+                p.x = (window.innerWidth * 0.2) + Math.random() * window.innerWidth;
+            } else {
+                p.x = window.innerWidth + 50;
+                p.y = -50 + Math.random() * (window.innerHeight * 0.8);
+            }
         }
-        if (p.x > window.innerWidth + 50) p.x = -50;
-        if (p.x < -50) p.x = window.innerWidth + 50;
 
         p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0) rotate(${angle + p.baseRotation + sway}deg)`;
     });

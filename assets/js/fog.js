@@ -43,7 +43,8 @@ window.fogData = [
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 15 (Initial)",
     buildDate: "2026-05-15",
-    downloadUrl: "https://drive.google.com/file/d/1P737P5KHpl8J7WRJYRdrAUFpCMqM7Jjb/view?usp=sharing",
+    //downloadUrl: "https://drive.google.com/file/d/1P737P5KHpl8J7WRJYRdrAUFpCMqM7Jjb/view?usp=sharing",
+    downloadUrl: "",
     banner: "assets/roms/fog/h3cn_socrates/banner.jpg",
     screenshots: [
         "assets/roms/fog/h3cn_socrates/1.jpg",
@@ -112,23 +113,25 @@ window.fogData = [
     credits: "- @kipasangin089, @Romeo_13card for testing\n- [nebbeli](https://x.com/nebbeli) for this amazing artwork\n- @ProjectUnknown01 for original ROM flasher (RapidFlasher)"
 },
 {
-    id: "fog_delphinium",
-    name: "Delphinium",
+    id: "fog_hos3id",
+    name: "HyperOS 3.1 ID",
     device: "Xiaomi Redmi 10C (fog)",
-    version: "Android 16",
-    buildDate: "2026-07-01",
-    isPersonal: true,
-    downloadUrl: "https://google.com/",
-    banner: "assets/roms/fog/delphinium/banner.png",
+    version: "Android 16 (Initial)",
+    buildDate: "2026-07-31",
+    isPersonal: false,
+    downloadUrl: "a",
+    banner: "assets/roms/fog/hos3id/banner.png",
     screenshots: [
-        "assets/roms/fog/delphinium/1.jpg",
-        "assets/roms/fog/delphinium/2.jpg",
-        "assets/roms/fog/delphinium/3.jpg",
-        "assets/roms/fog/delphinium/4.jpg",
-        "assets/roms/fog/delphinium/5.jpg",
-        "assets/roms/fog/delphinium/6.jpg"
+        "assets/roms/fog/hos3id/1.jpg",
+        "assets/roms/fog/hos3id/2.jpg",
+        "assets/roms/fog/hos3id/3.jpg",
+        "assets/roms/fog/hos3id/4.jpg",
+        "assets/roms/fog/hos3id/5.jpg",
+        "assets/roms/fog/hos3id/6.jpg",
+        "assets/roms/fog/hos3id/7.jpg"
     ],
-    description: "# \"Delphiniums grow tall and sturdy, rising upwards.\"",
-    credits: "- @fckmycmptr (alternoegraha) for base device sources\n- @dblenk9 for base/OG device tree\n- @CHRISL7 for vauxite kernel and @Teleg3_7 for fog adaptaion\n- @KitaujiQuartetNo1Euphonium for lot of helps"
+    description: "# \"Hee hee, what's going on? Is the whole world revolving?\"\n### Notes\n- **Not recommended** to use any other custom kernel; any issues you're facing by using them will not be given support\n- Let the ROM settle for a while after booting\n- Non rooted by default\n- Shipped with AOSP Kernel + TWRP\n### Known Issues\n- Some app may not detect zooming gestures\n- Screen coloring related option is not working",
+    flashInstruction: "### Installation\n- Use any custom recovery to flash the ROM (recommended to use orangefox by @Romeo_13card)\n- Format data\n- Reboot\n\n## NOTE: Doing any \"Wipe\" is NOT needed",
+    credits: "- @jopvan1 for HWC fixes\n- @nathannxx for helps\n- @kashis_cringey_stuffs for mods"
 }
 ];

@@ -3,12 +3,19 @@ let activeDownloadUrl = '';
 let isSecretMode = false;
 let leavesCreated = false;
 
-document.addEventListener("DOMContentLoaded", () => {
-    const today = new Date();
-    const date = today.getDate();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
+function getGMT8Target(dateStr) {
+    if (!dateStr) return new Date();
+    const parts = dateStr.trim().replace(/\//g, '-').split('-');
+    if (parts.length === 3) {
+        const y = parts[0];
+        const m = parts[1].padStart(2, '0');
+        const d = parts[2].padStart(2, '0');
+        return new Date(`${y}-${m}-${d}T20:00:00+08:00`);
+    }
+    return new Date(dateStr);
+}
 
+document.addEventListener("DOMContentLoaded", () => {
     window.romData = [];
     if (window.fogData) window.romData = window.romData.concat(window.fogData);
     if (window.earthData) window.romData = window.romData.concat(window.earthData);
@@ -106,8 +113,8 @@ function renderROMCards() {
     }
 
     filteredData.sort((a, b) => {
-        const dateA = a.buildDate ? new Date(a.buildDate).getTime() : 0;
-        const dateB = b.buildDate ? new Date(b.buildDate).getTime() : 0;
+        const dateA = a.buildDate ? getGMT8Target(a.buildDate).getTime() : 0;
+        const dateB = b.buildDate ? getGMT8Target(b.buildDate).getTime() : 0;
         return dateB - dateA;
     });
 
@@ -159,17 +166,15 @@ function renderROMCards() {
                 btnClass = "btn-dl secondary";
                 displayDate = "Unavailable";
             } else if (rom.buildDate) {
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-                const build = new Date(rom.buildDate);
-                build.setHours(0, 0, 0, 0);
+                const build = getGMT8Target(rom.buildDate);
+                const now = new Date();
 
-                if (build > today) {
+                if (build > now) {
                     badgeHtml = `<span class="new-badge">UPCOMING</span>`;
-                    displayDate = "Not yet announced";
+                    displayDate = "Coming soon";
                 } else {
                     displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                    const diffTime = today - build;
+                    const diffTime = now - build;
                     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
                     if (diffDays >= 0 && diffDays <= 14) {
                         badgeHtml = `<span class="new-badge">NEW</span>`;
@@ -382,13 +387,11 @@ function viewDetail(id) {
     let isUpcoming = false;
     let displayDate = "-";
     if (rom.buildDate) {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const build = new Date(rom.buildDate);
-        build.setHours(0, 0, 0, 0);
-        isUpcoming = build > today;
+        const build = getGMT8Target(rom.buildDate);
+        const now = new Date();
+        isUpcoming = build > now;
 
-        displayDate = isUpcoming ? "Just wait, mew~" : build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        displayDate = isUpcoming ? "Coming soon" : build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
     }
 
     let descHtml = parseMarkdown(rom.description);
@@ -632,14 +635,8 @@ async function loadAnnouncement() {
                     const endDateStr = lines[1].trim();
                     const messageText = lines.slice(2).join('\n').trim();
 
-                    const startStrFixed = startDateStr.replace(/-/g, '/');
-                    const endStrFixed = endDateStr.replace(/-/g, '/');
-
-                    const startDate = new Date(startStrFixed);
-                    startDate.setHours(0, 0, 0, 0);
-
-                    const endDate = new Date(endStrFixed);
-                    endDate.setHours(23, 59, 59, 999);
+                    const startDate = getGMT8Target(startDateStr);
+                    const endDate = getGMT8Target(endDateStr);
 
                     if (now >= startDate && now <= endDate && messageText.length > 0) {
                         activeMessages.push(messageText);

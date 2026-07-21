@@ -117,9 +117,9 @@ window.fogData = [
     name: "HyperOS 3.1 ID",
     device: "Xiaomi Redmi 10C (fog)",
     version: "Android 16 (Initial)",
-    buildDate: "2026-07-31",
+    buildDate: "2026-07-21",
     isPersonal: false,
-    downloadUrl: "a",
+    downloadUrl: "https://drive.google.com/file/d/1eSxfdxrAr2F4J9e-3SPRX9jbSKUa3bNJ/view?usp=sharing",
     banner: "assets/roms/fog/hos3id/banner.png",
     screenshots: [
         "assets/roms/fog/hos3id/1.jpg",
@@ -130,8 +130,8 @@ window.fogData = [
         "assets/roms/fog/hos3id/6.jpg",
         "assets/roms/fog/hos3id/7.jpg"
     ],
-    description: "# \"Hee hee, what's going on? Is the whole world revolving?\"\n### Notes\n- **Not recommended** to use any other custom kernel; any issues you're facing by using them will not be given support\n- Let the ROM settle for a while after booting\n- Non rooted by default\n- Shipped with AOSP Kernel + TWRP\n### Known Issues\n- Some app may not detect zooming gestures\n- Screen coloring related option is not working",
-    flashInstruction: "### Installation\n- Use any custom recovery to flash the ROM (recommended to use orangefox by @Romeo_13card)\n- Format data\n- Reboot\n\n## NOTE: Doing any \"Wipe\" is NOT needed",
-    credits: "- @jopvan1 for HWC fixes\n- @nathannxx for helps\n- @kashis_cringey_stuffs for mods\n- @Mnskkyy for mi cam"
+    description: "# \"Hee hee, what's going on? Is the whole world revolving?\"\n### Notes\n- **Not recommended** to use any other custom kernel; any issues you're facing by using them will not be given support\n- Let the ROM settle for a while after booting\n- Non rooted by default\n- Shipped with AOSP Kernel + TWRP\n### Extra Files\n- [Folkpatched boot](https://t.me/archivebsct2/26)\n### Known Issues\n- Some app may not detect zooming gestures\n- Screen coloring related option is not working",
+    flashInstruction: "### Installation\n- Use any custom recovery to flash the ROM\n- Format data\n- Reboot\n\n## NOTE: Doing any \"Wipe\" is NOT needed",
+    credits: "- @jopvan1 for HWC fixes\n- @nathannxx for helps\n- @kashis_cringey_stuffs for mods\n- @Mnskkyy for mi cam\n- @Romeo_13card and @Bangkong_sawah for testing"
 }
 ];

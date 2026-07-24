@@ -1,10 +1,4 @@
-2026-06-24
-2026-06-24
-- <b>MIUI 12.5 CN</b> has been released for public, <a href="#fog_mi125cn">check it out</a>. Make sure you're reading the instructions correctly!
-- Also, <b>DELTARUNE Chapter 5</b> will be releasing today! <a href="https://www.deltarune.com">check it out</a> if you're interested. 🌼
 
-===
-
-2026-07-12
-2026-07-12
-- <b>MIUI 12.5 CN</b> has been updated with fixes and optimizations, <a href="#fog_mi125cn">check it out</a>.
+2026-07-24
+2026-12-25
+- Looks like I can't continue maintaining my ROMs due to device limitation (dying ufs, etc.), thanks for everyone who used my ROMs, and people who contributes in it! I really appreciated it ^^<br><br>- With love, Butterscotch

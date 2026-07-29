@@ -1,4 +1,0 @@
-
-2026-07-24
-2026-12-25
-- Looks like I can't continue maintaining my ROMs due to device limitation (dying ufs, etc.), thanks for everyone who used my ROMs, and people who contributes in it! I really appreciated it ^^<br><br>- With love, Butterscotch

@@ -15,8 +15,59 @@ function getGMT8Target(dateStr) {
     return new Date(dateStr);
 }
 
+// Menambahkan CSS animasi kedip-kedip (shimmer) untuk placeholder
+function injectPlaceholderStyles() {
+    if (document.getElementById('placeholder-styles')) return;
+    const style = document.createElement('style');
+    style.id = 'placeholder-styles';
+    style.innerHTML = `
+        @keyframes shimmerPulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.4; }
+        }
+        .skeleton-shimmer {
+            animation: shimmerPulse 1.5s infinite ease-in-out;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// Menampilkan kotak-kotak kosong (Skeleton Loader)
+function showPlaceholders() {
+    const container = document.getElementById('cards-container');
+    if (!container) return;
+
+    let skeletonCards = "";
+    for (let i = 0; i < 6; i++) {
+        skeletonCards += `
+        <div class="rom-card glass" style="padding: 0; cursor: default; pointer-events: none; border-color: transparent; box-shadow: none;">
+            <div class="skeleton-shimmer" style="width: 100%; height: 160px; background: var(--surface-highest); border-radius: var(--radius-m3) var(--radius-m3) 0 0;"></div>
+            
+            <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+                <div class="skeleton-shimmer" style="width: 75%; height: 26px; background: var(--surface); border-radius: 8px; margin-bottom: 16px;"></div>
+                <div class="skeleton-shimmer" style="width: 50%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 8px;"></div>
+                <div class="skeleton-shimmer" style="width: 60%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 8px;"></div>
+                <div class="skeleton-shimmer" style="width: 40%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 24px;"></div>
+                <div class="skeleton-shimmer" style="width: 100%; height: 44px; background: var(--surface); border-radius: 100px; margin-top: auto;"></div>
+            </div>
+        </div>
+        `;
+    }
+
+    container.innerHTML = `
+        <div style="grid-column: 1 / -1; margin-bottom: 10px; border-bottom: 2px solid var(--border); padding-bottom: 12px;">
+            <div class="skeleton-shimmer" style="width: 180px; height: 28px; background: var(--surface-highest); border-radius: 8px;"></div>
+        </div>
+        ${skeletonCards}
+    `;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+    injectPlaceholderStyles();
+
     window.romData = [];
+    if (window.kunziteData) window.romData = window.romData.concat(window.kunziteData);
     if (window.fogData) window.romData = window.romData.concat(window.fogData);
     if (window.earthData) window.romData = window.romData.concat(window.earthData);
     if (window.galeData) window.romData = window.romData.concat(window.galeData);
@@ -51,7 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     createLeaves();
     renderDeviceFilters();
-    renderROMCards();
+    
+    // Tampilkan placeholder dulu, baru render data aslinya setelah 0.6 detik
+    showPlaceholders();
+    setTimeout(() => {
+        renderROMCards();
+    }, 600);
+
     loadAnnouncement();
     handleRouting();
 });
@@ -85,9 +142,15 @@ function renderDeviceFilters() {
 }
 
 function setFilter(device) {
+    if (currentFilter === device) return; // Mencegah reload kalau filter yang sama diklik
     currentFilter = device;
     renderDeviceFilters();
-    renderROMCards();
+    
+    // Efek transisi skeleton tiap ganti filter
+    showPlaceholders();
+    setTimeout(() => {
+        renderROMCards();
+    }, 400); 
 }
 
 function renderROMCards() {
@@ -238,7 +301,12 @@ function navigateHome(fromHash = false) {
     document.getElementById('page-home').classList.add('active');
 
     renderDeviceFilters();
-    renderROMCards();
+    
+    // Efek skeleton loader saat kembali ke halaman utama
+    showPlaceholders();
+    setTimeout(() => {
+        renderROMCards();
+    }, 400);
 }
 
 function show404() {
@@ -497,7 +565,17 @@ function handleRouting() {
         navigateHome(true);
     } else if (hash) {
         const romId = decodeURIComponent(hash.substring(1));
-        viewDetail(romId);
+        
+        // Sedikit animasi loading saat buka detail lewat url hash
+        const detailContainer = document.getElementById('detail-content');
+        if(detailContainer) {
+            detailContainer.innerHTML = '<div style="text-align: center; padding: 100px; color: var(--accent);">Loading...</div>';
+            setTimeout(() => {
+                viewDetail(romId);
+            }, 300);
+        } else {
+            viewDetail(romId);
+        }
     } else {
         isSecretMode = false;
         navigateHome(false);

@@ -2,6 +2,9 @@ let currentFilter = 'All';
 let activeDownloadUrl = '';
 let isSecretMode = false;
 let leavesCreated = false;
+let spamCount = 0;
+let spamTimeout;
+let isEggTriggered = false;
 
 function getGMT8Target(dateStr) {
     if (!dateStr) return new Date();
@@ -15,7 +18,6 @@ function getGMT8Target(dateStr) {
     return new Date(dateStr);
 }
 
-// Menambahkan CSS animasi kedip-kedip (shimmer) untuk placeholder
 function injectPlaceholderStyles() {
     if (document.getElementById('placeholder-styles')) return;
     const style = document.createElement('style');
@@ -33,7 +35,6 @@ function injectPlaceholderStyles() {
     document.head.appendChild(style);
 }
 
-// Menampilkan kotak-kotak kosong (Skeleton Loader)
 function showPlaceholders() {
     const container = document.getElementById('cards-container');
     if (!container) return;
@@ -43,7 +44,6 @@ function showPlaceholders() {
         skeletonCards += `
         <div class="rom-card glass" style="padding: 0; cursor: default; pointer-events: none; border-color: transparent; box-shadow: none;">
             <div class="skeleton-shimmer" style="width: 100%; height: 160px; background: var(--surface-highest); border-radius: var(--radius-m3) var(--radius-m3) 0 0;"></div>
-            
             <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
                 <div class="skeleton-shimmer" style="width: 75%; height: 26px; background: var(--surface); border-radius: 8px; margin-bottom: 16px;"></div>
                 <div class="skeleton-shimmer" style="width: 50%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 8px;"></div>
@@ -63,11 +63,35 @@ function showPlaceholders() {
     `;
 }
 
+function triggerEasterEgg() {
+    if (isEggTriggered) return;
+    isEggTriggered = true;
+
+    const overlay = document.createElement('div');
+    overlay.className = 'nuked-banner-noise';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.zIndex = '999999';
+    overlay.style.opacity = '1';
+    
+    document.body.appendChild(overlay);
+
+    const appDiv = document.getElementById('app');
+    if (appDiv) appDiv.style.display = 'none';
+    document.body.style.overflow = 'hidden';
+
+    const audio = new Audio('assets/lake_chant.mp3');
+    audio.loop = true;
+    audio.play().catch(e => {});
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     injectPlaceholderStyles();
 
     window.romData = [];
-    if (window.kunziteData) window.romData = window.romData.concat(window.kunziteData);
     if (window.fogData) window.romData = window.romData.concat(window.fogData);
     if (window.earthData) window.romData = window.romData.concat(window.earthData);
     if (window.galeData) window.romData = window.romData.concat(window.galeData);
@@ -103,7 +127,6 @@ document.addEventListener("DOMContentLoaded", () => {
     createLeaves();
     renderDeviceFilters();
     
-    // Tampilkan placeholder dulu, baru render data aslinya setelah 0.6 detik
     showPlaceholders();
     setTimeout(() => {
         renderROMCards();
@@ -132,21 +155,20 @@ function renderDeviceFilters() {
     devices.forEach(device => {
         let shortName = device;
         const match = device.match(/\(([^)]+)\)/);
-    if (match) {
-        shortName = match[1].charAt(0).toUpperCase() + match[1].slice(1);
-    }
-    filterHtml += `<button class="filter-btn ${currentFilter === device ? 'active' : ''}" onclick="setFilter('${device}')">${shortName}</button>`;
+        if (match) {
+            shortName = match[1].charAt(0).toUpperCase() + match[1].slice(1);
+        }
+        filterHtml += `<button class="filter-btn ${currentFilter === device ? 'active' : ''}" onclick="setFilter('${device}')">${shortName}</button>`;
     });
 
     filterContainer.innerHTML = filterHtml;
 }
 
 function setFilter(device) {
-    if (currentFilter === device) return; // Mencegah reload kalau filter yang sama diklik
+    if (currentFilter === device) return;
     currentFilter = device;
     renderDeviceFilters();
     
-    // Efek transisi skeleton tiap ganti filter
     showPlaceholders();
     setTimeout(() => {
         renderROMCards();
@@ -302,7 +324,6 @@ function navigateHome(fromHash = false) {
 
     renderDeviceFilters();
     
-    // Efek skeleton loader saat kembali ke halaman utama
     showPlaceholders();
     setTimeout(() => {
         renderROMCards();
@@ -415,7 +436,6 @@ function parseMarkdown(text) {
             return safeText.replace(/\n/g, '<br>');
         }
     } catch (e) {
-        console.error("Marked parse error:", e);
         return safeText.replace(/\n/g, '<br>');
     }
 }
@@ -558,6 +578,17 @@ function viewDetail(id) {
 }
 
 function handleRouting() {
+    if (isEggTriggered) return;
+
+    spamCount++;
+    clearTimeout(spamTimeout);
+    spamTimeout = setTimeout(() => { spamCount = 0; }, 1500);
+
+    if (spamCount >= 10) {
+        triggerEasterEgg();
+        return;
+    }
+
     const hash = window.location.hash;
 
     if (hash === '#personal') {
@@ -566,7 +597,6 @@ function handleRouting() {
     } else if (hash) {
         const romId = decodeURIComponent(hash.substring(1));
         
-        // Sedikit animasi loading saat buka detail lewat url hash
         const detailContainer = document.getElementById('detail-content');
         if(detailContainer) {
             detailContainer.innerHTML = '<div style="text-align: center; padding: 100px; color: var(--accent);">Loading...</div>';
@@ -639,12 +669,12 @@ function createLeaves() {
         leafParticles.push({
             el: leaf,
             x: window.innerWidth * Math.random() + (window.innerWidth * 0.2),
-                           y: Math.random() * window.innerHeight - window.innerHeight,
-                           size: size,
-                           mass: size / 20,
-                           flutter: Math.random() * Math.PI * 2,
-                           flutterSpeed: 0.02 + Math.random() * 0.02,
-                           baseRotation: 45
+            y: Math.random() * window.innerHeight - window.innerHeight,
+            size: size,
+            mass: size / 20,
+            flutter: Math.random() * Math.PI * 2,
+            flutterSpeed: 0.02 + Math.random() * 0.02,
+            baseRotation: 45
         });
     }
 
@@ -767,9 +797,7 @@ async function loadAnnouncement() {
                 };
             }
         }
-    } catch (error) {
-        console.log("No announcement.");
-    }
+    } catch (error) {}
 }
 
 window.onclick = function(event) {

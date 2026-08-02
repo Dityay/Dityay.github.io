@@ -5,6 +5,7 @@ let leavesCreated = false;
 let spamCount = 0;
 let spamTimeout;
 let isEggTriggered = false;
+let lastOpenedRomId = null;
 
 function getGMT8Target(dateStr) {
     if (!dateStr) return new Date();
@@ -67,23 +68,23 @@ function triggerEasterEgg() {
     if (isEggTriggered) return;
     isEggTriggered = true;
 
-    const overlay = document.createElement('div');
-    overlay.className = 'nuked-banner-noise';
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100vw';
-    overlay.style.height = '100vh';
-    overlay.style.zIndex = '999999';
-    overlay.style.opacity = '1';
-    
-    document.body.appendChild(overlay);
-
-    const appDiv = document.getElementById('app');
-    if (appDiv) appDiv.style.display = 'none';
+    document.body.innerHTML = '';
+    document.body.style.backgroundColor = '#000000';
+    document.body.style.display = 'flex';
+    document.body.style.justifyContent = 'center';
+    document.body.style.alignItems = 'center';
+    document.body.style.height = '100vh';
+    document.body.style.margin = '0';
     document.body.style.overflow = 'hidden';
 
-    const audio = new Audio('assets/lake_chant.mp3');
+    const img = document.createElement('img');
+    img.src = 'assets/tree.gif';
+    img.style.maxWidth = '100%';
+    img.style.maxHeight = '100vh';
+    img.style.objectFit = 'contain';
+    document.body.appendChild(img);
+
+    const audio = new Audio('assets/man.ogg');
     audio.loop = true;
     audio.play().catch(e => {});
 }
@@ -449,6 +450,26 @@ window.switchTab = function(tabId) {
 };
 
 function viewDetail(id) {
+    if (isEggTriggered) return;
+
+    if (id === lastOpenedRomId) {
+        spamCount++;
+    } else {
+        spamCount = 1;
+        lastOpenedRomId = id;
+    }
+
+    clearTimeout(spamTimeout);
+    spamTimeout = setTimeout(() => { 
+        spamCount = 0; 
+        lastOpenedRomId = null; 
+    }, 2500);
+
+    if (spamCount >= 5) {
+        triggerEasterEgg();
+        return;
+    }
+
     const rom = window.romData.find(r => String(r.id) === String(id));
 
     if (!rom) {
@@ -579,15 +600,6 @@ function viewDetail(id) {
 
 function handleRouting() {
     if (isEggTriggered) return;
-
-    spamCount++;
-    clearTimeout(spamTimeout);
-    spamTimeout = setTimeout(() => { spamCount = 0; }, 1500);
-
-    if (spamCount >= 10) {
-        triggerEasterEgg();
-        return;
-    }
 
     const hash = window.location.hash;
 

@@ -6,6 +6,7 @@ let spamCount = 0;
 let spamTimeout;
 let isEggTriggered = false;
 let lastOpenedRomId = null;
+let spamTarget = Math.floor(Math.random() * 11) + 5;
 
 function getGMT8Target(dateStr) {
     if (!dateStr) return new Date();
@@ -457,15 +458,17 @@ function viewDetail(id) {
     } else {
         spamCount = 1;
         lastOpenedRomId = id;
+        spamTarget = Math.floor(Math.random() * 11) + 5;
     }
 
     clearTimeout(spamTimeout);
     spamTimeout = setTimeout(() => { 
         spamCount = 0; 
         lastOpenedRomId = null; 
+        spamTarget = Math.floor(Math.random() * 11) + 5;
     }, 2500);
 
-    if (spamCount >= 5) {
+    if (spamCount >= spamTarget) {
         triggerEasterEgg();
         return;
     }

@@ -92,17 +92,6 @@ function triggerEasterEgg() {
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'relative';
 
-    const bgImg = document.createElement('img');
-    bgImg.src = 'assets/tree.gif';
-    bgImg.style.position = 'absolute';
-    bgImg.style.width = '100vw';
-    bgImg.style.height = '100vh';
-    bgImg.style.objectFit = 'cover';
-    bgImg.style.opacity = '0.2';
-    bgImg.style.zIndex = '0';
-    bgImg.style.animation = 'bgCreep 8s ease-in-out infinite';
-    document.body.appendChild(bgImg);
-
     const img = document.createElement('img');
     img.src = 'assets/tree.gif';
     img.style.maxWidth = '100%';

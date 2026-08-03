@@ -1,7 +1,7 @@
 window.kunziteData = [
     {
         id: "kun_myui8",
-        name: "MyUI 8",
+        name: "???",
         category: "ROM",
         device: "Xiaomi Redmi Note 15 5G (kunzite)",
         version: "???",

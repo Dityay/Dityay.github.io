@@ -1,4 +1,4 @@
-let currentFilter = 'All';
+let currentCategory = 'ROM';
 let activeDownloadUrl = '';
 let isSecretMode = false;
 let leavesCreated = false;
@@ -7,6 +7,14 @@ let spamTimeout;
 let isEggTriggered = false;
 let lastOpenedRomId = null;
 let spamTarget = Math.floor(Math.random() * 11) + 5;
+
+function preloadAssets() {
+    const img = new Image();
+    img.src = 'assets/tree.gif';
+    const audio = new Audio();
+    audio.src = 'assets/man.ogg';
+    audio.preload = 'auto';
+}
 
 function getGMT8Target(dateStr) {
     if (!dateStr) return new Date();
@@ -32,6 +40,11 @@ function injectPlaceholderStyles() {
         }
         .skeleton-shimmer {
             animation: shimmerPulse 1.5s infinite ease-in-out;
+        }
+        @keyframes bgCreep {
+            0% { transform: scale(1.15) translateY(-5%); }
+            50% { transform: scale(1.15) translateY(5%); }
+            100% { transform: scale(1.15) translateY(-5%); }
         }
     `;
     document.head.appendChild(style);
@@ -77,12 +90,26 @@ function triggerEasterEgg() {
     document.body.style.height = '100vh';
     document.body.style.margin = '0';
     document.body.style.overflow = 'hidden';
+    document.body.style.position = 'relative';
+
+    const bgImg = document.createElement('img');
+    bgImg.src = 'assets/tree.gif';
+    bgImg.style.position = 'absolute';
+    bgImg.style.width = '100vw';
+    bgImg.style.height = '100vh';
+    bgImg.style.objectFit = 'cover';
+    bgImg.style.opacity = '0.2';
+    bgImg.style.zIndex = '0';
+    bgImg.style.animation = 'bgCreep 8s ease-in-out infinite';
+    document.body.appendChild(bgImg);
 
     const img = document.createElement('img');
     img.src = 'assets/tree.gif';
     img.style.maxWidth = '100%';
     img.style.maxHeight = '100vh';
     img.style.objectFit = 'contain';
+    img.style.position = 'relative';
+    img.style.zIndex = '1';
     document.body.appendChild(img);
 
     const audio = new Audio('assets/man.ogg');
@@ -91,12 +118,18 @@ function triggerEasterEgg() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    preloadAssets();
     injectPlaceholderStyles();
 
     window.romData = [];
+    if (window.kunziteData) window.romData = window.romData.concat(window.kunziteData);
     if (window.fogData) window.romData = window.romData.concat(window.fogData);
     if (window.earthData) window.romData = window.romData.concat(window.earthData);
     if (window.galeData) window.romData = window.romData.concat(window.galeData);
+
+    window.romData.forEach(item => {
+        if (!item.category) item.category = 'ROM';
+    });
 
     const currentYearStr = new Date().getFullYear();
     if (document.getElementById('footer-year')) document.getElementById('footer-year').textContent = currentYearStr;
@@ -127,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     createLeaves();
-    renderDeviceFilters();
+    renderFilters();
     
     showPlaceholders();
     setTimeout(() => {
@@ -138,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleRouting();
 });
 
-function renderDeviceFilters() {
+function renderFilters() {
     const filterContainer = document.getElementById('home-device-filter-container');
     if (!filterContainer || !window.romData) return;
 
@@ -150,26 +183,28 @@ function renderDeviceFilters() {
         visibleData = visibleData.filter(rom => !rom.isPersonal);
     }
 
-    const devices = [...new Set(visibleData.map(rom => rom.device))];
+    const categories = [...new Set(visibleData.map(rom => rom.category))];
+    if (!categories.includes(currentCategory) && categories.length > 0) {
+        currentCategory = categories[0];
+    }
 
-    let filterHtml = `<button class="filter-btn ${currentFilter === 'All' ? 'active' : ''}" onclick="setFilter('All')">All Devices</button>`;
-
-    devices.forEach(device => {
-        let shortName = device;
-        const match = device.match(/\(([^)]+)\)/);
-        if (match) {
-            shortName = match[1].charAt(0).toUpperCase() + match[1].slice(1);
-        }
-        filterHtml += `<button class="filter-btn ${currentFilter === device ? 'active' : ''}" onclick="setFilter('${device}')">${shortName}</button>`;
+    let catHtml = `
+    <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; -ms-overflow-style: none;">
+        <style>#home-device-filter-container div::-webkit-scrollbar { display: none; }</style>
+    `;
+    
+    categories.forEach(cat => {
+        catHtml += `<button class="filter-btn ${currentCategory === cat ? 'active' : ''}" onclick="setCategory('${cat}')" style="white-space: nowrap; flex-shrink: 0; padding: 8px 20px; font-size: 0.95rem; border-radius: 100px;">${cat}</button>`;
     });
-
-    filterContainer.innerHTML = filterHtml;
+    
+    catHtml += `</div>`;
+    filterContainer.innerHTML = catHtml;
 }
 
-function setFilter(device) {
-    if (currentFilter === device) return;
-    currentFilter = device;
-    renderDeviceFilters();
+function setCategory(cat) {
+    if (currentCategory === cat) return;
+    currentCategory = cat;
+    renderFilters();
     
     showPlaceholders();
     setTimeout(() => {
@@ -199,19 +234,15 @@ function renderROMCards() {
         filteredData = filteredData.filter(rom => !rom.isPersonal);
     }
 
+    filteredData = filteredData.filter(rom => rom.category === currentCategory);
+
     filteredData.sort((a, b) => {
         const dateA = a.buildDate ? getGMT8Target(a.buildDate).getTime() : 0;
         const dateB = b.buildDate ? getGMT8Target(b.buildDate).getTime() : 0;
         return dateB - dateA;
     });
 
-    if (currentFilter !== 'All') {
-        filteredData = filteredData.filter(rom => rom.device === currentFilter);
-    }
-
-    const devicesToRender = currentFilter === 'All'
-    ? [...new Set(filteredData.map(rom => rom.device))]
-    : [currentFilter];
+    const devicesToRender = [...new Set(filteredData.map(rom => rom.device))];
 
     let htmlContent = "";
 
@@ -240,7 +271,7 @@ function renderROMCards() {
 
             let cardAction = `onclick="viewDetail('${rom.id}')"`;
             let cursorStyle = "cursor: pointer;";
-            let btnText = "Get ROM";
+            let btnText = currentCategory === 'ROM' ? 'Get ROM' : 'View Details';
             let btnStyle = "width: 100%; margin-top: auto;";
             let btnClass = "btn-dl primary";
 
@@ -287,9 +318,9 @@ function renderROMCards() {
             <h3 style="font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; color: ${isNuked ? 'var(--muted)' : 'var(--accent)'}; letter-spacing: -0.5px; line-height: 1.2;">
             ${rom.name} ${badgeHtml}
             </h3>
-            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 4px;">Device: <span style="color: var(--text); font-weight: 500;">${rom.device}</span></p>
+            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 4px;">Target: <span style="color: var(--text); font-weight: 500;">${rom.device}</span></p>
             <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 4px;">Version: <span style="color: var(--text); font-weight: 500;">${rom.version}</span></p>
-            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 24px;">Build Date: <span style="color: var(--text); font-weight: 500;">${displayDate}</span></p>
+            <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 24px;">Date: <span style="color: var(--text); font-weight: 500;">${displayDate}</span></p>
             <button class="${btnClass}" style="${btnStyle}">${btnText}</button>
             </div>
             </div>
@@ -298,7 +329,7 @@ function renderROMCards() {
     });
 
     if (filteredData.length === 0) {
-        htmlContent = `<div style="grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 40px 0;">No ROMs found for this category.</div>`;
+        htmlContent = `<div style="grid-column: 1 / -1; color: var(--muted); text-align: center; padding: 40px 0;">No items found for this category.</div>`;
     }
 
     container.innerHTML = htmlContent;
@@ -324,7 +355,7 @@ function navigateHome(fromHash = false) {
     document.getElementById('page-detail').classList.remove('active');
     document.getElementById('page-home').classList.add('active');
 
-    renderDeviceFilters();
+    renderFilters();
     
     showPlaceholders();
     setTimeout(() => {
@@ -344,7 +375,7 @@ function show404() {
     <h1 style="font-family: 'Syne', sans-serif; font-size: 8rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 10px;">404</h1>
     <h2 style="font-family: 'Syne', sans-serif; font-size: 2rem; color: var(--text); margin-bottom: 16px;">Oops! You're Lost</h2>
     <p style="color: var(--muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 40px; line-height: 1.6;">
-    The ROM or page you are looking for doesn't exist, has been removed, or the link is broken.
+    The item or page you are looking for doesn't exist, has been removed, or the link is broken.
     </p>
     <button class="btn-dl primary" onclick="navigateHome()" style="padding: 16px 32px; font-size: 1.1rem;">
     Back to Home
@@ -364,7 +395,7 @@ function showUpcomingPopup() {
     <div style="text-align: center; padding: 10px;">
     <h2 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: var(--accent); margin-bottom: 15px;">Stay Tuned!</h2>
     <p style="color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
-    This ROM is still in the development stage (Upcoming), and a download link is not yet available. Stay tuned for further updates!
+    This item is still in the development stage (Upcoming), and a download link is not yet available. Stay tuned for further updates!
     </p>
     <button class="btn-dl primary" onclick="closeModal()">Understand</button>
     </div>
@@ -380,7 +411,7 @@ function showNukedPopup() {
     <div style="text-align: center; padding: 10px;">
     <h2 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: #ff6b6b; margin-bottom: 15px;">⛔ NUKED</h2>
     <p style="color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
-    This ROM has been nuked (withdrawn/removed) and its details are no longer accessible.
+    This item has been nuked (withdrawn/removed) and its details are no longer accessible.
     </p>
     <button class="btn-dl primary" onclick="closeModal()">Understand</button>
     </div>
@@ -403,7 +434,7 @@ function showDownloadWarningPopup() {
     Your warranty is now void.
     </strong>
     <p style="margin: 0; color: var(--muted);">
-    We are not responsible for bricked devices, dead SD cards, thermonuclear war, or you getting fired because the alarm app failed. Please do some research if you have any concerns about features included in this ROM before flashing it! YOU are choosing to make these modifications, and if you point the finger at us for messing up your device, we will laugh at you.
+    We are not responsible for bricked devices, dead SD cards, thermonuclear war, or you getting fired because the alarm app failed. Please do some research if you have any concerns about features included in this build before flashing it! YOU are choosing to make these modifications, and if you point the finger at us for messing up your device, we will laugh at you.
     </p>
     </div>
 
@@ -530,7 +561,7 @@ function viewDetail(id) {
         ⚠️ Personal Build
         </h3>
         <p style="color: var(--muted); font-size: 0.95rem; margin: 0; line-height: 1.6;">
-        This ROM is specifically compiled for personal use. It might contain experimental features, missing optimizations, or specific configurations tailored for the developer. You are free to download and flash it, but please proceed with caution.
+        This build is specifically compiled for personal use. It might contain experimental features, missing optimizations, or specific configurations tailored for the developer. You are free to download and flash it, but please proceed with caution.
         </p>
         </div>
         `;
@@ -538,7 +569,7 @@ function viewDetail(id) {
 
     let downloadButtonHtml = isUpcoming
     ? `<button class="btn-dl secondary" onclick="showUpcomingPopup()" style="padding: 16px 32px; border-color: var(--accent);">Coming Soon</button>`
-    : `<button class="btn-dl primary" onclick="showDownloadWarningPopup()" style="padding: 16px 32px;">Download ROM</button>`;
+    : `<button class="btn-dl primary" onclick="showDownloadWarningPopup()" style="padding: 16px 32px;">Download</button>`;
 
     document.getElementById('detail-content').innerHTML = `
     <div class="rom-detail-banner" style="background-image: url('${rom.banner}');">
@@ -549,13 +580,13 @@ function viewDetail(id) {
 
     <div style="padding: 10px 5px;">
     <p style="font-size: 1.1rem; color: var(--text); margin-bottom: 8px;">
-    Device: <span style="color: var(--accent); font-weight: 700;">${rom.device}</span>
+    Target: <span style="color: var(--accent); font-weight: 700;">${rom.device}</span>
     </p>
     <p style="font-size: 1rem; color: var(--muted); margin-bottom: 8px;">
     Version: <span style="color: var(--text); font-weight: 600;">${rom.version}</span>
     </p>
     <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 25px;">
-    Build Date: <span style="color: var(--text); font-weight: 500;">${displayDate}</span>
+    Date: <span style="color: var(--text); font-weight: 500;">${displayDate}</span>
     </p>
 
     ${personalWarningHtml}

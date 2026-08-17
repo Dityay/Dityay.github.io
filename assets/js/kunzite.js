@@ -4,9 +4,9 @@ window.kunziteData = [
         name: "ColorOS 16",
         category: "ROM",
         device: "Xiaomi Redmi Note 15 5G (kunzite)",
-        version: "Android 16 (BETA)",
+        version: "Android 16 (Initial)",
         buildDate: "2026-8-17",
-        downloadUrl: "a",
+        downloadUrl: "https://drive.google.com/file/d/1KtrOS02peaNMy4t6LRopPS7DrKW8nRLf/view?usp=sharing",
         banner: "assets/roms/kunzite/cos16/banner.png",
         screenshots: [
             "assets/roms/kunzite/cos16/1.jpg",

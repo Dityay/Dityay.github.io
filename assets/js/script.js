@@ -1,4 +1,5 @@
 let currentCategory = 'ROM';
+let currentFilter = 'All';
 let activeDownloadUrl = '';
 let isSecretMode = false;
 let leavesCreated = false;
@@ -28,24 +29,31 @@ function getGMT8Target(dateStr) {
     return new Date(dateStr);
 }
 
+function updateCSS(suffix) {
+    const cssLink = document.getElementById('main-css') || document.querySelector('link[href*="style"]');
+    if (cssLink) {
+        cssLink.href = 'assets/css/style' + (suffix || '') + '.css';
+    }
+}
+
 function injectPlaceholderStyles() {
     if (document.getElementById('placeholder-styles')) return;
     const style = document.createElement('style');
     style.id = 'placeholder-styles';
     style.innerHTML = `
-        @keyframes shimmerPulse {
-            0% { opacity: 0.4; }
-            50% { opacity: 0.8; }
-            100% { opacity: 0.4; }
-        }
-        .skeleton-shimmer {
-            animation: shimmerPulse 1.5s infinite ease-in-out;
-        }
-        @keyframes bgCreep {
-            0% { transform: scale(1.15) translateY(-5%); }
-            50% { transform: scale(1.15) translateY(5%); }
-            100% { transform: scale(1.15) translateY(-5%); }
-        }
+    @keyframes shimmerPulse {
+        0% { opacity: 0.4; }
+        50% { opacity: 0.8; }
+        100% { opacity: 0.4; }
+    }
+    .skeleton-shimmer {
+        animation: shimmerPulse 1.5s infinite ease-in-out;
+    }
+    @keyframes bgCreep {
+        0% { transform: scale(1.15) translateY(-5%); }
+        50% { transform: scale(1.15) translateY(5%); }
+        100% { transform: scale(1.15) translateY(-5%); }
+    }
     `;
     document.head.appendChild(style);
 }
@@ -58,23 +66,23 @@ function showPlaceholders() {
     for (let i = 0; i < 6; i++) {
         skeletonCards += `
         <div class="rom-card glass" style="padding: 0; cursor: default; pointer-events: none; border-color: transparent; box-shadow: none;">
-            <div class="skeleton-shimmer" style="width: 100%; height: 160px; background: var(--surface-highest); border-radius: var(--radius-m3) var(--radius-m3) 0 0;"></div>
-            <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
-                <div class="skeleton-shimmer" style="width: 75%; height: 26px; background: var(--surface); border-radius: 8px; margin-bottom: 16px;"></div>
-                <div class="skeleton-shimmer" style="width: 50%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 8px;"></div>
-                <div class="skeleton-shimmer" style="width: 60%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 8px;"></div>
-                <div class="skeleton-shimmer" style="width: 40%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 24px;"></div>
-                <div class="skeleton-shimmer" style="width: 100%; height: 44px; background: var(--surface); border-radius: 100px; margin-top: auto;"></div>
-            </div>
+        <div class="skeleton-shimmer" style="width: 100%; height: 160px; background: var(--surface-highest); border-radius: var(--radius-m3) var(--radius-m3) 0 0;"></div>
+        <div style="padding: 24px; display: flex; flex-direction: column; flex-grow: 1;">
+        <div class="skeleton-shimmer" style="width: 75%; height: 26px; background: var(--surface); border-radius: 8px; margin-bottom: 16px;"></div>
+        <div class="skeleton-shimmer" style="width: 50%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 8px;"></div>
+        <div class="skeleton-shimmer" style="width: 60%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 8px;"></div>
+        <div class="skeleton-shimmer" style="width: 40%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 24px;"></div>
+        <div class="skeleton-shimmer" style="width: 100%; height: 44px; background: var(--surface); border-radius: 100px; margin-top: auto;"></div>
+        </div>
         </div>
         `;
     }
 
     container.innerHTML = `
-        <div style="grid-column: 1 / -1; margin-bottom: 10px; border-bottom: 2px solid var(--border); padding-bottom: 12px;">
-            <div class="skeleton-shimmer" style="width: 180px; height: 28px; background: var(--surface-highest); border-radius: 8px;"></div>
-        </div>
-        ${skeletonCards}
+    <div style="grid-column: 1 / -1; margin-bottom: 10px; border-bottom: 2px solid var(--border); padding-bottom: 12px;">
+    <div class="skeleton-shimmer" style="width: 180px; height: 28px; background: var(--surface-highest); border-radius: 8px;"></div>
+    </div>
+    ${skeletonCards}
     `;
 }
 
@@ -91,6 +99,17 @@ function triggerEasterEgg() {
     document.body.style.margin = '0';
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'relative';
+
+    const bgImg = document.createElement('img');
+    bgImg.src = 'assets/tree.gif';
+    bgImg.style.position = 'absolute';
+    bgImg.style.width = '100vw';
+    bgImg.style.height = '100vh';
+    bgImg.style.objectFit = 'cover';
+    bgImg.style.opacity = '0.2';
+    bgImg.style.zIndex = '0';
+    bgImg.style.animation = 'bgCreep 8s ease-in-out infinite';
+    document.body.appendChild(bgImg);
 
     const img = document.createElement('img');
     img.src = 'assets/tree.gif';
@@ -120,9 +139,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!item.category) item.category = 'ROM';
     });
 
-    const currentYearStr = new Date().getFullYear();
-    if (document.getElementById('footer-year')) document.getElementById('footer-year').textContent = currentYearStr;
-    document.querySelectorAll('.footer-year-d').forEach(el => el.textContent = currentYearStr);
+        const currentYearStr = new Date().getFullYear();
+        if (document.getElementById('footer-year')) document.getElementById('footer-year').textContent = currentYearStr;
+        document.querySelectorAll('.footer-year-d').forEach(el => el.textContent = currentYearStr);
 
     const htmlElement = document.documentElement;
     const systemThemeMedia = window.matchMedia('(prefers-color-scheme: dark)');
@@ -150,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     createLeaves();
     renderFilters();
-    
+
     showPlaceholders();
     setTimeout(() => {
         renderROMCards();
@@ -179,13 +198,13 @@ function renderFilters() {
 
     let catHtml = `
     <div style="display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; -ms-overflow-style: none;">
-        <style>#home-device-filter-container div::-webkit-scrollbar { display: none; }</style>
+    <style>#home-device-filter-container div::-webkit-scrollbar { display: none; }</style>
     `;
-    
+
     categories.forEach(cat => {
         catHtml += `<button class="filter-btn ${currentCategory === cat ? 'active' : ''}" onclick="setCategory('${cat}')" style="white-space: nowrap; flex-shrink: 0; padding: 8px 20px; font-size: 0.95rem; border-radius: 100px;">${cat}</button>`;
     });
-    
+
     catHtml += `</div>`;
     filterContainer.innerHTML = catHtml;
 }
@@ -194,11 +213,11 @@ function setCategory(cat) {
     if (currentCategory === cat) return;
     currentCategory = cat;
     renderFilters();
-    
+
     showPlaceholders();
     setTimeout(() => {
         renderROMCards();
-    }, 400); 
+    }, 400);
 }
 
 function renderROMCards() {
@@ -325,6 +344,7 @@ function renderROMCards() {
 }
 
 function navigateHome(fromHash = false) {
+    updateCSS('');
     if (!fromHash) {
         if (isSecretMode) {
             window.location.hash = 'personal';
@@ -345,7 +365,7 @@ function navigateHome(fromHash = false) {
     document.getElementById('page-home').classList.add('active');
 
     renderFilters();
-    
+
     showPlaceholders();
     setTimeout(() => {
         renderROMCards();
@@ -482,9 +502,9 @@ function viewDetail(id) {
     }
 
     clearTimeout(spamTimeout);
-    spamTimeout = setTimeout(() => { 
-        spamCount = 0; 
-        lastOpenedRomId = null; 
+    spamTimeout = setTimeout(() => {
+        spamCount = 0;
+        lastOpenedRomId = null;
         spamTarget = Math.floor(Math.random() * 11) + 5;
     }, 2500);
 
@@ -499,6 +519,8 @@ function viewDetail(id) {
         show404();
         return;
     }
+
+    updateCSS(rom.cssSuffix || '');
 
     const isNuked = !rom.downloadUrl || rom.downloadUrl.trim() === "";
     if (isNuked) {
@@ -631,7 +653,7 @@ function handleRouting() {
         navigateHome(true);
     } else if (hash) {
         const romId = decodeURIComponent(hash.substring(1));
-        
+
         const detailContainer = document.getElementById('detail-content');
         if(detailContainer) {
             detailContainer.innerHTML = '<div style="text-align: center; padding: 100px; color: var(--accent);">Loading...</div>';
@@ -704,12 +726,12 @@ function createLeaves() {
         leafParticles.push({
             el: leaf,
             x: window.innerWidth * Math.random() + (window.innerWidth * 0.2),
-            y: Math.random() * window.innerHeight - window.innerHeight,
-            size: size,
-            mass: size / 20,
-            flutter: Math.random() * Math.PI * 2,
-            flutterSpeed: 0.02 + Math.random() * 0.02,
-            baseRotation: 45
+                           y: Math.random() * window.innerHeight - window.innerHeight,
+                           size: size,
+                           mass: size / 20,
+                           flutter: Math.random() * Math.PI * 2,
+                           flutterSpeed: 0.02 + Math.random() * 0.02,
+                           baseRotation: 45
         });
     }
 

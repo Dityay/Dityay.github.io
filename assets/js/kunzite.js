@@ -1,12 +1,13 @@
 window.kunziteData = [
     {
         id: "kun_cos16",
-        name: "ColorOS 16",
+        name: "ColorOS 16 CN",
         category: "ROM",
-        device: "Xiaomi Redmi Note 15 5G (kunzite)",
-        version: "Android 16 (Initial)",
-        buildDate: "2026-8-17",
-        downloadUrl: "https://drive.google.com/file/d/1KtrOS02peaNMy4t6LRopPS7DrKW8nRLf/view?usp=sharing",
+        device: "Xiaomi REDMI Note 15 5G (kunzite)",
+        version: "Android 16 (Hotfix 1)",
+        buildDate: "2026-8-23",
+        cssSuffix: "-gold",
+        downloadUrl: "https://drive.google.com/file/d/1tPhopNKt77aVzncqdypMV10GxGxBM4bm/view?usp=sharing",
         banner: "assets/roms/kunzite/cos16/banner.png",
         screenshots: [
             "assets/roms/kunzite/cos16/1.jpg",
@@ -17,8 +18,8 @@ window.kunziteData = [
             "assets/roms/kunzite/cos16/6.jpg"
         ],
 
-        description: "# \"Skies have been forever blue...\"\n### Notes\n- **THIS IS A BETA BUILD, YOUR FEEDBACK IS REALLY NEEDED.**\n- Let the ROM settle for a while after booting (may lag after booting, especially for the first boot)\n- Non rooted by default and shipped with OrangeFox\n- **Thermal is disabled by default, to enable run ```setprop persist.deltacore.disable_thermal false``` in terminal with root**\n### Known Issues\n- FOD and FaceUnlock not working\n- Light sensor (auto brightness) not working\n- Report to me if you found any other issues",
-        flashInstruction: "### Installation\n- Flash [this](https://t.me/KunziteIDUpdates/38) or [this](https://t.me/archivebsct2/35) recovery\n- Flash the ROM file  (recommended flashing either from Internal storage or adb sideload)\n- Format data\n- Reboot if you dont want to flash any other things",
-        credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand for alot of helps, instructions and fixes\n- @ArticUpdates, @eepyvanagrand for settings mod\n- @heybyben for aosp vendor\n- [@EryneCad](https://x.com/EryneCad/status/2080014147471978672) for kriscest art :eyes:"
+        description: "# \"A dream as real as Golden Flowers\"\n### Notes\n- **CLEAN FLASH IS MANDATORY!**\n- **Let the ROM settle for a while after booting (may lag after booting, especially for the first boot)**\n- Non rooted by default and shipped with OrangeFox\n### Changes\n- Fixed prebuilt GCAM crash, some issue with Play Store, face unlock (after enrolling, goto face unlock settings, disable and re-enable **Screen unlock** toggle), app lock, other __kunzite__ variant not booting (need test), missing ring mode, and VOOC display\n- Enabled MGLRU by default\n- Minor changes and improvements\n### Known Issues\n- FOD not working\n- Light sensor (auto brightness), IR Blaster not working\n- Report to me if you found any other issues",
+        flashInstruction: "### Installation\n- Flash [this](https://t.me/KunziteIDUpdates/38) or [this](https://t.me/archivebsct2/35) recovery\n- Flash the ROM file  (recommended flashing either from Internal storage or adb sideload)\n- Format data\n\n- Flash [firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/) matching your device region **(optional)**\n- Reboot if you dont want to flash any other things (if there's any \"No OS\" warning after flashing just ignore it)",
+        credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand for alot of helps, instructions and fixes\n- @getthefckoutofheree for app lock fix\n- @heybyben for aosp vendor, ofox\n- @iDeadXD for kernel\n- @rianixia for original VOOC fix\n- @SM6475 for helps"
     }
 ];

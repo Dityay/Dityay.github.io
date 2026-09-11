@@ -30,10 +30,24 @@ function getGMT8Target(dateStr) {
 }
 
 function updateCSS(suffix) {
-    const cssLink = document.getElementById('main-css') || document.querySelector('link[href*="style"]');
-    if (cssLink) {
-        cssLink.href = 'assets/css/style' + (suffix || '') + '.css';
-    }
+    const newHref = 'assets/css/style' + (suffix || '') + '.css';
+    const currentLink = document.getElementById('main-css') || document.querySelector('link[href*="style"]');
+
+    if (currentLink && currentLink.getAttribute('href') === newHref) return;
+
+    const newLink = document.createElement('link');
+    newLink.rel = 'stylesheet';
+    newLink.href = newHref;
+
+    newLink.onload = () => {
+
+        if (currentLink) {
+            currentLink.remove();
+        }
+        newLink.id = 'main-css';
+    };
+
+    document.head.appendChild(newLink);
 }
 
 function injectPlaceholderStyles() {

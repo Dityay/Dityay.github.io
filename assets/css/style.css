@@ -1,26 +1,26 @@
 :root {
-    --bg: #0f1419;
-    --surface: rgba(26, 32, 39, 0.4);
-    --surface-cards: rgba(33, 40, 48, 0.5);
-    --border: rgba(68, 71, 78, 0.2);
-    --grid-color: #2b343e;
-    --text: #e1e2e8;
-    --muted: #aeb0b7;
-    --accent: #a8c7fa;
-    --accent-hover: #82abf0;
+    --bg: #0f0a0a;
+    --surface: rgba(30, 15, 15, 0.4);
+    --surface-cards: rgba(40, 20, 20, 0.5);
+    --border: rgba(100, 60, 60, 0.2);
+    --grid-color: #331d25;
+    --text: #ece0df;
+    --muted: #d0c4c2;
+    --accent: #ffb4ab;
+    --accent-hover: #ff897d;
     --radius-m3: 24px;
 }
 
 [data-theme="light"] {
-    --bg: #f8f9ff;
-    --surface: rgba(240, 243, 249, 0.5);
-    --surface-cards: rgba(233, 236, 245, 0.6);
-    --border: rgba(196, 198, 208, 0.3);
-    --grid-color: #e0e4ef;
-    --text: #1a1c1e;
-    --muted: #5e6066;
-    --accent: #0b57d0;
-    --accent-hover: #0842a0;
+    --bg: #fff8f7;
+    --surface: rgba(255, 234, 233, 0.5);
+    --surface-cards: rgba(255, 218, 214, 0.6);
+    --border: rgba(133, 115, 113, 0.3);
+    --grid-color: #f5ddda;
+    --text: #201a1a;
+    --muted: #534341;
+    --accent: #ba1a1a;
+    --accent-hover: #93000a;
 }
 
 [data-theme="light"] .modal {
@@ -28,7 +28,7 @@
 }
 
 [data-theme="light"] .modal-content {
-    background: rgba(240, 243, 249, 0.85);
+    background: rgba(255, 234, 233, 0.85);
     box-shadow: 0 24px 48px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
@@ -116,7 +116,7 @@ overflow-x: hidden;
 .orb-2 {
     width: 450px;
     height: 450px;
-    background: #364563;
+    background: #93000a;
     bottom: 10%;
     right: -100px;
     animation-delay: 2s;
@@ -192,7 +192,7 @@ nav {
 .btn-dl.primary {
     background-color: var(--accent);
     color: #14110e;
-    box-shadow: 0 4px 12px rgba(168, 199, 250, 0.2);
+    box-shadow: 0 4px 12px rgba(255, 180, 171, 0.2);
 
 }
 
@@ -265,7 +265,7 @@ nav {
     background: var(--accent);
     color: #14110e;
     border-color: var(--accent);
-    box-shadow: 0 4px 12px rgba(168, 199, 250, 0.25);
+    box-shadow: 0 4px 12px rgba(255, 180, 171, 0.25);
 }
 
 [data-theme="light"] .filter-btn.active {
@@ -382,7 +382,7 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(15, 20, 25, 0.95) 5%, rgba(15, 20, 25, 0.2) 100%);
+    background: linear-gradient(to top, rgba(15, 10, 10, 0.95) 5%, rgba(15, 10, 10, 0.2) 100%);
     z-index: 1;
 }
 
@@ -759,153 +759,170 @@ footer {
     }
 
     nav {
-        padding: 16px 5%;
+        padding: 12px 4%;
         width: 100%;
     }
 
     .nav-logo {
-        font-size: 1.4rem;
+        font-size: 1.25rem;
     }
 
     .btn-dl {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-
-    .page {
-        padding: 12px 5% 50px 5%;
-    }
-
-    .section-label {
-        font-size: 1.8rem;
-    }
-
-    .filter-controls {
-        gap: 8px;
-        margin-top: 10px;
-    }
-
-    .filter-btn {
         padding: 8px 16px;
         font-size: 0.85rem;
     }
 
+    .page {
+        padding: 12px 4% 40px 4%;
+    }
+
+    .section-label {
+        font-size: 1.5rem;
+    }
+
+    .filter-controls {
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .filter-btn {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+
     .banner {
-        padding: 16px;
-        margin: 10px auto 25px auto;
+        padding: 12px 16px;
+        margin: 10px auto 20px auto;
         align-items: flex-start;
         position: relative;
     }
 
     .banner-content {
-        gap: 12px;
+        gap: 10px;
         align-items: flex-start;
     }
 
     .banner-badge {
-        font-size: 0.7rem;
-        padding: 3px 8px;
+        font-size: 0.65rem;
+        padding: 2px 6px;
         margin-top: 0;
     }
 
     .banner-text {
-        max-height: 44px;
+        max-height: 40px;
     }
 
     .banner-text p, .banner-text ul {
-        font-size: 0.9rem;
-        line-height: 1.5;
+        font-size: 0.85rem;
+        line-height: 1.4;
     }
 
     .expand-btn {
-        font-size: 0.85rem;
-        padding: 6px 0 0 0;
+        font-size: 0.8rem;
+        padding: 4px 0 0 0;
     }
 
     .close-btn {
         position: absolute;
-        top: 12px;
-        right: 12px;
+        top: 10px;
+        right: 10px;
         padding: 0;
-        font-size: 22px;
+        font-size: 20px;
     }
 
     .cards-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 12px;
         width: 100%;
     }
 
     .rom-card {
-        padding: 0;
-        border-radius: 20px;
+        border-radius: 16px;
+    }
+
+
+    .rom-card > div:first-child {
+        height: 120px !important;
+    }
+
+    .rom-card > div:last-child {
+        padding: 16px !important;
     }
 
     #cards-container h2 {
-    font-size: 1.3rem !important;
-    margin-bottom: 8px !important;
+    font-size: 1.2rem !important;
+    margin-bottom: 6px !important;
+    margin-top: 24px !important;
     }
 
     .rom-card h3 {
-        font-size: 1.25rem !important;
-        margin-bottom: 8px !important;
+        font-size: 1.15rem !important;
+        margin-bottom: 6px !important;
     }
 
     .rom-card p {
-        font-size: 0.9rem !important;
-        margin-bottom: 4px !important;
+        font-size: 0.85rem !important;
+        margin-bottom: 2px !important;
+    }
+
+    .rom-card .btn-dl {
+        margin-top: 12px !important;
+        padding: 10px 0 !important;
     }
 
     .new-badge {
-        font-size: 0.65rem;
-        padding: 2px 6px;
+        font-size: 0.6rem;
+        padding: 2px 5px;
         transform: translateY(-2px);
     }
 
     .detail-container {
-        padding: 24px 16px;
-        border-radius: 20px;
-        margin-bottom: 40px;
+        padding: 16px 12px;
+        border-radius: 16px;
+        margin-bottom: 30px;
     }
 
     .rom-detail-banner {
         width: 100% !important;
         box-sizing: border-box;
-        height: 180px;
-        padding: 20px;
-        border-radius: 16px;
-        margin-bottom: 24px;
+        height: 140px;
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 16px;
     }
 
     .rom-banner-title {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 
     .rom-info-tabs {
         padding-bottom: 8px;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
     }
 
     .tab-btn {
-        padding: 8px 14px;
-        font-size: 0.95rem;
+        padding: 6px 12px;
+        font-size: 0.85rem;
     }
 
     .rom-description-container p, .rom-description-container blockquote p {
-        font-size: 0.95rem !important;
+        font-size: 0.9rem !important;
+        margin-bottom: 12px !important;
     }
 
     .rom-description-container h3 {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
+        margin-top: 16px;
+        margin-bottom: 8px;
     }
 
     .rom-description-container h4 {
-        font-size: 1.05rem;
+        font-size: 1rem;
     }
 
     .screenshot-grid {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 8px;
     }
 
     .screenshot-item {
@@ -913,67 +930,67 @@ footer {
     }
 
     .modal-content {
-        padding: 24px;
-        border-radius: 24px;
+        padding: 20px;
+        border-radius: 20px;
         width: 92%;
     }
 
     #detail-content > div[style*="text-align: center"] h1 {
-    font-size: 4rem !important;
+    font-size: 3.5rem !important;
     }
 
     #detail-content > div[style*="text-align: center"] h2 {
-    font-size: 1.3rem !important;
-    margin-bottom: 10px !important;
+    font-size: 1.2rem !important;
+    margin-bottom: 8px !important;
     }
 
     #detail-content > div[style*="text-align: center"] p {
-    font-size: 0.9rem !important;
-    margin-bottom: 25px !important;
+    font-size: 0.85rem !important;
+    margin-bottom: 20px !important;
     padding: 0 10px;
     }
 
     .glass {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        background: rgba(26, 32, 39, 0.9) !important;
+        background: rgba(30, 15, 15, 0.9) !important;
     }
 
     .detail-container, .banner {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;
-        background: rgba(33, 40, 48, 0.95) !important;
+        background: rgba(40, 20, 20, 0.95) !important;
     }
 
     .modal-content {
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
-        background: rgba(26, 32, 39, 0.85) !important;
+        background: rgba(30, 15, 15, 0.85) !important;
     }
 
     [data-theme="light"] .glass {
-        background: rgba(240, 243, 249, 0.9) !important;
+        background: rgba(255, 234, 233, 0.9) !important;
     }
 
     [data-theme="light"] .detail-container, [data-theme="light"] .banner {
-        background: rgba(233, 236, 245, 0.95) !important;
+        background: rgba(255, 218, 214, 0.95) !important;
     }
 
     [data-theme="light"] .modal-content {
-        background: rgba(240, 243, 249, 0.85) !important;
+        background: rgba(255, 234, 233, 0.85) !important;
     }
 
     footer {
-        padding: 30px 5% 20px 5%;
-        margin-top: 20px;
+        padding: 24px 5% 16px 5%;
+        margin-top: 16px;
     }
 
     footer p {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
     }
 
     .footer-disclaimer {
-        font-size: 0.75rem;
-        margin-top: 8px;
+        font-size: 0.7rem;
+        margin-top: 6px;
     }
 }

@@ -6,7 +6,7 @@
     --grid-color: #3d3628;
     --text: #e8e4df;
     --muted: #b3aea6;
-    --accent: #f2c94c; /* Gold accent */
+    --accent: #f2c94c;
     --accent-hover: #d9b138;
     --radius-m3: 24px;
 }
@@ -19,7 +19,7 @@
     --grid-color: #e5dac3;
     --text: #242018;
     --muted: #6b6355;
-    --accent: #b38600; /* Darker gold for light mode */
+    --accent: #b38600;
     --accent-hover: #8f6b00;
 }
 
@@ -116,7 +116,7 @@ overflow-x: hidden;
 .orb-2 {
     width: 450px;
     height: 450px;
-    background: #634b22; /* Warm brown-gold untuk orb kedua */
+    background: #634b22;
     bottom: 10%;
     right: -100px;
     animation-delay: 2s;
@@ -192,7 +192,7 @@ nav {
 .btn-dl.primary {
     background-color: var(--accent);
     color: #14110e;
-    box-shadow: 0 4px 12px rgba(242, 201, 76, 0.2); /* Shadow disesuaikan dengan warna emas */
+    box-shadow: 0 4px 12px rgba(242, 201, 76, 0.2);
 
 }
 
@@ -933,7 +933,7 @@ footer {
     padding: 0 10px;
     }
 
-    /* Penyesuaian warna overlay mobile agar senada dengan Gold Material You */
+
     .glass {
         backdrop-filter: none !important;
         -webkit-backdrop-filter: none !important;

@@ -732,6 +732,9 @@ function navigateHome(fromHash = false) {
     if (homePage) homePage.classList.add('active');
 
     document.body.classList.remove('has-sticky-bar');
+    document.body.style.overflow = '';
+    closeModal();
+    closeReaderModal();
     const existingStickyBar = document.getElementById('mobile-sticky-bar');
     if (existingStickyBar) existingStickyBar.remove();
 
@@ -777,12 +780,12 @@ function showUpcomingPopup() {
     const content = document.getElementById('md-content');
 
     content.innerHTML = `
-        <div style="text-align: center; padding: 10px;">
-            <div style="width: 60px; height: 60px; margin: 0 auto 16px auto; border-radius: 50%; background: var(--accent-subtle); color: var(--accent); display: flex; align-items: center; justify-content: center;">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <div class="modal-popup-container">
+            <div class="modal-popup-icon-box">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             </div>
-            <h2 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: var(--accent); margin-bottom: 12px;">Stay Tuned!</h2>
-            <p style="color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
+            <h2 class="modal-popup-title">Stay Tuned!</h2>
+            <p class="modal-popup-text">
                 This build is actively in development. Direct downloads will be posted as soon as testing completes.
             </p>
             <div class="modal-actions-row">
@@ -791,6 +794,7 @@ function showUpcomingPopup() {
         </div>
     `;
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }
 
 function showNukedPopup() {
@@ -798,12 +802,12 @@ function showNukedPopup() {
     const content = document.getElementById('md-content');
 
     content.innerHTML = `
-        <div style="text-align: center; padding: 10px;">
-            <div style="width: 60px; height: 60px; margin: 0 auto 16px auto; border-radius: 50%; background: rgba(239, 68, 68, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center;">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+        <div class="modal-popup-container">
+            <div class="modal-popup-icon-box danger">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
             </div>
-            <h2 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; color: #ef4444; margin-bottom: 12px;">Build Withdrawn</h2>
-            <p style="color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
+            <h2 class="modal-popup-title danger">Build Withdrawn</h2>
+            <p class="modal-popup-text">
                 This ROM build has been deprecated or nuked due to newer releases or issues. Details and files are no longer accessible.
             </p>
             <div class="modal-actions-row">
@@ -812,6 +816,7 @@ function showNukedPopup() {
         </div>
     `;
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }
 
 function showDownloadWarningPopup() {
@@ -819,24 +824,24 @@ function showDownloadWarningPopup() {
     const content = document.getElementById('md-content');
 
     content.innerHTML = `
-        <div style="text-align: center; padding: 10px;">
-            <div style="width: 60px; height: 60px; margin: 0 auto 16px auto; border-radius: 50%; background: rgba(239, 68, 68, 0.15); color: #ef4444; display: flex; align-items: center; justify-content: center;">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        <div class="modal-popup-container">
+            <div class="modal-popup-icon-box danger">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             </div>
-            <h2 style="font-family: 'Syne', sans-serif; font-size: 1.6rem; color: #ef4444; margin-bottom: 14px;">
+            <h2 class="modal-popup-title danger">
                 Important Flashing Notice
             </h2>
 
-            <div style="font-size: 0.92rem; line-height: 1.6; margin-bottom: 24px; background: var(--surface); padding: 16px 18px; border-radius: var(--radius-md); border: 1px solid var(--border); text-align: left;">
-                <strong style="color: #ef4444; font-size: 1rem; display: block; margin-bottom: 6px;">
+            <div class="modal-popup-notice">
+                <strong class="modal-popup-notice-title">
                     Your warranty is now void.
                 </strong>
-                <p style="margin: 0; color: var(--muted);">
+                <p>
                     We are not responsible for bricked devices, dead SD cards, or thermonuclear war. Please verify instructions carefully before flashing! You choose to install this at your own discretion.
                 </p>
             </div>
 
-            <div class="modal-actions-row" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <div class="modal-actions-row">
                 <button class="btn-dl primary" onclick="proceedDownload()">Proceed to Download</button>
                 <button class="btn-dl secondary" onclick="copyActiveDownloadUrl()">Copy Link</button>
                 <button class="btn-dl secondary" onclick="closeModal()">Cancel</button>
@@ -845,6 +850,7 @@ function showDownloadWarningPopup() {
     `;
 
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }
 
 function copyActiveDownloadUrl() {
@@ -1007,8 +1013,10 @@ function viewDetail(id) {
     }
 
     let displayDate = "-";
+    let formattedReleaseDate = "";
     if (build) {
-        displayDate = isUpcoming ? "Coming soon" : build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        formattedReleaseDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        displayDate = isUpcoming ? "Coming soon" : formattedReleaseDate;
     }
 
     let descHtml = parseMarkdown(rom.description);
@@ -1114,7 +1122,7 @@ function viewDetail(id) {
         ${personalWarningHtml}
 
         <div class="rom-info-tabs">
-            <button class="tab-btn active" onclick="switchTab('desc')">Changelog & Notes ${isUpcoming ? '<span class="tab-badge-locked">🔒 Coming Soon</span>' : ''}</button>
+            <button class="tab-btn active" onclick="switchTab('desc')">Changelog & Notes ${isUpcoming ? '<span class="tab-badge-locked"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:3px; vertical-align:-1px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Locked</span>' : ''}</button>
             <button class="tab-btn" onclick="switchTab('flash')">Flashing Steps</button>
             <button class="tab-btn" onclick="switchTab('screens')">Screenshots (${currentLightboxImages.length})</button>
         </div>
@@ -1142,7 +1150,7 @@ function viewDetail(id) {
                         <div class="upcoming-sensor-overlay" id="upcoming-sensor-overlay">
                             <div class="upcoming-sensor-card">
                                 <div class="upcoming-sensor-icon">
-                                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                                     </svg>
@@ -1153,7 +1161,7 @@ function viewDetail(id) {
                                 </div>
                                 <h3 class="upcoming-sensor-title">Description & Changelog Locked</h3>
                                 <p class="upcoming-sensor-text">
-                                    This build is currently in development and scheduled for release on <strong>${displayDate}</strong>. The full changelog and release notes are kept under wraps until release.
+                                    This build is currently in active development and ${formattedReleaseDate ? `scheduled for release on <strong>${formattedReleaseDate}</strong>` : `scheduled for release soon`}. The full changelog and release notes will be revealed upon official release.
                                 </p>
                                 <div class="upcoming-sensor-callout">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1395,16 +1403,19 @@ window.addEventListener('hashchange', () => {
 function closeModal() {
     const mdModal = document.getElementById('md-modal');
     if (mdModal) mdModal.style.display = 'none';
+    document.body.style.overflow = '';
 }
 
 function closeReaderModal() {
     const readerModal = document.getElementById('reader-modal');
     if (readerModal) readerModal.style.display = 'none';
+    document.body.style.overflow = '';
 }
 
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {
         event.target.style.display = "none";
+        document.body.style.overflow = '';
     }
 };
 

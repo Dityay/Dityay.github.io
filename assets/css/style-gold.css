@@ -1,39 +1,39 @@
 :root {
-    --bg: #14120e;
-    --surface: rgba(36, 32, 24, 0.4);
-    --surface-cards: rgba(46, 41, 30, 0.5);
-    --border: rgba(90, 80, 60, 0.2);
-    --grid-color: #3d3628;
-    --text: #e8e4df;
-    --muted: #b3aea6;
-    --accent: #f2c94c;
-    --accent-hover: #d9b138;
-    --accent-glow: rgba(242, 201, 76, 0.28);
-    --accent-subtle: rgba(242, 201, 76, 0.12);
-    --radius-m3: 24px;
+    --bg: #090a0f;
+    --surface: rgba(15, 17, 26, 0.7);
+    --surface-cards: rgba(18, 21, 33, 0.75);
+    --border: rgba(255, 255, 255, 0.08);
+    --grid-color: rgba(255, 255, 255, 0.035);
+    --text: #f0f2f5;
+    --muted: #8b949e;
+    --accent: #f59e0b;
+    --accent-hover: #d97706;
+    --accent-glow: rgba(245, 158, 11, 0.25);
+    --accent-subtle: rgba(245, 158, 11, 0.1);
+    --radius-m3: 14px;
 }
 
 [data-theme="light"] {
-    --bg: #fdfbf7;
-    --surface: rgba(245, 240, 230, 0.5);
-    --surface-cards: rgba(238, 232, 218, 0.6);
-    --border: rgba(210, 200, 180, 0.3);
-    --grid-color: #e5dac3;
-    --text: #242018;
-    --muted: #6b6355;
-    --accent: #b38600;
-    --accent-hover: #8f6b00;
-    --accent-glow: rgba(179, 134, 0, 0.2);
-    --accent-subtle: rgba(179, 134, 0, 0.1);
+    --bg: #f8fafc;
+    --surface: rgba(255, 255, 255, 0.85);
+    --surface-cards: rgba(255, 255, 255, 0.95);
+    --border: rgba(0, 0, 0, 0.08);
+    --grid-color: rgba(0, 0, 0, 0.04);
+    --text: #0f172a;
+    --muted: #64748b;
+    --accent: #d97706;
+    --accent-hover: #b45309;
+    --accent-glow: rgba(217, 119, 6, 0.2);
+    --accent-subtle: rgba(217, 119, 6, 0.1);
 }
 
 [data-theme="light"] .modal {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(15, 23, 42, 0.4);
 }
 
 [data-theme="light"] .modal-content {
-    background: rgba(245, 240, 230, 0.85);
-    box-shadow: 0 24px 48px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 24px 48px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 *, *::before, *::after {
@@ -284,7 +284,7 @@ nav {
 
 .page.active {
     display: block;
-    animation: m3Elastic 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: m3Elastic 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .section-header {
@@ -443,7 +443,7 @@ nav {
 
 .tab-content {
     display: none;
-    animation: m3Elastic 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: m3Elastic 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tab-content.active {
@@ -662,10 +662,10 @@ nav {
     padding: 35px;
     width: 90%;
     max-width: 450px;
-    border-radius: 36px;
+    border-radius: 16px;
     position: relative;
     box-shadow: 0 24px 48px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    animation: m3Pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    animation: m3Pop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .close-modal {
@@ -728,12 +728,12 @@ footer {
 }
 
 @keyframes m3Pop {
-    from { opacity: 0; transform: scale(0.85) translateY(40px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes m3Elastic {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
 }
 

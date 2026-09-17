@@ -49,7 +49,7 @@ let currentActiveCssSuffix = '-gold';
 function updateCSS(suffix) {
     const desiredSuffix = suffix || '-gold';
     const targetFile = 'assets/css/style' + desiredSuffix + '.css';
-    const targetHref = targetFile + '?v=26';
+    const targetHref = targetFile + '?v=27';
     let mainLink = document.getElementById('main-css');
 
     // If mainLink exists and already points to the desired stylesheet, and suffix matches, no-op
@@ -85,6 +85,11 @@ function updateCSS(suffix) {
             link.remove();
         }
     });
+
+    // Notify ribbons canvas of theme update
+    if (typeof window.updateRibbonTheme === 'function') {
+        setTimeout(window.updateRibbonTheme, 50);
+    }
 }
 
 // Toast Notification System
@@ -162,7 +167,7 @@ function showPlaceholders() {
                 <div class="skeleton-shimmer" style="width: 70%; height: 26px; background: var(--surface); border-radius: 8px; margin-bottom: 14px;"></div>
                 <div class="skeleton-shimmer" style="width: 45%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 8px;"></div>
                 <div class="skeleton-shimmer" style="width: 55%; height: 14px; background: var(--surface); border-radius: 4px; margin-bottom: 20px;"></div>
-                <div class="skeleton-shimmer" style="width: 100%; height: 44px; background: var(--surface); border-radius: 100px; margin-top: auto;"></div>
+                <div class="skeleton-shimmer" style="width: 100%; height: 40px; background: var(--surface); border-radius: 8px; margin-top: auto;"></div>
             </div>
         </div>
         `;
@@ -489,7 +494,7 @@ function renderROMCards() {
 
     if (!window.romData || !Array.isArray(window.romData)) {
         container.innerHTML = `
-            <div style="grid-column: 1 / -1; padding: 30px; background: rgba(255, 107, 107, 0.1); border: 2px dashed #ff6b6b; border-radius: 20px; text-align: center;">
+            <div style="grid-column: 1 / -1; padding: 30px; background: rgba(255, 107, 107, 0.1); border: 1px dashed #ff6b6b; border-radius: 12px; text-align: center;">
                 <h3 style="color: #ff6b6b; font-family: 'Syne', sans-serif; margin-bottom: 10px;">⚠️ Failed to load ROM data</h3>
                 <p style="color: var(--text);">Make sure your device datasets are loaded correctly.</p>
             </div>
@@ -1088,7 +1093,7 @@ function viewDetail(id) {
     let personalWarningHtml = "";
     if (rom.isPersonal) {
         personalWarningHtml = `
-            <div style="background: var(--surface-cards); border-left: 4px solid var(--accent); padding: 18px 22px; margin: 15px 0 25px 0; border-radius: 0 var(--radius-md) var(--radius-md) 0;">
+            <div style="background: var(--surface-cards); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 16px 20px; margin: 15px 0 25px 0; border-radius: var(--radius-sm);">
                 <h3 style="color: var(--accent); font-family: 'Syne', sans-serif; font-size: 1.15rem; margin-top: 0; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
                     ⚠️ Personal Build
                 </h3>

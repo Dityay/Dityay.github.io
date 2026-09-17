@@ -3,25 +3,68 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Butterscotch</title>
+    <title>Butterscotch | Custom ROMs & Ports</title>
+    <meta name="description" content="High-performance custom ROMs, ports, and vendor builds for Xiaomi & Redmi devices (fog, kunzite, earth, gale)." />
+    <meta name="theme-color" content="#14120e" id="meta-theme-color" />
+    <meta property="og:title" content="Butterscotch | Custom Android ROMs & Ports" />
+    <meta property="og:description" content="High-performance custom ROMs, ports, and vendor builds for Xiaomi & Redmi devices." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-    <link id="main-css" rel="stylesheet" href="assets/css/style-gold.css?v=17" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&display=swap" rel="stylesheet" />
+    <link id="main-css" rel="stylesheet" href="assets/css/style-gold.css?v=20" />
+    <link rel="stylesheet" href="assets/css/style-components.css?v=20" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
 
+    <!-- Ambient Floating Orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
     <div id="app">
+        <!-- Sticky Glass Navigation -->
         <nav>
-            <div class="nav-logo" onclick="navigateHome()">Butterscotch</div>
+            <div class="nav-brand" onclick="navigateHome()" title="Butterscotch Home">
+                <div class="nav-logo-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                        <!-- Android Bot Icon -->
+                        <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h4v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.85.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C6.73 3.35 5.5 5.51 5.5 8h13c0-2.49-1.23-4.65-2.97-5.84zM9 5.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+                    </svg>
+                </div>
+                <span class="nav-logo-text">Butterscotch</span>
+                <span class="nav-badge-pill">ROMs</span>
+            </div>
             <div class="nav-controls">
-                <a href="https://telegram.me/dtyaa_ajh" target="_blank" class="btn-dl secondary nav-btn" style="text-decoration: none;">
-                    Telegram
+                <button id="theme-toggle-btn" class="btn-icon" aria-label="Toggle theme" title="Toggle Light / Dark mode">
+                    <!-- Sun icon shown in dark mode to switch to light -->
+                    <svg id="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <!-- Moon icon shown in light mode to switch to dark -->
+                    <svg id="theme-icon-moon" style="display: none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <a href="https://telegram.me/dtyaa_ajh" target="_blank" rel="noopener noreferrer" class="btn-dl secondary nav-btn" style="text-decoration: none;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.674c.459 0 .66-.21.916-.459l2.199-2.138 4.573 3.379c.843.464 1.448.225 1.658-.783l3-14.143c.307-1.23-.467-1.786-1.509-1.336z"/>
+                    </svg>
+                    <span>Telegram</span>
                 </a>
             </div>
         </nav>
 
+        <!-- Announcement Banner -->
         <div id="announcement-banner" class="banner hidden">
             <div class="banner-content">
                 <span class="banner-badge">Info</span>
@@ -32,13 +75,74 @@
                     <button class="expand-btn" id="expand-btn">View more</button>
                 </div>
             </div>
-            <button id="close-banner" class="close-btn" aria-label="Tutup Pengumuman">&times;</button>
+            <button id="close-banner" class="close-btn" aria-label="Close Announcement">&times;</button>
         </div>
 
+        <!-- Home Page -->
         <div id="page-home" class="page active">
-            <div class="section-header" style="margin-top: 40px;">
-                <div class="section-label" style="margin: 0; padding: 0;">
-                    <span>Available ROMs</span>
+            <!-- Hero Showcase Section -->
+            <div class="hero-section">
+                <div class="hero-eyebrow">
+                    <span class="hero-dot"></span>
+                    <span>Android Custom ROMs & Ports</span>
+                </div>
+                <h1 class="hero-title">Experience Android <span class="gradient-text">Without Limits</span></h1>
+                <p class="hero-subtitle">High-performance custom ROMs, ports, and vendor builds for Xiaomi & Redmi devices. Maintained with care and performance in mind.</p>
+                
+                <div class="hero-stats-row">
+                    <div class="hero-stat-card">
+                        <span class="stat-value" id="stat-total-roms">10</span>
+                        <span class="stat-label">Available ROMs</span>
+                    </div>
+                    <div class="hero-stat-card">
+                        <span class="stat-value" id="stat-total-devices">4</span>
+                        <span class="stat-label">Supported Devices</span>
+                    </div>
+                    <div class="hero-stat-card">
+                        <span class="stat-value">11 - 16</span>
+                        <span class="stat-label">Android Versions</span>
+                    </div>
+                    <div class="hero-stat-card">
+                        <span class="stat-value" style="color: #22c55e;">Active</span>
+                        <span class="stat-label">Repository Status</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search, Filter & Controls Hub -->
+            <div class="filter-search-hub">
+                <div class="search-box">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="rom-search-input" placeholder="Search ROM, Android version, or device (fog, earth, gale, kunzite)..." aria-label="Search ROMs">
+                    <kbd class="search-shortcut" title="Press / to search">/</kbd>
+                    <button id="search-clear-btn" class="search-clear-btn hidden" aria-label="Clear search">&times;</button>
+                </div>
+
+                <div class="hub-controls-row">
+                    <div class="device-chips" id="device-filter-chips">
+                        <!-- Populated by script.js -->
+                    </div>
+                    <div class="sort-control">
+                        <label for="rom-sort-select" class="sort-label">Sort:</label>
+                        <select id="rom-sort-select" class="sort-dropdown" aria-label="Sort ROMs">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="name">Name (A-Z)</option>
+                            <option value="android">Android Version</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <div class="section-label-row">
+                    <div class="section-label" style="margin: 0; padding: 0;">
+                        <span>Available ROMs</span>
+                    </div>
+                    <div class="results-counter" id="results-counter"></div>
                 </div>
                 <div class="filter-controls" id="home-device-filter-container"></div>
             </div>
@@ -46,20 +150,81 @@
             <div class="cards-grid" id="cards-container"></div>
         </div>
 
+        <!-- Detail Page -->
         <div id="page-detail" class="page">
             <div class="detail-container">
-                <div class="back-btn" onclick="navigateHome()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="19" y1="12" x2="5" y2="12"></line>
-                        <polyline points="12 19 5 12 12 5"></polyline>
-                    </svg>
-                    Back
+                <div class="detail-top-bar">
+                    <div class="back-btn" onclick="navigateHome()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="19" y1="12" x2="5" y2="12"></line>
+                            <polyline points="12 19 5 12 12 5"></polyline>
+                        </svg>
+                        <span>Back to ROMs</span>
+                    </div>
+                    <div class="detail-breadcrumbs" id="detail-breadcrumbs"></div>
+                    <button class="btn-share-top" id="btn-share-rom" onclick="shareCurrentRom()" title="Copy link to this ROM">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                            <polyline points="16 6 12 2 8 6"></polyline>
+                            <line x1="12" y1="2" x2="12" y2="15"></line>
+                        </svg>
+                        <span>Share ROM</span>
+                    </button>
                 </div>
                 <div id="detail-content"></div>
             </div>
         </div>
+
+        <!-- Modern Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">Butterscotch</div>
+                <p class="footer-tagline">Clean, high-performance custom ROMs & ports for the community.</p>
+                <div class="footer-links">
+                    <a href="https://telegram.me/dtyaa_ajh" target="_blank" rel="noopener noreferrer">Maintainer</a>
+                    <span class="separator">&bull;</span>
+                    <a href="https://t.me/bscotchsdump" target="_blank" rel="noopener noreferrer">ROM Dump</a>
+                    <span class="separator">&bull;</span>
+                    <a href="#personal" onclick="event.preventDefault(); window.location.hash='personal';">Secret Builds</a>
+                </div>
+                <p class="footer-disclaimer">
+                    Custom ROMs are developed independently. Flashing custom software involves risk.
+                    <br>&copy; <span id="footer-year">2026</span> Butterscotch Project. All rights reserved.
+                </p>
+            </div>
+        </footer>
     </div>
 
+    <!-- Fullscreen Screenshot Lightbox Modal -->
+    <div id="lightbox-modal" class="lightbox-modal" style="display: none;" role="dialog" aria-modal="true" aria-label="Screenshot Lightbox">
+        <div class="lightbox-backdrop" onclick="closeLightbox()"></div>
+        <div class="lightbox-content">
+            <button class="lightbox-btn lightbox-close" onclick="closeLightbox()" aria-label="Close screenshot preview">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <button class="lightbox-btn lightbox-prev" onclick="prevLightboxImage()" aria-label="Previous screenshot">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <div class="lightbox-img-wrapper">
+                <img id="lightbox-image" src="" alt="Screenshot Fullscreen Preview" />
+            </div>
+            <button class="lightbox-btn lightbox-next" onclick="nextLightboxImage()" aria-label="Next screenshot">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+            <div class="lightbox-footer">
+                <span id="lightbox-counter" class="lightbox-counter">1 / 1</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Download / Markdown Modal -->
     <div id="md-modal" class="modal">
         <div class="modal-content glass">
             <span class="close-modal" onclick="closeModal()">&times;</span>
@@ -67,6 +232,7 @@
         </div>
     </div>
 
+    <!-- Reader Modal -->
     <div id="reader-modal" class="modal">
         <div class="modal-content glass">
             <span class="close-modal" onclick="closeReaderModal()">&times;</span>
@@ -76,6 +242,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Floating Toast Notification Container -->
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+    <!-- Scripts -->
     <script src="assets/js/kunzite.js"></script>
     <script src="assets/js/fog.js"></script>
     <script src="assets/js/earth.js"></script>

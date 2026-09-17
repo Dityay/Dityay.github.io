@@ -12,10 +12,8 @@ window.galeData = [
             "assets/roms/gale/origin/2.jpg",
             "assets/roms/gale/origin/3.jpg"
         ],
-
-        description: "### Known Issues\n- SIM Card restarting, use [this](https://t.me/DroidProjectCommunity/269578) module to fix\n- MTP dead, you can use adb commands or ADB Explorer app from your PC\n- Broken home screen layout caused by screen resolution",
-        notes: "- ONLY FLASH FROM MIUI 14/HOS 1 OR AOSP!!!\n- ENG PRELOADER IS NOT INCLUDED\n- App transition animation disabled\n- Do NOT enable live blur, your cpu cant handle and will froze\n- If dark mode glitched, run this command in terminal `su -c resetprop debug.hwui.force_dark false` (im lazy to include it)",
-        flashInstruction: "### Flashing Steps\n1. Reboot to custom recovery (TWRP/OrangeFox)\n2. Wipe Dalvik, Cache, Data\n3. Format Data (Type 'yes')\n4. Flash the ROM zip file\n5. Reboot to system",
-        credits: "- @Damarrr25 for teaching ports\n- @note11shype for base and some help\n- @JanDimple for testing (as always)\n- @klikajatolol for Vivo hals"
+        description: "### Notes\n- **Clean Flash Mandatory:** Only flash from MIUI 14, HyperOS 1, or AOSP base!\n- Engineering preloader is NOT included\n- App transition animations are disabled by default\n- Do NOT enable Live Blur (CPU cannot handle it and will freeze)\n- If Dark Mode glitches, run in terminal: `su -c resetprop debug.hwui.force_dark false`\n\n### Known Issues\n- SIM Card restart issue — use [this Magisk module](https://t.me/DroidProjectCommunity/269578) to fix\n- MTP is broken (use ADB commands or ADB Explorer app from PC)\n- Home screen layout may scale unusually due to screen resolution differences",
+        flashInstruction: "### Installation Steps\n1. Reboot into custom recovery (TWRP / OrangeFox)\n2. Wipe Dalvik, Cache, and Data\n3. Format Data (type `yes` to confirm)\n4. Flash the ROM zip file\n5. Reboot to system\n\n> ⚠️ **Warning:** ONLY flash from MIUI 14, HyperOS 1, or AOSP base!",
+        credits: "- @Damarrr25 for teaching ports\n- @note11shype for base and assistance\n- @JanDimple for testing (as always)\n- @klikajatolol for Vivo HALs"
     }
 ];

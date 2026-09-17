@@ -8,6 +8,8 @@
     --muted: #bda3ad;
     --accent: #ff87ab; /* Sakura Pink accent */
     --accent-hover: #f06595;
+    --accent-glow: rgba(255, 135, 171, 0.28);
+    --accent-subtle: rgba(255, 135, 171, 0.12);
     --radius-m3: 24px;
 }
 
@@ -21,6 +23,8 @@
     --muted: #7a5f69;
     --accent: #d6336c; /* Darker Sakura Pink for light mode */
     --accent-hover: #a61e4d;
+    --accent-glow: rgba(214, 51, 108, 0.2);
+    --accent-subtle: rgba(214, 51, 108, 0.1);
 }
 
 [data-theme="light"] .modal {

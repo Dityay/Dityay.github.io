@@ -14,10 +14,8 @@ window.earthData = [
             "assets/roms/earth/origin/4.jpg",
             "assets/roms/earth/origin/5.jpg"
         ],
-
-        description: "### Changes\n- Default CPU governor is powersave\n- Return app transition animations\n- Fixed home screen layout\n- Removed AOD option\n- Fixed dead sensor\n- Reduce swappiness to 125\n- Fixed random reboot\n- Added viperfx (open from sounds settings)\n- Permissive SELinux",
-        notes: "### Known Issues\n- EXFAT SDCARD IS NOT SUPPORTED.\n- Do NOT enable live blur, our vendor/cpu doesnt support it\n- MTP dead, you can use adb commands or ADB Explorer app from your PC (every originos port has this issue)",
-        flashInstruction: "### Flashing Steps\n1. Reboot to custom recovery (TWRP/OrangeFox)\n2. Wipe Dalvik, Cache, Data\n3. Format Data (Type 'yes')\n4. Flash the ROM zip file\n5. Reboot to system",
-        credits: "- @Damarrr25 for help\n- @panzzxz for sensor fixing clue\n- @kiellzz1 for this BEST banner\n- @note11shype for base and some help\n- Dadobye for Vivo hals"
+        description: "### Changes\n- Default CPU governor set to powersave\n- Restored app transition animations\n- Fixed home screen layout\n- Removed AOD (Always-On Display) option\n- Fixed dead sensor issue\n- Reduced swappiness to 125\n- Fixed random reboot issue\n- Added ViPER4Android FX (accessible from Sound settings)\n- Set SELinux to Permissive\n\n### Known Issues\n- exFAT SD Card is NOT supported\n- MTP is broken (use ADB commands or ADB Explorer app from PC)\n\n### Notes\n- Do NOT enable Live Blur (unsupported by vendor/CPU and may freeze the device)",
+        flashInstruction: "### Installation Steps\n1. Reboot into custom recovery (TWRP / OrangeFox)\n2. Wipe Dalvik, Cache, and Data\n3. Format Data (type `yes` to confirm)\n4. Flash the ROM zip file\n5. Reboot to system\n\n> ⚠️ **Important:** Back up all essential data before formatting data.",
+        credits: "- @Damarrr25 for development help\n- @panzzxz for sensor fixing clues\n- @kiellzz1 for this amazing banner\n- @note11shype for base and assistance\n- Dadobye for Vivo HALs"
     }
 ];

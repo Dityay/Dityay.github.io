@@ -8,6 +8,8 @@
     --muted: #b3aea6;
     --accent: #f2c94c;
     --accent-hover: #d9b138;
+    --accent-glow: rgba(242, 201, 76, 0.28);
+    --accent-subtle: rgba(242, 201, 76, 0.12);
     --radius-m3: 24px;
 }
 
@@ -21,6 +23,8 @@
     --muted: #6b6355;
     --accent: #b38600;
     --accent-hover: #8f6b00;
+    --accent-glow: rgba(179, 134, 0, 0.2);
+    --accent-subtle: rgba(179, 134, 0, 0.1);
 }
 
 [data-theme="light"] .modal {

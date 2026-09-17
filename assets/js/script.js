@@ -43,28 +43,48 @@ function getGMT8Target(dateStr) {
     return new Date(dateStr);
 }
 
-// Dynamic Theme CSS loader (smooth stylesheet switching without breaking)
+// Dynamic Theme CSS loader (smooth, robust stylesheet switching without getting stuck)
+let currentActiveCssSuffix = '-gold';
+
 function updateCSS(suffix) {
     const desiredSuffix = suffix || '-gold';
-    const newHref = 'assets/css/style' + desiredSuffix + '.css';
-    const currentLink = document.getElementById('main-css') || document.querySelector('link[href*="style"]');
+    const targetFile = 'assets/css/style' + desiredSuffix + '.css';
+    const targetHref = targetFile + '?v=26';
+    let mainLink = document.getElementById('main-css');
 
-    if (currentLink && currentLink.getAttribute('href') && currentLink.getAttribute('href').includes(newHref)) {
+    // If mainLink exists and already points to the desired stylesheet, and suffix matches, no-op
+    if (currentActiveCssSuffix === desiredSuffix && mainLink && mainLink.getAttribute('href') && mainLink.getAttribute('href').includes(targetFile)) {
         return;
     }
 
-    const newLink = document.createElement('link');
-    newLink.rel = 'stylesheet';
-    newLink.href = newHref + '?v=' + Date.now();
+    currentActiveCssSuffix = desiredSuffix;
 
-    newLink.onload = () => {
-        if (currentLink && currentLink !== newLink) {
-            currentLink.remove();
+    if (mainLink) {
+        // Direct in-place href update: deterministic, instantaneous, preserves DOM order before style-components.css
+        mainLink.href = targetHref;
+    } else {
+        // Fallback: create #main-css and insert BEFORE style-components.css
+        mainLink = document.createElement('link');
+        mainLink.id = 'main-css';
+        mainLink.rel = 'stylesheet';
+        mainLink.href = targetHref;
+
+        const componentsLink = document.querySelector('link[href*="style-components"]');
+        if (componentsLink && componentsLink.parentNode) {
+            componentsLink.parentNode.insertBefore(mainLink, componentsLink);
+        } else {
+            document.head.prepend(mainLink);
         }
-        newLink.id = 'main-css';
-    };
+    }
 
-    document.head.appendChild(newLink);
+    // Safety sweep: purge any duplicate or rogue theme link elements left in <head>
+    const themeLinks = document.querySelectorAll('link[href*="style-gold"], link[href*="style-red"], link[href*="style-sakura"], link[href*="style."]');
+    themeLinks.forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (link.id !== 'main-css' && !href.includes('style-components')) {
+            link.remove();
+        }
+    });
 }
 
 // Toast Notification System
@@ -207,6 +227,7 @@ function updateHeroStats() {
     if (!window.romData) return;
     const totalRomsEl = document.getElementById('stat-total-roms');
     const totalDevicesEl = document.getElementById('stat-total-devices');
+    const androidVersionsEl = document.getElementById('stat-android-versions');
 
     if (totalRomsEl) {
         totalRomsEl.textContent = window.romData.length;
@@ -214,6 +235,20 @@ function updateHeroStats() {
     if (totalDevicesEl) {
         const uniqueDevices = new Set(window.romData.map(r => r.device));
         totalDevicesEl.textContent = uniqueDevices.size;
+    }
+    if (androidVersionsEl) {
+        const versions = window.romData
+            .map(r => {
+                const match = String(r.version || '').match(/Android\s*(\d+)/i);
+                return match ? parseInt(match[1], 10) : null;
+            })
+            .filter(v => v !== null && !isNaN(v));
+
+        if (versions.length > 0) {
+            const minVer = Math.min(...versions);
+            const maxVer = Math.max(...versions);
+            androidVersionsEl.textContent = minVer === maxVer ? `${minVer}` : `${minVer} - ${maxVer}`;
+        }
     }
 }
 
@@ -747,6 +782,7 @@ function navigateHome(fromHash = false) {
 
 // 404 Error Page
 function show404() {
+    updateCSS('-gold');
     document.body.classList.remove('has-sticky-bar');
     const existingStickyBar = document.getElementById('mobile-sticky-bar');
     if (existingStickyBar) existingStickyBar.remove();
@@ -1161,7 +1197,7 @@ function viewDetail(id) {
                                 </div>
                                 <h3 class="upcoming-sensor-title">Description & Changelog Locked</h3>
                                 <p class="upcoming-sensor-text">
-                                    This build is currently in active development and ${formattedReleaseDate ? `scheduled for release on <strong>${formattedReleaseDate}</strong>` : `scheduled for release soon`}. The full changelog and release notes will be revealed upon official release.
+                                    This build is currently in active development. The release schedule, changelog, and release notes are kept secret until official release.
                                 </p>
                                 <div class="upcoming-sensor-callout">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

@@ -194,6 +194,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Keyboard Shortcuts
     initKeyboardShortcuts();
+
+    // Mobile Gestures & Ergonomics
+    initLightboxTouchGestures();
+    initScrollToTop();
+    adjustMobilePlaceholders();
+    window.addEventListener('resize', adjustMobilePlaceholders);
 });
 
 // Update Hero Statistics
@@ -422,15 +428,11 @@ function renderCategoryFilters() {
         currentCategory = categories[0];
     }
 
-    let catHtml = `
-        <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; -ms-overflow-style: none;">
-    `;
-
+    let catHtml = '';
     categories.forEach(cat => {
-        catHtml += `<button class="filter-btn ${currentCategory === cat ? 'active' : ''}" onclick="setCategory('${cat}')" style="white-space: nowrap; flex-shrink: 0; padding: 8px 18px; font-size: 0.9rem; border-radius: 100px;">${cat}</button>`;
+        catHtml += `<button class="filter-btn ${currentCategory === cat ? 'active' : ''}" onclick="setCategory('${cat}')">${cat}</button>`;
     });
 
-    catHtml += `</div>`;
     filterContainer.innerHTML = catHtml;
 }
 
@@ -729,6 +731,10 @@ function navigateHome(fromHash = false) {
     if (detailPage) detailPage.classList.remove('active');
     if (homePage) homePage.classList.add('active');
 
+    document.body.classList.remove('has-sticky-bar');
+    const existingStickyBar = document.getElementById('mobile-sticky-bar');
+    if (existingStickyBar) existingStickyBar.remove();
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     renderCategoryFilters();
@@ -738,6 +744,10 @@ function navigateHome(fromHash = false) {
 
 // 404 Error Page
 function show404() {
+    document.body.classList.remove('has-sticky-bar');
+    const existingStickyBar = document.getElementById('mobile-sticky-bar');
+    if (existingStickyBar) existingStickyBar.remove();
+
     const detailContainer = document.querySelector('.detail-container');
     if (detailContainer) detailContainer.style.background = 'transparent';
 
@@ -775,7 +785,9 @@ function showUpcomingPopup() {
             <p style="color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
                 This build is actively in development. Direct downloads will be posted as soon as testing completes.
             </p>
-            <button class="btn-dl primary" onclick="closeModal()">Got it</button>
+            <div class="modal-actions-row">
+                <button class="btn-dl primary" onclick="closeModal()">Got it</button>
+            </div>
         </div>
     `;
     modal.style.display = 'flex';
@@ -794,7 +806,9 @@ function showNukedPopup() {
             <p style="color: var(--text); font-size: 1rem; line-height: 1.6; margin-bottom: 25px;">
                 This ROM build has been deprecated or nuked due to newer releases or issues. Details and files are no longer accessible.
             </p>
-            <button class="btn-dl primary" onclick="closeModal()">Understood</button>
+            <div class="modal-actions-row">
+                <button class="btn-dl primary" onclick="closeModal()">Understood</button>
+            </div>
         </div>
     `;
     modal.style.display = 'flex';
@@ -822,10 +836,10 @@ function showDownloadWarningPopup() {
                 </p>
             </div>
 
-            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                <button class="btn-dl secondary" onclick="closeModal()">Cancel</button>
-                <button class="btn-dl secondary" onclick="copyActiveDownloadUrl()">Copy Link</button>
+            <div class="modal-actions-row" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
                 <button class="btn-dl primary" onclick="proceedDownload()">Proceed to Download</button>
+                <button class="btn-dl secondary" onclick="copyActiveDownloadUrl()">Copy Link</button>
+                <button class="btn-dl secondary" onclick="closeModal()">Cancel</button>
             </div>
         </div>
     `;
@@ -1008,9 +1022,18 @@ function viewDetail(id) {
     let screenshotsHtml = "";
     if (currentLightboxImages.length > 0) {
         screenshotsHtml = `
-            <div class="screenshot-grid" style="margin-top: 20px;">
+            <div class="screenshot-hint-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+                <span>Tap screenshot for fullscreen • Swipe left/right to browse</span>
+            </div>
+            <div class="screenshot-grid">
                 ${currentLightboxImages.map((src, idx) => `
-                    <img src="${src}" class="screenshot-item" alt="Screenshot ${idx + 1}" loading="lazy" onclick="openLightbox(${idx})">
+                    <div class="screenshot-card" onclick="openLightbox(${idx})" title="Screenshot ${idx + 1}">
+                        <img src="${src}" class="screenshot-item" alt="Screenshot ${idx + 1}" loading="lazy">
+                        <div class="screenshot-overlay">
+                            <span class="screenshot-counter-badge">${idx + 1} / ${currentLightboxImages.length}</span>
+                        </div>
+                    </div>
                 `).join('')}
             </div>
         `;
@@ -1033,8 +1056,8 @@ function viewDetail(id) {
     }
 
     let downloadButtonHtml = isUpcoming
-        ? `<button class="btn-dl secondary" onclick="showUpcomingPopup()" style="padding: 16px 36px; border-color: var(--accent);">Coming Soon</button>`
-        : `<button class="btn-dl primary" onclick="showDownloadWarningPopup()" style="padding: 16px 36px;">Download ROM</button>`;
+        ? `<button class="btn-dl secondary" onclick="showUpcomingPopup()" style="border-color: var(--accent);">Coming Soon</button>`
+        : `<button class="btn-dl primary" onclick="showDownloadWarningPopup()">Download ROM</button>`;
 
     const detailContent = document.getElementById('detail-content');
     detailContent.innerHTML = `
@@ -1169,12 +1192,26 @@ function viewDetail(id) {
             </div>
         </div>
 
-        <div style="margin-top: 35px; border-top: 1px solid var(--border); padding-top: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;">
+        <div class="detail-actions-row">
             ${downloadButtonHtml}
-            <button class="btn-dl secondary" onclick="shareCurrentRom()" style="padding: 16px 28px;">
+            <button class="btn-dl secondary" onclick="shareCurrentRom()">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
                 Copy Link
             </button>
+        </div>
+
+        <!-- Sticky Mobile Bottom Bar -->
+        <div class="mobile-sticky-bar" id="mobile-sticky-bar">
+            <div class="sticky-bar-info">
+                <span class="sticky-rom-name">${rom.name}</span>
+                <span class="sticky-rom-meta">${rom.device.split('(')[0].trim()} • ${rom.version}</span>
+            </div>
+            <div class="sticky-bar-actions">
+                ${isUpcoming
+                    ? `<button class="btn-dl secondary sticky-dl-btn" onclick="showUpcomingPopup()">Soon</button>`
+                    : `<button class="btn-dl primary sticky-dl-btn" onclick="showDownloadWarningPopup()">Download</button>`
+                }
+            </div>
         </div>
     `;
 
@@ -1183,6 +1220,7 @@ function viewDetail(id) {
 
     document.getElementById('page-home').classList.remove('active');
     document.getElementById('page-detail').classList.add('active');
+    document.body.classList.add('has-sticky-bar');
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1255,23 +1293,73 @@ function prevLightboxImage() {
     }
 }
 
-// Swipe gestures for lightbox on mobile
+// Lightbox Touch Swipe Gestures (Horizontal navigation & vertical dismiss)
 let touchStartX = 0;
+let touchStartY = 0;
 let touchEndX = 0;
-const lightboxModal = document.getElementById('lightbox-modal');
-if (lightboxModal) {
+let touchEndY = 0;
+
+function initLightboxTouchGestures() {
+    const lightboxModal = document.getElementById('lightbox-modal');
+    if (!lightboxModal) return;
+
     lightboxModal.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        touchStartX = e.changedTouches[0].clientX;
+        touchStartY = e.changedTouches[0].clientY;
     }, { passive: true });
 
     lightboxModal.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        if (touchStartX - touchEndX > 50) {
-            nextLightboxImage(); // swipe left -> next
-        } else if (touchEndX - touchStartX > 50) {
-            prevLightboxImage(); // swipe right -> prev
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        touchEndX = e.changedTouches[0].clientX;
+        touchEndY = e.changedTouches[0].clientY;
+
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+        const absX = Math.abs(diffX);
+        const absY = Math.abs(diffY);
+
+        // Horizontal swipe navigation (minimum 40px threshold)
+        if (absX > 40 && absX > absY) {
+            if (diffX < 0) {
+                nextLightboxImage(); // swipe left -> next
+            } else {
+                prevLightboxImage(); // swipe right -> prev
+            }
+        } else if (diffY > 75 && absY > absX) {
+            // Vertical swipe down -> close preview
+            closeLightbox();
         }
     }, { passive: true });
+}
+
+// Quick Scroll to Top button handler
+function initScrollToTop() {
+    const scrollBtn = document.getElementById('scroll-top-btn');
+    if (!scrollBtn) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollBtn.classList.add('visible');
+        } else {
+            scrollBtn.classList.remove('visible');
+        }
+    }, { passive: true });
+
+    scrollBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
+
+// Responsive search input placeholder for mobile devices
+function adjustMobilePlaceholders() {
+    const searchInput = document.getElementById('rom-search-input');
+    if (!searchInput) return;
+    if (window.innerWidth <= 640) {
+        searchInput.placeholder = 'Search ROMs or devices...';
+    } else {
+        searchInput.placeholder = 'Search ROM, Android version, or device (fog, earth, gale, kunzite)...';
+    }
 }
 
 // Router & Deep Linking
@@ -1341,7 +1429,8 @@ function createLeaves() {
         return; // respect user preference
     }
 
-    const leafCount = 14;
+    const isMobile = window.innerWidth <= 768;
+    const leafCount = isMobile ? 6 : 14;
     for (let i = 0; i < leafCount; i++) {
         const leaf = document.createElement('div');
         leaf.classList.add('leaf');

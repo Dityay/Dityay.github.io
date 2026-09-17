@@ -875,7 +875,8 @@ footer {
     .rom-detail-banner {
         width: 100% !important;
         box-sizing: border-box;
-        height: 180px;
+        min-height: 160px;
+        height: auto;
         padding: 20px;
         border-radius: 16px;
         margin-bottom: 24px;

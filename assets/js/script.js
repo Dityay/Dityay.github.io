@@ -45,12 +45,24 @@ function getGMT8Target(dateStr) {
 
 // Dynamic Theme CSS loader (smooth, robust stylesheet switching without getting stuck)
 let currentActiveCssSuffix = '-gold';
+if (!document.documentElement.hasAttribute('data-css-theme')) {
+    document.documentElement.setAttribute('data-css-theme', '-gold');
+}
 
 function updateCSS(suffix) {
     const desiredSuffix = suffix || '-gold';
     const targetFile = 'assets/css/style' + desiredSuffix + '.css';
-    const targetHref = targetFile + '?v=33';
+    const targetHref = targetFile + '?v=35';
     let mainLink = document.getElementById('main-css');
+
+    // 1. Immediately set data-css-theme on <html> for instant reactive synchronization
+    document.documentElement.setAttribute('data-css-theme', desiredSuffix);
+
+    // 2. Immediately notify ribbons canvas so the color starts changing with ZERO network wait!
+    if (typeof window.updateRibbonTheme === 'function') {
+        window.updateRibbonTheme(desiredSuffix);
+    }
+    window.dispatchEvent(new CustomEvent('ribbonThemeUpdate', { detail: desiredSuffix }));
 
     // If mainLink exists and already points to the desired stylesheet, and suffix matches, no-op
     if (currentActiveCssSuffix === desiredSuffix && mainLink && mainLink.getAttribute('href') && mainLink.getAttribute('href').includes(targetFile)) {
@@ -59,15 +71,23 @@ function updateCSS(suffix) {
 
     currentActiveCssSuffix = desiredSuffix;
 
+    const onCssLoaded = () => {
+        if (typeof window.updateRibbonTheme === 'function') {
+            window.updateRibbonTheme(desiredSuffix);
+        }
+    };
+
     if (mainLink) {
         // Direct in-place href update: deterministic, instantaneous, preserves DOM order before style-components.css
         mainLink.href = targetHref;
+        mainLink.addEventListener('load', onCssLoaded, { once: true });
     } else {
         // Fallback: create #main-css and insert BEFORE style-components.css
         mainLink = document.createElement('link');
         mainLink.id = 'main-css';
         mainLink.rel = 'stylesheet';
         mainLink.href = targetHref;
+        mainLink.addEventListener('load', onCssLoaded, { once: true });
 
         const componentsLink = document.querySelector('link[href*="style-components"]');
         if (componentsLink && componentsLink.parentNode) {
@@ -86,10 +106,14 @@ function updateCSS(suffix) {
         }
     });
 
-    // Notify ribbons canvas of theme update
-    if (typeof window.updateRibbonTheme === 'function') {
-        setTimeout(window.updateRibbonTheme, 50);
-    }
+    // Multi-interval check to guarantee synchronization even under slow network
+    [50, 150, 300, 600].forEach(delay => {
+        setTimeout(() => {
+            if (typeof window.updateRibbonTheme === 'function') {
+                window.updateRibbonTheme(desiredSuffix);
+            }
+        }, delay);
+    });
 }
 
 // Toast Notification System
@@ -280,6 +304,10 @@ function initThemeManager() {
             if (sunIcon) sunIcon.style.display = 'block';
             if (moonIcon) moonIcon.style.display = 'none';
             if (metaThemeColor) metaThemeColor.setAttribute('content', '#14120e');
+        }
+
+        if (typeof window.updateRibbonTheme === 'function') {
+            window.updateRibbonTheme();
         }
     }
 

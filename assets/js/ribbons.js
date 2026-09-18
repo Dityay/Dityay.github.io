@@ -38,16 +38,35 @@
         isDark: true
     };
 
+    const THEME_PRESETS = {
+        'gold': {
+            dark: { r: 245, g: 158, b: 11 },   // #f59e0b
+            light: { r: 217, g: 119, b: 6 }    // #d97706
+        },
+        'red': {
+            dark: { r: 244, g: 63, b: 94 },    // #f43f5e
+            light: { r: 225, g: 29, b: 72 }    // #e11d48
+        },
+        'sakura': {
+            dark: { r: 244, g: 114, b: 182 },  // #f472b6
+            light: { r: 219, g: 39, b: 119 }   // #db2777
+        },
+        'default': {
+            dark: { r: 239, g: 68, b: 68 },    // #ef4444
+            light: { r: 220, g: 38, b: 38 }    // #dc2626
+        }
+    };
+
     function hexToRgb(hex) {
         let c = hex.replace('#', '').trim();
         if (c.length === 3) c = c.split('').map(x => x + x).join('');
         const num = parseInt(c, 16);
-        if (isNaN(num)) return { r: 245, g: 158, b: 11 };
+        if (isNaN(num)) return null;
         return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
     }
 
     function parseColor(str) {
-        if (!str) return { r: 245, g: 158, b: 11 };
+        if (!str) return null;
         str = str.trim();
         if (str.startsWith('#')) return hexToRgb(str);
         const rgbMatch = str.match(/rgba?\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
@@ -58,19 +77,70 @@
                 b: parseInt(rgbMatch[3], 10)
             };
         }
-        return { r: 245, g: 158, b: 11 };
+        return null;
     }
 
-    function updateThemeColors() {
-        const rootStyle = getComputedStyle(document.documentElement);
-        const accentStr = rootStyle.getPropertyValue('--accent') || '#f59e0b';
-        colorState.targetAccent = parseColor(accentStr);
+    function getPresetForTheme(themeStr) {
+        if (!themeStr) return null;
+        const s = String(themeStr).toLowerCase();
+        if (s.includes('sakura')) return THEME_PRESETS['sakura'];
+        if (s.includes('red')) return THEME_PRESETS['red'];
+        if (s.includes('gold')) return THEME_PRESETS['gold'];
+        if (s.includes('default') || s.includes('style.css')) return THEME_PRESETS['default'];
+        return null;
+    }
 
-        const theme = document.documentElement.getAttribute('data-theme');
-        colorState.isDark = theme !== 'light';
+    function updateThemeColors(hint) {
+        const themeAttr = document.documentElement.getAttribute('data-theme');
+        colorState.isDark = themeAttr !== 'light';
+
+        // 1. Instant zero-latency theme detection via hint, attribute, or href
+        const cssTheme = hint || document.documentElement.getAttribute('data-css-theme') || '';
+        let matchedPreset = getPresetForTheme(cssTheme);
+
+        if (!matchedPreset) {
+            const mainLink = document.getElementById('main-css');
+            const href = mainLink ? (mainLink.getAttribute('href') || '') : '';
+            matchedPreset = getPresetForTheme(href);
+        }
+
+        // Default to gold if not specified
+        if (!matchedPreset && (!cssTheme || cssTheme === '-gold')) {
+            matchedPreset = THEME_PRESETS['gold'];
+        }
+
+        if (matchedPreset) {
+            const presetRgb = colorState.isDark ? matchedPreset.dark : matchedPreset.light;
+            colorState.targetAccent = { ...presetRgb };
+        } else {
+            // Fallback: sync with computed style ONLY if no preset matched
+            try {
+                const rootStyle = getComputedStyle(document.documentElement);
+                const accentStr = rootStyle.getPropertyValue('--accent');
+                const parsed = parseColor(accentStr);
+                if (parsed) {
+                    colorState.targetAccent = parsed;
+                }
+            } catch (e) {
+                // graceful fallback
+            }
+        }
+
+        // Force immediate color snap & redraw if animation loop is currently paused
+        if (!isRunning || prefersReducedMotion) {
+            colorState.accent = { ...colorState.targetAccent };
+            renderFrame(performance.now());
+        }
     }
 
     function lerpColor(curr, target, factor) {
+        if (!target) return;
+        if (Math.abs(target.r - curr.r) < 0.5 && Math.abs(target.g - curr.g) < 0.5 && Math.abs(target.b - curr.b) < 0.5) {
+            curr.r = target.r;
+            curr.g = target.g;
+            curr.b = target.b;
+            return;
+        }
         curr.r += (target.r - curr.r) * factor;
         curr.g += (target.g - curr.g) * factor;
         curr.b += (target.b - curr.b) * factor;
@@ -223,7 +293,7 @@
         if (!ctx || width === 0 || height === 0) return;
 
         // Smooth color interpolation
-        lerpColor(colorState.accent, colorState.targetAccent, 0.04);
+        lerpColor(colorState.accent, colorState.targetAccent, 0.10);
 
         // Smooth mouse & scroll lerping
         mouse.x += (mouse.targetX - mouse.x) * 0.035;
@@ -290,12 +360,28 @@
             }
         });
 
+        window.addEventListener('focus', () => {
+            updateThemeColors();
+            startAnimation();
+        });
+
         // Sync with dynamic theme changes
-        const observer = new MutationObserver(() => {
+        const observer = new MutationObserver((mutations) => {
+            for (const mut of mutations) {
+                if (mut.attributeName === 'data-css-theme') {
+                    const hint = document.documentElement.getAttribute('data-css-theme');
+                    updateThemeColors(hint);
+                    return;
+                }
+            }
             updateThemeColors();
         });
         observer.observe(document.head, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] });
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme', 'data-css-theme'] });
+
+        window.addEventListener('ribbonThemeUpdate', (e) => {
+            updateThemeColors(e.detail);
+        });
     }
 
     function init() {

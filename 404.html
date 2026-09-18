@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-css-theme="-gold">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&display=swap" rel="stylesheet" />
-    <link id="main-css" rel="stylesheet" href="assets/css/style-gold.css?v=33" />
-    <link rel="stylesheet" href="assets/css/style-components.css?v=33" />
+    <link id="main-css" rel="stylesheet" href="assets/css/style-gold.css?v=35" />
+    <link rel="stylesheet" href="assets/css/style-components.css?v=35" />
 </head>
 <body>
 
@@ -121,6 +121,10 @@
                     if (moonIcon) moonIcon.style.display = 'none';
                     if (metaThemeColor) metaThemeColor.setAttribute('content', '#14120e');
                 }
+
+                if (typeof window.updateRibbonTheme === 'function') {
+                    window.updateRibbonTheme();
+                }
             }
 
             const savedTheme = localStorage.getItem('butterscotch-theme');
@@ -141,6 +145,6 @@
             }
         });
     </script>
-    <script src="assets/js/ribbons.js?v=33"></script>
+    <script src="assets/js/ribbons.js?v=35"></script>
 </body>
 </html>

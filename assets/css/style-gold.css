@@ -3,7 +3,7 @@
     --surface: rgba(15, 17, 26, 0.7);
     --surface-cards: rgba(18, 21, 33, 0.75);
     --border: rgba(255, 255, 255, 0.08);
-    --grid-color: rgba(255, 255, 255, 0.035);
+    --grid-color: rgba(255, 255, 255, 0.12);
     --text: #f0f2f5;
     --muted: #8b949e;
     --accent: #f59e0b;
@@ -11,10 +11,10 @@
     --accent-glow: rgba(245, 158, 11, 0.25);
     --accent-subtle: rgba(245, 158, 11, 0.1);
     --radius-m3: 14px;
-    --btn-primary-bg: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
-    --btn-primary-hover: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
+    --btn-primary-bg: var(--accent);
+    --btn-primary-hover: var(--accent-hover);
     --btn-primary-color: #090a0f;
-    --btn-primary-shadow: 0 1px 2px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    --btn-primary-shadow: 0 2px 8px var(--accent-glow);
 }
 
 [data-theme="light"] {
@@ -22,17 +22,17 @@
     --surface: rgba(255, 255, 255, 0.85);
     --surface-cards: rgba(255, 255, 255, 0.95);
     --border: rgba(0, 0, 0, 0.08);
-    --grid-color: rgba(0, 0, 0, 0.04);
+    --grid-color: rgba(15, 23, 42, 0.13);
     --text: #0f172a;
     --muted: #64748b;
     --accent: #d97706;
     --accent-hover: #b45309;
     --accent-glow: rgba(217, 119, 6, 0.2);
     --accent-subtle: rgba(217, 119, 6, 0.1);
-    --btn-primary-bg: linear-gradient(180deg, #fbbf24 0%, #f59e0b 100%);
-    --btn-primary-hover: linear-gradient(180deg, #fcd34d 0%, #fbbf24 100%);
-    --btn-primary-color: #090a0f;
-    --btn-primary-shadow: 0 2px 6px rgba(245, 158, 11, 0.25), 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    --btn-primary-bg: var(--accent);
+    --btn-primary-hover: var(--accent-hover);
+    --btn-primary-color: #ffffff;
+    --btn-primary-shadow: 0 2px 8px var(--accent-glow);
 }
 
 [data-theme="light"] .modal {
@@ -80,13 +80,13 @@ body::before, body::after {
 
 body::before {
     background-size: 50px 50px;
-    opacity: 0.6;
+    opacity: 0.9;
     animation: moveGrid 20s linear infinite;
 }
 
 body::after {
     background-size: 70px 70px;
-    opacity: 0.3;
+    opacity: 0.55;
     z-index: -3;
     animation: moveGridLarge 35s linear infinite;
 }
@@ -98,7 +98,7 @@ body::after {
 
 @keyframes moveGridLarge {
     0% { background-position: 0 0; }
-    100% { background-position: -500px -500px; }
+    100% { background-position: -700px -700px; }
 }
 
 #app {

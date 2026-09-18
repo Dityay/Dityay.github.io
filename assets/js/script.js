@@ -49,7 +49,7 @@ let currentActiveCssSuffix = '-gold';
 function updateCSS(suffix) {
     const desiredSuffix = suffix || '-gold';
     const targetFile = 'assets/css/style' + desiredSuffix + '.css';
-    const targetHref = targetFile + '?v=27';
+    const targetHref = targetFile + '?v=33';
     let mainLink = document.getElementById('main-css');
 
     // If mainLink exists and already points to the desired stylesheet, and suffix matches, no-op
@@ -202,8 +202,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Theme Management (Light / Dark)
     initThemeManager();
 
-    // Leaf Particles
-    createLeaves();
+    // Remove leaf container if present
+    const existingLeafContainer = document.getElementById('leaf-container');
+    if (existingLeafContainer) existingLeafContainer.remove();
 
     // Setup Filter Hub & Search
     initSearchAndFilters();
@@ -1460,106 +1461,7 @@ window.onclick = function(event) {
     }
 };
 
-// Falling Leaves Ambient Background Particle System
-let leafParticles = [];
-let windTime = 0;
-let wind = {
-    currentX: -3.5, targetX: -3.5,
-    currentY: 2.2, targetY: 2.2
-};
-let isLeafAnimationRunning = false;
 
-function createLeaves() {
-    let container = document.getElementById('leaf-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'leaf-container';
-        document.body.prepend(container);
-    }
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return; // respect user preference
-    }
-
-    const isMobile = window.innerWidth <= 768;
-    const leafCount = isMobile ? 6 : 14;
-    for (let i = 0; i < leafCount; i++) {
-        const leaf = document.createElement('div');
-        leaf.classList.add('leaf');
-
-        const size = Math.random() * 22 + 22;
-        leaf.style.width = `${size}px`;
-        leaf.style.height = `${size}px`;
-        leaf.style.opacity = (Math.random() * 0.25 + 0.08).toFixed(2);
-        leaf.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%" fill="currentColor"><path d="M 4 20 C 4 10 14 4 20 4 C 20 14 10 20 4 20 Z"/></svg>`;
-
-        container.appendChild(leaf);
-
-        leafParticles.push({
-            el: leaf,
-            x: window.innerWidth * Math.random() + (window.innerWidth * 0.2),
-            y: Math.random() * window.innerHeight - window.innerHeight,
-            size: size,
-            mass: size / 22,
-            flutter: Math.random() * Math.PI * 2,
-            flutterSpeed: 0.015 + Math.random() * 0.02,
-            baseRotation: 45
-        });
-    }
-
-    isLeafAnimationRunning = true;
-    requestAnimationFrame(animateLeaves);
-
-    // Pause when tab not visible to conserve battery
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            isLeafAnimationRunning = false;
-        } else {
-            if (!isLeafAnimationRunning) {
-                isLeafAnimationRunning = true;
-                requestAnimationFrame(animateLeaves);
-            }
-        }
-    });
-}
-
-function animateLeaves() {
-    if (!isLeafAnimationRunning) return;
-
-    windTime += 0.015;
-    wind.targetX = -4 + Math.sin(windTime) * 2.5;
-    wind.targetY = 2.2 + Math.cos(windTime * 0.8) * 1.2;
-
-    wind.currentX += (wind.targetX - wind.currentX) * 0.05;
-    wind.currentY += (wind.targetY - wind.currentY) * 0.05;
-
-    leafParticles.forEach(p => {
-        let swoop = Math.sin(p.flutter) * 1.5;
-        let vx = wind.currentX * p.mass + swoop;
-        let vy = wind.currentY * p.mass;
-
-        p.x += vx;
-        p.y += vy;
-        p.flutter += p.flutterSpeed;
-
-        let angle = Math.atan2(vy, vx) * (180 / Math.PI);
-        let sway = Math.sin(p.flutter) * 18;
-
-        if (p.y > window.innerHeight + 50 || p.x < -50) {
-            if (Math.random() > 0.5) {
-                p.y = -50;
-                p.x = (window.innerWidth * 0.2) + Math.random() * window.innerWidth;
-            } else {
-                p.x = window.innerWidth + 50;
-                p.y = -50 + Math.random() * (window.innerHeight * 0.8);
-            }
-        }
-
-        p.el.style.transform = `translate3d(${p.x}px, ${p.y}px, 0) rotate(${angle + p.baseRotation + sway}deg)`;
-    });
-
-    requestAnimationFrame(animateLeaves);
-}
 
 // Announcement Banner Loader
 async function loadAnnouncement() {

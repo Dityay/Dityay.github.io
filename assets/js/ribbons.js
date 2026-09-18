@@ -78,38 +78,38 @@
 
     // Straight Tilted Barrier Tapes Configuration
     const straightTapes = [
-        // Tape 0: Main Police Caution Marquee Tape (Tilted Straight)
-        {
-            type: 'text',
-            yRatio: 0.32,
-            angleDeg: -10.5,
-            width: 42,
-            scrollSpeed: 0.055,
-            text: ' /// ⚠️ CAUTION: CUSTOM ROM ZONE  ///  FLASH AT YOUR OWN RISK  ///  DO NOT CROSS  ///  BUTTERSCOTCH LABS  ///  RESTRICTED BUILDS ',
-            opacity: 0.88,
-            parallax: 0.15
-        },
-        // Tape 1: Classic Diagonal Hazard Stripes Tape (Tilted Straight, Crossing Angle)
+        // Tape 0: Upper Crossing Diagonal Hazard Stripes Tape (Tilted Straight)
         {
             type: 'stripes',
-            yRatio: 0.64,
-            angleDeg: 13.5,
+            yRatio: 0.18,
+            angleDeg: -10.5,
             width: 44,
             stripeWidth: 26,
-            scrollSpeed: 0.038,
-            opacity: 0.84,
-            parallax: 0.20
+            scrollSpeed: 0.045,
+            opacity: 0.88,
+            parallax: 0.12
         },
-        // Tape 2: Narrow Ambient Hazard Line (Tilted Straight, Lower Section)
+        // Tape 1: Main Mid-Lower Crossing Diagonal Hazard Stripes Tape (Opposing Angle)
         {
             type: 'stripes',
-            yRatio: 0.86,
-            angleDeg: -6.5,
-            width: 24,
+            yRatio: 0.60,
+            angleDeg: 13.0,
+            width: 46,
+            stripeWidth: 28,
+            scrollSpeed: -0.038,
+            opacity: 0.85,
+            parallax: 0.18
+        },
+        // Tape 2: Secondary Lower Ambient Hazard Line (Tilted Straight)
+        {
+            type: 'stripes',
+            yRatio: 0.88,
+            angleDeg: -7.0,
+            width: 28,
             stripeWidth: 16,
-            scrollSpeed: -0.025,
-            opacity: 0.50,
-            parallax: 0.10
+            scrollSpeed: 0.024,
+            opacity: 0.70,
+            parallax: 0.08
         }
     ];
 
@@ -154,24 +154,24 @@
         const cg = Math.round(colorState.accent.g);
         const cb = Math.round(colorState.accent.b);
 
-        const op = colorState.isDark ? tape.opacity : tape.opacity * 0.55;
+        const op = colorState.isDark ? tape.opacity : tape.opacity * 0.75;
         const accentColor = `rgba(${cr}, ${cg}, ${cb}, ${op})`;
         const darkColor = colorState.isDark
             ? `rgba(9, 10, 15, ${op * 0.95})`
-            : `rgba(240, 242, 245, ${op * 0.95})`;
+            : `rgba(15, 23, 42, ${op * 0.85})`;
 
         const borderColor = colorState.isDark
-            ? `rgba(0, 0, 0, ${op * 0.95})`
-            : `rgba(15, 23, 42, ${op * 0.85})`;
+            ? `rgba(0, 0, 0, ${op * 0.98})`
+            : `rgba(15, 23, 42, ${op * 0.90})`;
 
         ctx.save();
         ctx.translate(cx, cy);
         ctx.rotate(angleRad);
 
         // Ambient shadow for floating depth
-        ctx.shadowColor = colorState.isDark ? 'rgba(0, 0, 0, 0.65)' : 'rgba(0, 0, 0, 0.12)';
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetY = 4;
+        ctx.shadowColor = colorState.isDark ? 'rgba(0, 0, 0, 0.75)' : 'rgba(0, 0, 0, 0.16)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetY = 5;
 
         // 1. Fill base tape rectangle with Accent Color
         ctx.fillStyle = accentColor;
@@ -219,74 +219,6 @@
         ctx.restore();
     }
 
-    /**
-     * Renders a straight tilted police caution text marquee tape.
-     * Uses local rotated 2D space for ultra-fast, zero-overhead drawing.
-     */
-    function renderStraightTextTape(tape, time) {
-        const isMobile = width <= 768;
-        const tapeW = isMobile ? tape.width * 0.82 : tape.width;
-        const Hw = tapeW / 2;
-
-        const totalLen = Math.hypot(width, height) + 300;
-        const halfLen = totalLen / 2;
-
-        const cy = height * tape.yRatio - (scrollY * 0.04 * tape.parallax) + (mouse.y - 0.5) * 12;
-        const cx = width / 2 + (mouse.x - 0.5) * 16;
-        const angleRad = (tape.angleDeg * Math.PI) / 180;
-
-        const cr = Math.round(colorState.accent.r);
-        const cg = Math.round(colorState.accent.g);
-        const cb = Math.round(colorState.accent.b);
-
-        const op = colorState.isDark ? tape.opacity : tape.opacity * 0.55;
-        const accentColor = `rgba(${cr}, ${cg}, ${cb}, ${op * 0.95})`;
-        const borderColor = `rgba(9, 10, 15, ${op * 0.95})`;
-
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(angleRad);
-
-        // Ambient shadow
-        ctx.shadowColor = colorState.isDark ? 'rgba(0, 0, 0, 0.7)' : 'rgba(0, 0, 0, 0.14)';
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetY = 4;
-
-        // 1. Fill base tape rectangle
-        ctx.fillStyle = accentColor;
-        ctx.fillRect(-halfLen, -Hw, totalLen, tapeW);
-
-        // Remove shadow
-        ctx.shadowColor = 'transparent';
-
-        // 2. Top & Bottom crisp solid borders
-        ctx.strokeStyle = borderColor;
-        ctx.lineWidth = isMobile ? 2 : 2.5;
-
-        ctx.beginPath();
-        ctx.moveTo(-halfLen, -Hw);
-        ctx.lineTo(halfLen, -Hw);
-        ctx.moveTo(-halfLen, Hw);
-        ctx.lineTo(halfLen, Hw);
-        ctx.stroke();
-
-        // 3. Repeating monospace caution marquee text
-        const fontSize = isMobile ? 11 : 12;
-        ctx.font = `bold ${fontSize}px "JetBrains Mono", "SF Mono", monospace`;
-        ctx.fillStyle = '#090a0f'; // high-contrast black on warning tape
-        ctx.textBaseline = 'middle';
-
-        const textPattern = tape.text;
-        const patternW = ctx.measureText(textPattern).width || 800;
-        const scrollX = (time * tape.scrollSpeed) % patternW;
-
-        for (let x = -halfLen - patternW; x < halfLen + patternW; x += patternW) {
-            ctx.fillText(textPattern, x - scrollX, 1);
-        }
-
-        ctx.restore();
-    }
-
     function renderFrame(time) {
         if (!ctx || width === 0 || height === 0) return;
 
@@ -306,8 +238,6 @@
             const tape = straightTapes[i];
             if (tape.type === 'stripes') {
                 renderStraightStripesTape(tape, time);
-            } else if (tape.type === 'text') {
-                renderStraightTextTape(tape, time);
             }
         }
     }

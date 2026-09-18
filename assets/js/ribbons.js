@@ -32,13 +32,21 @@
 
     // Dynamic theme color state with smooth lerping
     const colorState = {
-        accent: { r: 245, g: 158, b: 11 },
-        targetAccent: { r: 245, g: 158, b: 11 },
-        dark: { r: 9, g: 10, b: 15 },
+        accent: { r: 16, g: 185, b: 129 },
+        targetAccent: { r: 16, g: 185, b: 129 },
+        dark: { r: 7, g: 10, b: 8 },
         isDark: true
     };
 
     const THEME_PRESETS = {
+        'emerald': {
+            dark: { r: 16, g: 185, b: 129 },   // #10b981
+            light: { r: 5, g: 150, b: 105 }    // #059669
+        },
+        'green': {
+            dark: { r: 16, g: 185, b: 129 },
+            light: { r: 5, g: 150, b: 105 }
+        },
         'gold': {
             dark: { r: 245, g: 158, b: 11 },   // #f59e0b
             light: { r: 217, g: 119, b: 6 }    // #d97706
@@ -52,8 +60,8 @@
             light: { r: 219, g: 39, b: 119 }   // #db2777
         },
         'default': {
-            dark: { r: 239, g: 68, b: 68 },    // #ef4444
-            light: { r: 220, g: 38, b: 38 }    // #dc2626
+            dark: { r: 16, g: 185, b: 129 },   // #10b981
+            light: { r: 5, g: 150, b: 105 }    // #059669
         }
     };
 
@@ -83,6 +91,7 @@
     function getPresetForTheme(themeStr) {
         if (!themeStr) return null;
         const s = String(themeStr).toLowerCase();
+        if (s.includes('emerald') || s.includes('green')) return THEME_PRESETS['emerald'];
         if (s.includes('sakura')) return THEME_PRESETS['sakura'];
         if (s.includes('red')) return THEME_PRESETS['red'];
         if (s.includes('gold')) return THEME_PRESETS['gold'];
@@ -104,9 +113,9 @@
             matchedPreset = getPresetForTheme(href);
         }
 
-        // Default to gold if not specified
-        if (!matchedPreset && (!cssTheme || cssTheme === '-gold')) {
-            matchedPreset = THEME_PRESETS['gold'];
+        // Default to emerald if not specified
+        if (!matchedPreset && (!cssTheme || cssTheme === '-emerald' || cssTheme === '-gold')) {
+            matchedPreset = THEME_PRESETS['emerald'];
         }
 
         if (matchedPreset) {

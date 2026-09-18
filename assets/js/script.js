@@ -44,15 +44,15 @@ function getGMT8Target(dateStr) {
 }
 
 // Dynamic Theme CSS loader (smooth, robust stylesheet switching without getting stuck)
-let currentActiveCssSuffix = '-gold';
+let currentActiveCssSuffix = '-emerald';
 if (!document.documentElement.hasAttribute('data-css-theme')) {
-    document.documentElement.setAttribute('data-css-theme', '-gold');
+    document.documentElement.setAttribute('data-css-theme', '-emerald');
 }
 
 function updateCSS(suffix) {
-    const desiredSuffix = suffix || '-gold';
+    const desiredSuffix = suffix || '-emerald';
     const targetFile = 'assets/css/style' + desiredSuffix + '.css';
-    const targetHref = targetFile + '?v=35';
+    const targetHref = targetFile + '?v=36';
     let mainLink = document.getElementById('main-css');
 
     // 1. Immediately set data-css-theme on <html> for instant reactive synchronization
@@ -98,7 +98,7 @@ function updateCSS(suffix) {
     }
 
     // Safety sweep: purge any duplicate or rogue theme link elements left in <head>
-    const themeLinks = document.querySelectorAll('link[href*="style-gold"], link[href*="style-red"], link[href*="style-sakura"], link[href*="style."]');
+    const themeLinks = document.querySelectorAll('link[href*="style-emerald"], link[href*="style-gold"], link[href*="style-red"], link[href*="style-sakura"], link[href*="style."]');
     themeLinks.forEach(link => {
         const href = link.getAttribute('href') || '';
         if (link.id !== 'main-css' && !href.includes('style-components')) {
@@ -782,7 +782,7 @@ function shareCurrentRom() {
 
 // Home Navigation
 function navigateHome(fromHash = false) {
-    updateCSS('-gold');
+    updateCSS('-emerald');
 
     if (!fromHash) {
         if (isSecretMode) {
@@ -816,7 +816,7 @@ function navigateHome(fromHash = false) {
 
 // 404 Error Page
 function show404() {
-    updateCSS('-gold');
+    updateCSS('-emerald');
     document.body.classList.remove('has-sticky-bar');
     const existingStickyBar = document.getElementById('mobile-sticky-bar');
     if (existingStickyBar) existingStickyBar.remove();
@@ -1050,8 +1050,8 @@ function viewDetail(id) {
         return;
     }
 
-    // Apply theme suffix if defined (e.g. sakura, gold)
-    updateCSS(rom.cssSuffix || '-gold');
+    // Apply theme suffix if defined (e.g. sakura, emerald, gold, red)
+    updateCSS(rom.cssSuffix || '-emerald');
 
     const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
     const now = new Date();

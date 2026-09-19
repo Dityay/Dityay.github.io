@@ -13,11 +13,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&display=swap" rel="stylesheet" />
-    <link id="main-css" rel="stylesheet" href="assets/css/style-emerald.css?v=37" />
-    <link rel="stylesheet" href="assets/css/style-components.css?v=37" />
-    <link rel="prefetch" href="assets/css/style-gold.css?v=37" />
-    <link rel="prefetch" href="assets/css/style-red.css?v=37" />
-    <link rel="prefetch" href="assets/css/style-sakura.css?v=37" />
+    <link id="main-css" rel="stylesheet" href="assets/css/style-emerald.css?v=38" />
+    <link rel="stylesheet" href="assets/css/style-components.css?v=38" />
+    <link rel="prefetch" href="assets/css/style-gold.css?v=38" />
+    <link rel="prefetch" href="assets/css/style-red.css?v=38" />
+    <link rel="prefetch" href="assets/css/style-sakura.css?v=38" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -53,9 +53,9 @@
                 <span class="nav-badge-pill">ROMs</span>
             </div>
             <div class="nav-controls">
-                <div id="ytta-nav-badge" class="ytta-indicator-pill" style="display: none;" onclick="exitYttaMode()" title="YTTA Debug Active - Click to exit">
+                <div id="ytta-nav-badge" class="ytta-indicator-pill" style="display: none;" onclick="exitYttaMode()" title="Debug Mode Active - Click to exit">
                     <span class="pulse-dot" style="background: var(--accent); width: 6px; height: 6px; border-radius: 50%;"></span>
-                    <span>DEBUG YTTA</span>
+                    <span>DEBUG MODE</span>
                 </div>
                 <button id="theme-toggle-btn" class="btn-icon" aria-label="Toggle theme" title="Toggle Light / Dark mode">
                     <!-- Sun icon shown in dark mode to switch to light -->
@@ -306,8 +306,8 @@
         </div>
     </div>
 
-    <!-- YTTA PIN Security Modal -->
-    <div id="pin-modal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-label="YTTA Authorization">
+    <!-- PIN Security Modal (Debug Mode) -->
+    <div id="pin-modal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-label="Debug Mode Authorization">
         <div class="modal-content glass ytta-pin-modal-content">
             <span class="close-modal" onclick="closePinModal(false)">&times;</span>
             <div class="modal-popup-container">
@@ -320,7 +320,7 @@
                 </div>
                 <h2 class="modal-popup-title" style="font-size: 1.35rem;">Developer Access</h2>
                 <p class="modal-popup-text" style="font-size: 0.88rem; margin: 0 auto 16px auto; max-width: 280px; color: var(--muted);">
-                    Enter 4-digit PIN to access <strong>YTTA Debug Mode</strong> and unlock upcoming pre-release ROM builds.
+                    Enter 4-digit PIN to access <strong>Debug Mode</strong> and unlock upcoming pre-release ROM builds.
                 </p>
 
                 <form id="ytta-pin-form" onsubmit="event.preventDefault(); verifyPin();" autocomplete="off">
@@ -338,7 +338,7 @@
                     </div>
                     <div id="pin-error-msg" class="pin-error-msg" style="display: none;">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-                        <span>PIN salah! Akses ditolak.</span>
+                        <span>Incorrect PIN. Access denied.</span>
                     </div>
 
                     <div class="pin-keypad">
@@ -378,12 +378,12 @@
     </button>
 
     <!-- Scripts -->
-    <script src="assets/js/kunzite.js"></script>
+    <script src="assets/js/kunzite.js?v=38"></script>
     <script src="assets/js/fog.js"></script>
     <script src="assets/js/earth.js"></script>
     <script src="assets/js/gale.js"></script>
-    <script src="assets/js/script.js?v=37"></script>
-    <script src="assets/js/ribbons.js?v=37"></script>
+    <script src="assets/js/script.js?v=38"></script>
+    <script src="assets/js/ribbons.js?v=38"></script>
 
 </body>
 </html>

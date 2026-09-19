@@ -29,7 +29,7 @@ function exitYttaMode() {
         sessionStorage.removeItem('butterscotch-ytta');
     } catch (e) {}
     updateYttaUi();
-    showToast('🔒 YTTA Debug Mode deactivated', 'info', 2500);
+    showToast('🔒 Debug Mode deactivated', 'info', 2500);
     renderROMCards();
     const detailPage = document.getElementById('page-detail');
     if (detailPage && detailPage.classList.contains('active')) {
@@ -134,7 +134,7 @@ function verifyPin() {
         closePinModal(true);
         updateYttaUi();
         renderROMCards();
-        showToast('🔓 Access Granted: YTTA Debug Mode Unlocked!', 'success', 2800);
+        showToast('🔓 Access Granted: Debug Mode Unlocked!', 'success', 2800);
         redirectToUpcomingRom();
     } else {
         if (modalContent) {
@@ -144,7 +144,7 @@ function verifyPin() {
         }
         input.classList.add('pin-input-error');
         if (errorMsg) errorMsg.style.display = 'flex';
-        showToast('❌ PIN salah! Akses ditolak.', 'error', 2500);
+        showToast('❌ Incorrect PIN. Access denied.', 'error', 2500);
         setTimeout(() => {
             input.value = '';
             input.focus();
@@ -167,7 +167,7 @@ function redirectToUpcomingRom() {
 
 function handleYttaRouting() {
     if (isYttaMode) {
-        showToast('🔓 YTTA Debug Mode active', 'info', 2000);
+        showToast('🔓 Debug Mode active', 'info', 2000);
         redirectToUpcomingRom();
         return;
     }
@@ -176,7 +176,7 @@ function handleYttaRouting() {
         if (sessionStorage.getItem('butterscotch-ytta') === 'true') {
             isYttaMode = true;
             updateYttaUi();
-            showToast('🔓 YTTA Debug Mode active', 'info', 2000);
+            showToast('🔓 Debug Mode active', 'info', 2000);
             redirectToUpcomingRom();
             return;
         }
@@ -244,7 +244,7 @@ if (!document.documentElement.hasAttribute('data-css-theme')) {
 function updateCSS(suffix) {
     const desiredSuffix = suffix || '-emerald';
     const targetFile = 'assets/css/style' + desiredSuffix + '.css';
-    const targetHref = targetFile + '?v=37';
+    const targetHref = targetFile + '?v=38';
     let mainLink = document.getElementById('main-css');
 
     // 1. Immediately set data-css-theme on <html> for instant reactive synchronization
@@ -1475,7 +1475,7 @@ function viewDetail(id) {
                             <div style="display: flex; align-items: center; gap: 12px;">
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent); flex-shrink: 0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
                                 <div>
-                                    <div style="font-weight: 700; font-size: 0.95rem; color: var(--accent); font-family: 'Syne', sans-serif;">YTTA Debug Mode Active</div>
+                                    <div style="font-weight: 700; font-size: 0.95rem; color: var(--accent); font-family: 'Syne', sans-serif;">Debug Mode Active</div>
                                     <div style="font-size: 0.8rem; color: var(--muted); margin-top: 2px;">Pre-release specifications, changelog, and build preview unlocked for testing.</div>
                                 </div>
                             </div>

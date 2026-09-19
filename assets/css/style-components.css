@@ -3092,6 +3092,245 @@ button, a, select, input, .rom-card, .chip-btn, .filter-btn, .tab-btn {
     vertical-align: middle;
 }
 
+.tab-badge-unlocked {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.16);
+    border: 1px solid #10b981;
+    border-radius: var(--radius-pill);
+    padding: 2px 8px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+/* YTTA Debug Mode Banner & Controls */
+.ytta-debug-banner {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid var(--accent);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 16px var(--accent-glow);
+    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="light"] .ytta-debug-banner {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: #059669;
+}
+
+.ytta-exit-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: var(--font-sans);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: var(--transition-base);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.ytta-exit-btn:hover {
+    background: rgba(244, 63, 94, 0.2);
+    border-color: #f43f5e;
+    color: #f43f5e;
+    transform: translateY(-1px);
+}
+
+[data-theme="light"] .ytta-exit-btn {
+    background: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.12);
+    color: #0f172a;
+}
+
+[data-theme="light"] .ytta-exit-btn:hover {
+    background: rgba(225, 29, 72, 0.15);
+    border-color: #e11d48;
+    color: #e11d48;
+}
+
+.ytta-indicator-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    background: rgba(16, 185, 129, 0.16);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: var(--transition-base);
+    margin-right: 4px;
+}
+
+.ytta-indicator-pill:hover {
+    background: rgba(244, 63, 94, 0.2);
+    border-color: #f43f5e;
+    color: #f43f5e;
+}
+
+/* ==========================================================================
+   YTTA Debug Mode PIN Modal & Keypad
+   ========================================================================== */
+
+.ytta-pin-modal-content {
+    max-width: 380px !important;
+    width: 92% !important;
+    padding: 32px 24px 28px 24px !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 30px var(--accent-glow) !important;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.pin-icon-box {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 16px auto;
+    border-radius: 50%;
+    background: var(--accent-subtle);
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 18px var(--accent-glow);
+}
+
+.pin-input-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 18px 0 8px 0;
+}
+
+.pin-display-input {
+    width: 170px;
+    height: 52px;
+    text-align: center;
+    font-size: 2rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.38em;
+    padding-left: 0.38em;
+    border-radius: var(--radius-sm);
+    background: rgba(0, 0, 0, 0.35);
+    border: 2px solid var(--border);
+    color: var(--accent);
+    outline: none;
+    transition: var(--transition-base);
+    box-sizing: border-box;
+}
+
+[data-theme="light"] .pin-display-input {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--accent);
+}
+
+.pin-display-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow);
+}
+
+.pin-display-input.pin-input-error {
+    border-color: #ef4444 !important;
+    color: #ef4444 !important;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.35) !important;
+}
+
+.pin-error-msg {
+    color: #ef4444;
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
+.pin-keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 250px;
+    margin: 16px auto 4px auto;
+}
+
+.pin-key {
+    height: 48px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    font-size: 1.25rem;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-base);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+[data-theme="light"] .pin-key {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.1);
+    color: #0f172a;
+}
+
+.pin-key:hover {
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.pin-key:active {
+    transform: scale(0.94);
+}
+
+.pin-key.pin-key-fn {
+    font-size: 0.95rem;
+    color: var(--muted);
+}
+
+.pin-key.pin-key-fn:hover {
+    color: var(--accent);
+}
+
+.pin-shake {
+    animation: pinShakeAnim 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes pinShakeAnim {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-8px); }
+    40%, 80% { transform: translateX(8px); }
+}
+
 @media (max-width: 768px) {
     .upcoming-desc-wrapper {
         min-height: 380px;

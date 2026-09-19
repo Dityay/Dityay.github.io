@@ -9,6 +9,198 @@ let currentSearchQuery = '';
 let currentSortOrder = 'newest';
 let activeDownloadUrl = '';
 let isSecretMode = false;
+let isYttaMode = false;
+try {
+    if (sessionStorage.getItem('butterscotch-ytta') === 'true') {
+        isYttaMode = true;
+    }
+} catch (e) {}
+
+function updateYttaUi() {
+    const badge = document.getElementById('ytta-nav-badge');
+    if (badge) {
+        badge.style.display = isYttaMode ? 'inline-flex' : 'none';
+    }
+}
+
+function exitYttaMode() {
+    isYttaMode = false;
+    try {
+        sessionStorage.removeItem('butterscotch-ytta');
+    } catch (e) {}
+    updateYttaUi();
+    showToast('🔒 YTTA Debug Mode deactivated', 'info', 2500);
+    renderROMCards();
+    const detailPage = document.getElementById('page-detail');
+    if (detailPage && detailPage.classList.contains('active')) {
+        const hash = window.location.hash ? window.location.hash.substring(1) : '';
+        if (hash) {
+            viewDetail(hash);
+        } else {
+            navigateHome(false);
+        }
+    }
+}
+
+// YTTA Debug Mode & PIN Security System (PIN: 1225)
+const YTTA_DEBUG_PIN = '1225';
+
+function openPinModal() {
+    const modal = document.getElementById('pin-modal');
+    const input = document.getElementById('ytta-pin-input');
+    const errorMsg = document.getElementById('pin-error-msg');
+    if (!modal) return;
+
+    if (errorMsg) errorMsg.style.display = 'none';
+    if (input) {
+        input.value = '';
+        input.classList.remove('pin-input-error');
+    }
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+        if (input) input.focus();
+    }, 120);
+}
+
+function closePinModal(authorized = false) {
+    const modal = document.getElementById('pin-modal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+
+    if (!authorized) {
+        const hash = window.location.hash;
+        if (hash === '#ytta' || hash === '#debug') {
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState(null, '', window.location.pathname + window.location.search);
+            } else {
+                window.location.hash = '';
+            }
+            navigateHome(false);
+        }
+    }
+}
+
+function appendPinDigit(digit) {
+    const input = document.getElementById('ytta-pin-input');
+    const errorMsg = document.getElementById('pin-error-msg');
+    if (!input) return;
+    if (errorMsg) errorMsg.style.display = 'none';
+    input.classList.remove('pin-input-error');
+
+    if (input.value.length < 4) {
+        input.value += digit;
+        if (input.value.length === 4) {
+            setTimeout(() => {
+                verifyPin();
+            }, 120);
+        }
+    }
+}
+
+function deletePinDigit() {
+    const input = document.getElementById('ytta-pin-input');
+    const errorMsg = document.getElementById('pin-error-msg');
+    if (!input) return;
+    if (errorMsg) errorMsg.style.display = 'none';
+    input.classList.remove('pin-input-error');
+    input.value = input.value.slice(0, -1);
+}
+
+function clearPinInput() {
+    const input = document.getElementById('ytta-pin-input');
+    const errorMsg = document.getElementById('pin-error-msg');
+    if (!input) return;
+    if (errorMsg) errorMsg.style.display = 'none';
+    input.classList.remove('pin-input-error');
+    input.value = '';
+    input.focus();
+}
+
+function verifyPin() {
+    const input = document.getElementById('ytta-pin-input');
+    const modalContent = document.querySelector('.ytta-pin-modal-content');
+    const errorMsg = document.getElementById('pin-error-msg');
+    if (!input) return;
+
+    const enteredPin = String(input.value).trim();
+    if (enteredPin === YTTA_DEBUG_PIN) {
+        try {
+            sessionStorage.setItem('butterscotch-ytta', 'true');
+        } catch (e) {}
+        isYttaMode = true;
+        closePinModal(true);
+        updateYttaUi();
+        renderROMCards();
+        showToast('🔓 Access Granted: YTTA Debug Mode Unlocked!', 'success', 2800);
+        redirectToUpcomingRom();
+    } else {
+        if (modalContent) {
+            modalContent.classList.remove('pin-shake');
+            void modalContent.offsetWidth; // Force reflow
+            modalContent.classList.add('pin-shake');
+        }
+        input.classList.add('pin-input-error');
+        if (errorMsg) errorMsg.style.display = 'flex';
+        showToast('❌ PIN salah! Akses ditolak.', 'error', 2500);
+        setTimeout(() => {
+            input.value = '';
+            input.focus();
+        }, 350);
+    }
+}
+
+function redirectToUpcomingRom() {
+    const upcomingRom = (window.romData && window.romData.find(r => {
+        const b = r.buildDate ? getGMT8Target(r.buildDate) : null;
+        return b && b > new Date();
+    })) || (window.romData && window.romData.find(r => r.id === 'kun_nos5'));
+
+    if (upcomingRom) {
+        viewDetail(upcomingRom.id);
+    } else {
+        navigateHome(false);
+    }
+}
+
+function handleYttaRouting() {
+    if (isYttaMode) {
+        showToast('🔓 YTTA Debug Mode active', 'info', 2000);
+        redirectToUpcomingRom();
+        return;
+    }
+
+    try {
+        if (sessionStorage.getItem('butterscotch-ytta') === 'true') {
+            isYttaMode = true;
+            updateYttaUi();
+            showToast('🔓 YTTA Debug Mode active', 'info', 2000);
+            redirectToUpcomingRom();
+            return;
+        }
+    } catch (e) {}
+
+    openPinModal();
+}
+
+function initPinInputListeners() {
+    const input = document.getElementById('ytta-pin-input');
+    if (!input) return;
+    input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/g, '').slice(0, 4);
+        const errorMsg = document.getElementById('pin-error-msg');
+        if (errorMsg) errorMsg.style.display = 'none';
+        input.classList.remove('pin-input-error');
+        if (input.value.length === 4) {
+            setTimeout(() => {
+                verifyPin();
+            }, 120);
+        }
+    });
+}
+
 let spamCount = 0;
 let spamTimeout;
 let isEggTriggered = false;
@@ -52,7 +244,7 @@ if (!document.documentElement.hasAttribute('data-css-theme')) {
 function updateCSS(suffix) {
     const desiredSuffix = suffix || '-emerald';
     const targetFile = 'assets/css/style' + desiredSuffix + '.css';
-    const targetHref = targetFile + '?v=36';
+    const targetHref = targetFile + '?v=37';
     let mainLink = document.getElementById('main-css');
 
     // 1. Immediately set data-css-theme on <html> for instant reactive synchronization
@@ -241,6 +433,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Announcement & Router
     loadAnnouncement();
     handleRouting();
+    updateYttaUi();
+    initPinInputListeners();
 
     // Keyboard Shortcuts
     initKeyboardShortcuts();
@@ -397,6 +591,13 @@ function initKeyboardShortcuts() {
             const lightbox = document.getElementById('lightbox-modal');
             if (lightbox && lightbox.style.display !== 'none') {
                 closeLightbox();
+                return;
+            }
+
+            // Check pin modal
+            const pinModal = document.getElementById('pin-modal');
+            if (pinModal && pinModal.style.display !== 'none') {
+                closePinModal(false);
                 return;
             }
 
@@ -640,11 +841,12 @@ function renderROMCards() {
             const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
             const now = new Date();
             const isUpcoming = build && build > now;
+            const isUnlockedByYtta = isUpcoming && isYttaMode;
             const isNuked = !isUpcoming && (!rom.downloadUrl || rom.downloadUrl.trim() === "");
 
             let cardAction = `onclick="viewDetail('${rom.id}')"`;
             let cursorStyle = "cursor: pointer;";
-            let btnText = 'View Details';
+            let btnText = isUnlockedByYtta ? 'View Details (Debug)' : 'View Details';
             let btnClass = "btn-dl primary btn-card-main";
             let btnStyle = "";
 
@@ -665,8 +867,13 @@ function renderROMCards() {
                 btnClass = "btn-dl secondary btn-card-main";
                 displayDate = "Unavailable";
             } else if (isUpcoming) {
-                badgeHtml += `<span class="badge-tag upcoming">UPCOMING</span>`;
-                displayDate = "Coming soon";
+                if (isUnlockedByYtta) {
+                    badgeHtml += `<span class="badge-tag upcoming" style="background: var(--accent); color: #032313; font-weight: 700;">UNLOCKED</span>`;
+                    displayDate = build ? `${build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })} (Upcoming)` : 'Coming soon';
+                } else {
+                    badgeHtml += `<span class="badge-tag upcoming">UPCOMING</span>`;
+                    displayDate = "Coming soon";
+                }
             } else if (build) {
                 displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
                 const diffTime = now - build;
@@ -1056,6 +1263,7 @@ function viewDetail(id) {
     const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
     const now = new Date();
     const isUpcoming = build && build > now;
+    const isUnlockedByYtta = isUpcoming && isYttaMode;
     const isNuked = !isUpcoming && (!rom.downloadUrl || rom.downloadUrl.trim() === "");
 
     if (isNuked) {
@@ -1086,7 +1294,11 @@ function viewDetail(id) {
     let formattedReleaseDate = "";
     if (build) {
         formattedReleaseDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-        displayDate = isUpcoming ? "Coming soon" : formattedReleaseDate;
+        if (isUnlockedByYtta) {
+            displayDate = `${formattedReleaseDate} (Upcoming Preview)`;
+        } else {
+            displayDate = isUpcoming ? "Coming soon" : formattedReleaseDate;
+        }
     }
 
     let descHtml = parseMarkdown(rom.description);
@@ -1133,15 +1345,28 @@ function viewDetail(id) {
         `;
     }
 
-    let downloadButtonHtml = isUpcoming
+    let downloadButtonHtml = (isUpcoming && !isUnlockedByYtta)
         ? `<button class="btn-dl secondary" onclick="showUpcomingPopup()" style="border-color: var(--accent);">Coming Soon</button>`
-        : `<button class="btn-dl primary" onclick="showDownloadWarningPopup()">Download ROM</button>`;
+        : `<button class="btn-dl primary" onclick="showDownloadWarningPopup()">${isUnlockedByYtta ? 'Download ROM (Debug Unlocked)' : 'Download ROM'}</button>`;
+
+    let bannerBadgeHtml = isUpcoming
+        ? (isUnlockedByYtta ? '<span class="badge-tag upcoming" style="background: var(--accent); color: #032313; font-weight: 700; margin-bottom: 10px;">UNLOCKED PREVIEW</span>' : '<span class="badge-tag upcoming" style="margin-bottom: 10px;">UPCOMING</span>')
+        : '<span class="badge-tag new" style="margin-bottom: 10px;">STABLE</span>';
+
+    let tabDescBadgeHtml = '';
+    if (isUpcoming) {
+        if (isUnlockedByYtta) {
+            tabDescBadgeHtml = `<span class="tab-badge-unlocked"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:3px; vertical-align:-1px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg>Unlocked</span>`;
+        } else {
+            tabDescBadgeHtml = `<span class="tab-badge-locked"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:3px; vertical-align:-1px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Locked</span>`;
+        }
+    }
 
     const detailContent = document.getElementById('detail-content');
     detailContent.innerHTML = `
         <div class="rom-detail-banner" style="background-image: url('${rom.banner}');">
             <div class="rom-banner-content">
-                <span class="badge-tag ${isUpcoming ? 'upcoming' : 'new'}" style="margin-bottom: 10px;">${isUpcoming ? 'UPCOMING' : 'STABLE'}</span>
+                ${bannerBadgeHtml}
                 <h1 class="rom-banner-title">${rom.name}</h1>
             </div>
         </div>
@@ -1192,14 +1417,14 @@ function viewDetail(id) {
         ${personalWarningHtml}
 
         <div class="rom-info-tabs">
-            <button class="tab-btn active" onclick="switchTab('desc')">Changelog & Notes ${isUpcoming ? '<span class="tab-badge-locked"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right:3px; vertical-align:-1px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Locked</span>' : ''}</button>
+            <button class="tab-btn active" onclick="switchTab('desc')">Changelog & Notes ${tabDescBadgeHtml}</button>
             <button class="tab-btn" onclick="switchTab('flash')">Flashing Steps</button>
             <button class="tab-btn" onclick="switchTab('screens')">Screenshots (${currentLightboxImages.length})</button>
         </div>
 
         <div class="rom-description-container">
             <div id="tab-desc" class="tab-content active">
-                ${isUpcoming ? `
+                ${(isUpcoming && !isUnlockedByYtta) ? `
                     <div class="upcoming-desc-wrapper">
                         <div class="upcoming-desc-body is-blurred" id="upcoming-desc-body">
                             ${descHtml}
@@ -1245,6 +1470,19 @@ function viewDetail(id) {
                         </div>
                     </div>
                 ` : `
+                    ${isUnlockedByYtta ? `
+                        <div class="ytta-debug-banner">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent); flex-shrink: 0;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                <div>
+                                    <div style="font-weight: 700; font-size: 0.95rem; color: var(--accent); font-family: 'Syne', sans-serif;">YTTA Debug Mode Active</div>
+                                    <div style="font-size: 0.8rem; color: var(--muted); margin-top: 2px;">Pre-release specifications, changelog, and build preview unlocked for testing.</div>
+                                </div>
+                            </div>
+                            <button class="ytta-exit-btn" onclick="exitYttaMode()">Exit Debug</button>
+                        </div>
+                    ` : ''}
+
                     ${descHtml}
 
                     ${notesHtml ? `
@@ -1285,9 +1523,9 @@ function viewDetail(id) {
                 <span class="sticky-rom-meta">${rom.device.split('(')[0].trim()} • ${rom.version}</span>
             </div>
             <div class="sticky-bar-actions">
-                ${isUpcoming
+                ${(isUpcoming && !isUnlockedByYtta)
                     ? `<button class="btn-dl secondary sticky-dl-btn" onclick="showUpcomingPopup()">Soon</button>`
-                    : `<button class="btn-dl primary sticky-dl-btn" onclick="showDownloadWarningPopup()">Download</button>`
+                    : `<button class="btn-dl primary sticky-dl-btn" onclick="showDownloadWarningPopup()">${isUnlockedByYtta ? 'Download (Debug)' : 'Download'}</button>`
                 }
             </div>
         </div>
@@ -1448,6 +1686,8 @@ function handleRouting() {
     if (hash === '#personal') {
         isSecretMode = true;
         navigateHome(true);
+    } else if (hash === '#ytta' || hash === '#debug') {
+        handleYttaRouting();
     } else if (hash && hash.length > 1) {
         const romId = decodeURIComponent(hash.substring(1));
         const detailContainer = document.getElementById('detail-content');
@@ -1484,8 +1724,12 @@ function closeReaderModal() {
 
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {
-        event.target.style.display = "none";
-        document.body.style.overflow = '';
+        if (event.target.id === 'pin-modal') {
+            closePinModal(false);
+        } else {
+            event.target.style.display = "none";
+            document.body.style.overflow = '';
+        }
     }
 };
 

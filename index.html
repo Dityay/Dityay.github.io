@@ -13,11 +13,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Syne:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&display=swap" rel="stylesheet" />
-    <link id="main-css" rel="stylesheet" href="assets/css/style-emerald.css?v=36" />
-    <link rel="stylesheet" href="assets/css/style-components.css?v=36" />
-    <link rel="prefetch" href="assets/css/style-gold.css?v=36" />
-    <link rel="prefetch" href="assets/css/style-red.css?v=36" />
-    <link rel="prefetch" href="assets/css/style-sakura.css?v=36" />
+    <link id="main-css" rel="stylesheet" href="assets/css/style-emerald.css?v=37" />
+    <link rel="stylesheet" href="assets/css/style-components.css?v=37" />
+    <link rel="prefetch" href="assets/css/style-gold.css?v=37" />
+    <link rel="prefetch" href="assets/css/style-red.css?v=37" />
+    <link rel="prefetch" href="assets/css/style-sakura.css?v=37" />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
@@ -53,6 +53,10 @@
                 <span class="nav-badge-pill">ROMs</span>
             </div>
             <div class="nav-controls">
+                <div id="ytta-nav-badge" class="ytta-indicator-pill" style="display: none;" onclick="exitYttaMode()" title="YTTA Debug Active - Click to exit">
+                    <span class="pulse-dot" style="background: var(--accent); width: 6px; height: 6px; border-radius: 50%;"></span>
+                    <span>DEBUG YTTA</span>
+                </div>
                 <button id="theme-toggle-btn" class="btn-icon" aria-label="Toggle theme" title="Toggle Light / Dark mode">
                     <!-- Sun icon shown in dark mode to switch to light -->
                     <svg id="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -302,6 +306,67 @@
         </div>
     </div>
 
+    <!-- YTTA PIN Security Modal -->
+    <div id="pin-modal" class="modal" style="display: none;" role="dialog" aria-modal="true" aria-label="YTTA Authorization">
+        <div class="modal-content glass ytta-pin-modal-content">
+            <span class="close-modal" onclick="closePinModal(false)">&times;</span>
+            <div class="modal-popup-container">
+                <div class="modal-popup-icon-box pin-icon-box">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        <circle cx="12" cy="16" r="1.5"></circle>
+                    </svg>
+                </div>
+                <h2 class="modal-popup-title" style="font-size: 1.35rem;">Developer Access</h2>
+                <p class="modal-popup-text" style="font-size: 0.88rem; margin: 0 auto 16px auto; max-width: 280px; color: var(--muted);">
+                    Enter 4-digit PIN to access <strong>YTTA Debug Mode</strong> and unlock upcoming pre-release ROM builds.
+                </p>
+
+                <form id="ytta-pin-form" onsubmit="event.preventDefault(); verifyPin();" autocomplete="off">
+                    <div class="pin-input-wrapper">
+                        <input 
+                            type="password" 
+                            id="ytta-pin-input" 
+                            class="pin-display-input" 
+                            maxlength="4" 
+                            placeholder="••••" 
+                            inputmode="numeric" 
+                            pattern="[0-9]*" 
+                            autocomplete="off" 
+                        />
+                    </div>
+                    <div id="pin-error-msg" class="pin-error-msg" style="display: none;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <span>PIN salah! Akses ditolak.</span>
+                    </div>
+
+                    <div class="pin-keypad">
+                        <button type="button" class="pin-key" onclick="appendPinDigit('1')">1</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('2')">2</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('3')">3</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('4')">4</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('5')">5</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('6')">6</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('7')">7</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('8')">8</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('9')">9</button>
+                        <button type="button" class="pin-key pin-key-fn" onclick="clearPinInput()" title="Clear">C</button>
+                        <button type="button" class="pin-key" onclick="appendPinDigit('0')">0</button>
+                        <button type="button" class="pin-key pin-key-fn" onclick="deletePinDigit()" title="Backspace">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                        </button>
+                    </div>
+
+                    <div class="modal-actions-row" style="margin-top: 20px;">
+                        <button type="button" class="btn-dl secondary" onclick="closePinModal(false)">Cancel</button>
+                        <button type="submit" class="btn-dl primary" id="pin-submit-btn">Unlock</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <!-- Floating Toast Notification Container -->
     <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
@@ -317,8 +382,8 @@
     <script src="assets/js/fog.js"></script>
     <script src="assets/js/earth.js"></script>
     <script src="assets/js/gale.js"></script>
-    <script src="assets/js/script.js?v=36"></script>
-    <script src="assets/js/ribbons.js?v=36"></script>
+    <script src="assets/js/script.js?v=37"></script>
+    <script src="assets/js/ribbons.js?v=37"></script>
 
 </body>
 </html>

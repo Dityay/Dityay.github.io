@@ -244,7 +244,7 @@ if (!document.documentElement.hasAttribute('data-css-theme')) {
 function updateCSS(suffix) {
     const desiredSuffix = suffix || '-emerald';
     const targetFile = 'assets/css/style' + desiredSuffix + '.css';
-    const targetHref = targetFile + '?v=38';
+    const targetHref = targetFile + '?v=39';
     let mainLink = document.getElementById('main-css');
 
     // 1. Immediately set data-css-theme on <html> for instant reactive synchronization

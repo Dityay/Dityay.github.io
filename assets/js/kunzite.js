@@ -29,7 +29,7 @@ window.kunziteData = [
         version: "Android 17",
         buildDate: "2026-09-20",
         cssSuffix: "-red",
-        downloadUrl: "https://drive.google.com/file/d/1nothingos5_kunzite_beta_preview/view?usp=sharing",
+        downloadUrl: "https://drive.google.com/file/d/1-tlzzDJ6QjcvHy4jW23f1SDFvDLKGCVy/view?usp=sharing",
         banner: "assets/roms/kunzite/nos5/banner.jpg",
         screenshots: [
             "assets/roms/kunzite/nos5/1.png",
@@ -41,8 +41,8 @@ window.kunziteData = [
             "assets/roms/kunzite/nos5/7.png",
             "assets/roms/kunzite/nos5/8.png"
         ],
-        description: "> *\"Then do me a favor and never leave me again, okay?\"*\n\n### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Built-in with Moto Dolby Atmos and Mi Camera (MiCam)\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n\n### Changes\n- Initial NothingOS 5 port with Android 17 base\n- Integrated Moto Dolby Atmos audio processing\n- Integrated Mi Camera with full sensor compatibility\n\n### Known Issues\n- Face Unlock not working\n- IR Blaster not working\n- Screen-off Fingerprint on Display (FOD) not working\n- Please report any other bugs encountered to the maintainer",
+        description: "> *\"I just wanna be with you. That's all I need.\"*\n\n### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Built-in with Moto Dolby Atmos and Mi Camera (MiCam)\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n\n### Changes\n- Initial NothingOS 5 port with Android 17 base\n- Integrated Moto Dolby Atmos audio processing\n- Integrated Mi Camera with full sensor compatibility\n\n### Known Issues\n- Face Unlock not working\n- IR Blaster not working\n- Screen-off Fingerprint on Display (FOD) not working\n- Please report any other bugs encountered to the maintainer",
         flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
-        credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand, @rianixia for porting base, instructions and fixes\n- @reiryuki for Moto Dolby Atmos\n- @heybyben for AOSP vendor, OrangeFox, and Mi Camera (MiCam)\n- @iDeadXD for kernel\n- @ProjectUnknown01 for RapidFlasher\n- [@xiaos_chef](https://www.tiktok.com/@xiaos_chef) for YOSHIKIII art\n- Nothing Community for firmware dumps"
+        credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand, @rianixia for porting base, instructions and fixes\n- @reiryuki for Moto Dolby Atmos\n- @heybyben for AOSP vendor, OrangeFox, and Mi Camera (MiCam)\n- @iDeadXD for kernel\n- @ProjectUnknown01 for RapidFlasher\n- Nothing Community for firmware dumps"
     }
 ];

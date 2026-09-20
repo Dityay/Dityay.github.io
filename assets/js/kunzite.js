@@ -26,7 +26,7 @@ window.kunziteData = [
         name: "NothingOS 5 BETA",
         category: "Non-Xiaomi",
         device: "Xiaomi REDMI Note 15 5G (kunzite)",
-        version: "Android 17",
+        version: "Android 17 (Initial)",
         buildDate: "2026-09-20",
         cssSuffix: "-red",
         downloadUrl: "https://drive.google.com/file/d/1-tlzzDJ6QjcvHy4jW23f1SDFvDLKGCVy/view?usp=sharing",
@@ -46,11 +46,11 @@ window.kunziteData = [
         credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand, @rianixia for instructions and fixes\n- @reiryuki for Moto Dolby Atmos\n- @heybyben for AOSP vendor, OrangeFox, and Mi Camera (MiCam)\n- @iDeadXD for kernel\n- @makartos, @UralRedux, @SM6475 for testing\n- @ProjectUnknown01 for RapidFlasher\n- Nothing Community for firmware dumps"
     },
     {
-        id: "kun_myui8",
-        name: "MyUI 8",
+        id: "kun_helloui17",
+        name: "HelloUI 17",
         category: "Non-Xiaomi",
         device: "Xiaomi REDMI Note 15 5G (kunzite)",
-        version: "Android 16",
+        version: "Android 17 (Initial)",
         buildDate: "2026-09-30",
         cssSuffix: "-emerald",
         isWip: true,

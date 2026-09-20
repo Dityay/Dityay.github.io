@@ -2,6 +2,7 @@ window.fogData = [
     {
         id: "fog_my7",
         name: "MyUI 7",
+        category: "Non-Xiaomi",
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 15 (Hotfix)",
         buildDate: "2026-03-26",
@@ -21,6 +22,7 @@ window.fogData = [
     {
         id: "fog_hos2lcn",
         name: "HyperOS 2 Lite",
+        category: "Xiaomi (HyperOS, MIUI)",
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 14 (Hotfix 2)",
         buildDate: "2026-04-26",
@@ -40,6 +42,7 @@ window.fogData = [
     {
         id: "fog_ho3lcn",
         name: "HyperOS 3 Lite",
+        category: "Xiaomi (HyperOS, MIUI)",
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 15 (Initial)",
         buildDate: "2026-05-15",
@@ -58,6 +61,7 @@ window.fogData = [
     {
         id: "fog_nos",
         name: "NothingOS 4.1",
+        category: "Non-Xiaomi",
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 16 (Initial)",
         buildDate: "2026-05-26",
@@ -76,6 +80,7 @@ window.fogData = [
     {
         id: "fog_mi12eea",
         name: "MIUI 12 EEA",
+        category: "Xiaomi (HyperOS, MIUI)",
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 11 (Initial)",
         buildDate: "2026-06-09",
@@ -94,6 +99,7 @@ window.fogData = [
     {
         id: "fog_mi125cn",
         name: "MIUI 12.5 CN",
+        category: "Xiaomi (HyperOS, MIUI)",
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 11 (Hotfix)",
         buildDate: "2026-07-12",
@@ -115,6 +121,7 @@ window.fogData = [
     {
         id: "fog_hos3id",
         name: "HyperOS 3.1 ID",
+        category: "Xiaomi (HyperOS, MIUI)",
         device: "Xiaomi Redmi 10C (fog)",
         version: "Android 16 (Initial)",
         buildDate: "2026-07-21",

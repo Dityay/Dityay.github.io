@@ -2,6 +2,7 @@ window.galeData = [
     {
         id: "gale_origin",
         name: "OriginOS 4",
+        category: "Non-Xiaomi",
         device: "Xiaomi Redmi 13C (gale)",
         version: "Android 14 (Initial)",
         buildDate: "2025-09-05",

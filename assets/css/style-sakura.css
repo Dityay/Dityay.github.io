@@ -756,6 +756,12 @@ footer {
     animation: staticNoise 0.5s steps(2) infinite;
 }
 
+[data-theme="light"] .nuked-banner-noise {
+    background-color: #f8fafc;
+    opacity: 0.65;
+    filter: grayscale(1) contrast(1.15) brightness(1.05);
+}
+
 @keyframes staticNoise {
     0% { background-position: 0px 0px; }
     20% { background-position: -40px 30px; }

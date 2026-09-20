@@ -2,7 +2,7 @@ window.kunziteData = [
     {
         id: "kun_cos16",
         name: "ColorOS 16 CN",
-        category: "ROM",
+        category: "Non-Xiaomi",
         device: "Xiaomi REDMI Note 15 5G (kunzite)",
         version: "Android 16 (Hotfix 1)",
         buildDate: "2026-8-23",
@@ -24,7 +24,7 @@ window.kunziteData = [
     {
         id: "kun_nos5",
         name: "NothingOS 5 BETA",
-        category: "ROM",
+        category: "Non-Xiaomi",
         device: "Xiaomi REDMI Note 15 5G (kunzite)",
         version: "Android 17",
         buildDate: "2026-09-20",
@@ -41,8 +41,24 @@ window.kunziteData = [
             "assets/roms/kunzite/nos5/7.png",
             "assets/roms/kunzite/nos5/8.png"
         ],
-        description: "> *\"I just wanna be with you. That's all I need.\"*\n\n### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Built-in with Moto Dolby Atmos and Mi Camera (MiCam)\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n\n### Changes\n- Initial NothingOS 5 port with Android 17 base\n- Integrated Moto Dolby Atmos audio processing\n- Integrated Mi Camera with full sensor compatibility\n\n### Known Issues\n- Face Unlock not working\n- IR Blaster not working\n- Screen-off Fingerprint on Display (FOD) not working\n- Wallpaper effects (Glass & Atmosphere) reset on reboot\n- Please report any other bugs encountered to the maintainer",
+        description: "> *\"I just wanna be with you. That's all I need.\"*\n\n### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Built-in with Moto Dolby Atmos and Mi Camera (MiCam) *(some camera features may not work)*\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n\n### Changes\n- Initial NothingOS 5 port with Android 17 base\n- Integrated Moto Dolby Atmos audio processing\n- Integrated Mi Camera (MiCam)\n\n### Known Issues\n- Face Unlock not working\n- IR Blaster not working\n- Screen-off Fingerprint on Display (FOD) not working\n- Wallpaper effects (Glass & Atmosphere) reset on reboot\n- Some Mi Camera features/modes may not work properly\n- Please report any other bugs encountered to the maintainer",
         flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
-        credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand, @rianixia for porting base, instructions and fixes\n- @reiryuki for Moto Dolby Atmos\n- @heybyben for AOSP vendor, OrangeFox, and Mi Camera (MiCam)\n- @iDeadXD for kernel\n- @makartos, @UralRedux, @SM6475 for testing\n- @ProjectUnknown01 for RapidFlasher\n- Nothing Community for firmware dumps"
+        credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand, @rianixia for instructions and fixes\n- @reiryuki for Moto Dolby Atmos\n- @heybyben for AOSP vendor, OrangeFox, and Mi Camera (MiCam)\n- @iDeadXD for kernel\n- @makartos, @UralRedux, @SM6475 for testing\n- @ProjectUnknown01 for RapidFlasher\n- Nothing Community for firmware dumps"
+    },
+    {
+        id: "kun_myui8",
+        name: "MyUI 8",
+        category: "Non-Xiaomi",
+        device: "Xiaomi REDMI Note 15 5G (kunzite)",
+        version: "Android 16",
+        buildDate: "2026-09-30",
+        cssSuffix: "-emerald",
+        isWip: true,
+        downloadUrl: "",
+        banner: "",
+        screenshots: [],
+        description: "> *\"Work in progress build.\"*",
+        flashInstruction: "",
+        credits: ""
     }
 ];

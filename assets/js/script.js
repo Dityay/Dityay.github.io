@@ -3,7 +3,7 @@
  * Enhanced UI, Animations, Search, Filtering, Lightbox & Functionality
  */
 
-let currentCategory = 'ROM';
+let currentCategory = 'All';
 let currentDeviceFilter = 'All';
 let currentSearchQuery = '';
 let currentSortOrder = 'newest';
@@ -404,7 +404,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (window.galeData) window.romData = window.romData.concat(window.galeData);
 
     window.romData.forEach(item => {
-        if (!item.category) item.category = 'ROM';
+        if (!item.category) {
+            const n = (item.name || '').toLowerCase();
+            item.category = (n.includes('hyperos') || n.includes('miui'))
+                ? 'Xiaomi (HyperOS, MIUI)'
+                : 'Non-Xiaomi';
+        }
     });
 
     // Update dynamic statistics in Hero section
@@ -693,14 +698,26 @@ function renderCategoryFilters() {
         visibleData = visibleData.filter(rom => !rom.isPersonal);
     }
 
-    const categories = [...new Set(visibleData.map(rom => rom.category || 'ROM'))];
-    if (!categories.includes(currentCategory) && categories.length > 0) {
-        currentCategory = categories[0];
+    const uniqueCats = [...new Set(visibleData.map(rom => rom.category).filter(Boolean))];
+    uniqueCats.sort((a, b) => {
+        if (a.includes('Xiaomi') && !a.includes('Non')) return -1;
+        if (b.includes('Xiaomi') && !b.includes('Non')) return 1;
+        return a.localeCompare(b);
+    });
+
+    const categories = ['All', ...uniqueCats];
+    if (!categories.includes(currentCategory)) {
+        currentCategory = 'All';
     }
 
     let catHtml = '';
     categories.forEach(cat => {
-        catHtml += `<button class="filter-btn ${currentCategory === cat ? 'active' : ''}" onclick="setCategory('${cat}')">${cat}</button>`;
+        const count = cat === 'All'
+            ? visibleData.length
+            : visibleData.filter(r => r.category === cat).length;
+        const activeClass = currentCategory === cat ? 'active' : '';
+        const label = cat === 'All' ? 'All ROMs' : cat;
+        catHtml += `<button class="filter-btn ${activeClass}" onclick="setCategory('${cat}')">${label} <span class="filter-btn-count" style="opacity: 0.75; font-size: 0.8rem; margin-left: 4px;">(${count})</span></button>`;
     });
 
     filterContainer.innerHTML = catHtml;
@@ -742,7 +759,9 @@ function renderROMCards() {
     }
 
     // Category filter
-    filteredData = filteredData.filter(rom => (rom.category || 'ROM') === currentCategory);
+    if (currentCategory !== 'All') {
+        filteredData = filteredData.filter(rom => (rom.category || 'Non-Xiaomi') === currentCategory);
+    }
 
     // Device filter
     if (currentDeviceFilter !== 'All') {
@@ -760,11 +779,13 @@ function renderROMCards() {
             const ver = (rom.version || '').toLowerCase();
             const desc = (rom.description || '').toLowerCase();
             const notes = (rom.notes || '').toLowerCase();
+            const cat = (rom.category || '').toLowerCase();
             return name.includes(currentSearchQuery) ||
                    dev.includes(currentSearchQuery) ||
                    ver.includes(currentSearchQuery) ||
                    desc.includes(currentSearchQuery) ||
-                   notes.includes(currentSearchQuery);
+                   notes.includes(currentSearchQuery) ||
+                   cat.includes(currentSearchQuery);
         });
     }
 
@@ -818,6 +839,7 @@ function renderROMCards() {
     // Grouping by device
     const devicesToRender = [...new Set(filteredData.map(rom => rom.device))];
     let htmlContent = "";
+    let globalCardIdx = 0;
 
     devicesToRender.forEach((device, index) => {
         const marginTop = index === 0 ? "0px" : "40px";
@@ -836,121 +858,159 @@ function renderROMCards() {
             </div>
         `;
 
-        htmlContent += deviceRoms.map((rom, romIdx) => {
-            let badgeHtml = "";
-            const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
-            const now = new Date();
-            const isUpcoming = build && build > now;
-            const isUnlockedByYtta = isUpcoming && isYttaMode;
-            const isNuked = !isUpcoming && (!rom.downloadUrl || rom.downloadUrl.trim() === "");
+        const deviceCategories = [...new Set(deviceRoms.map(r => r.category || 'Non-Xiaomi'))];
+        deviceCategories.sort((a, b) => {
+            if (a.includes('Xiaomi') && !a.includes('Non')) return -1;
+            if (b.includes('Xiaomi') && !b.includes('Non')) return 1;
+            return a.localeCompare(b);
+        });
 
-            let cardAction = `onclick="viewDetail('${rom.id}')"`;
-            let cursorStyle = "cursor: pointer;";
-            let btnText = isUnlockedByYtta ? 'View Details (Debug)' : 'View Details';
-            let btnClass = "btn-dl primary btn-card-main";
-            let btnStyle = "";
+        const shouldShowCategoryHeaders = currentCategory === 'All' && deviceCategories.length > 1;
 
-            // Extract codename from device
-            const matchCodename = (rom.device || '').match(/\(([^)]+)\)/);
-            const codename = matchCodename ? matchCodename[1] : '';
+        deviceCategories.forEach(cat => {
+            const catRoms = deviceRoms.filter(r => (r.category || 'Non-Xiaomi') === cat);
+            if (catRoms.length === 0) return;
 
-            // Extract Android version pill
-            const matchAndroid = (rom.version || '').match(/(Android\s*\d+)/i);
-            const androidPill = matchAndroid ? matchAndroid[1] : 'Android';
-
-            if (isNuked) {
-                badgeHtml += `<span class="badge-tag nuked">NUKED</span>`;
-                cardAction = `onclick="showNukedPopup()"`;
-                cursorStyle = "cursor: pointer;";
-                btnText = "Unavailable";
-                btnStyle = "opacity: 0.6;";
-                btnClass = "btn-dl secondary btn-card-main";
-                displayDate = "Unavailable";
-            } else if (isUpcoming) {
-                if (isUnlockedByYtta) {
-                    badgeHtml += `<span class="badge-tag upcoming" style="background: var(--accent); color: #032313; font-weight: 700;">UNLOCKED</span>`;
-                    displayDate = build ? `${build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })} (Upcoming)` : 'Coming soon';
-                } else {
-                    badgeHtml += `<span class="badge-tag upcoming">UPCOMING</span>`;
-                    displayDate = "Coming soon";
-                }
-            } else if (build) {
-                displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                const diffTime = now - build;
-                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                if (diffDays >= 0 && diffDays <= 21) {
-                    badgeHtml += `<span class="badge-tag new">NEW</span>`;
-                }
+            if (shouldShowCategoryHeaders) {
+                htmlContent += `
+                    <div style="grid-column: 1 / -1; margin-top: 18px; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; padding: 7px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm);">
+                        <span style="font-family: 'Syne', sans-serif; font-size: 0.92rem; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                            ${cat}
+                        </span>
+                        <span style="font-size: 0.8rem; color: var(--muted); font-weight: 600;">${catRoms.length} build${catRoms.length === 1 ? '' : 's'}</span>
+                    </div>
+                `;
             }
 
-            if (rom.isPersonal) {
-                badgeHtml += `<span class="badge-tag personal">PERSONAL</span>`;
-            }
+            htmlContent += catRoms.map((rom) => {
+                let badgeHtml = "";
+                let displayDate = "-";
+                const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
+                const now = new Date();
+                const isWip = !!rom.isWip;
+                const isUpcoming = !isWip && build && build > now;
+                const isUnlockedByYtta = isUpcoming && isYttaMode;
+                const isNuked = !isWip && !isUpcoming && (!rom.downloadUrl || rom.downloadUrl.trim() === "");
 
-            let bannerContent = isNuked
-                ? `<div class="nuked-banner-noise" style="width: 100%; height: 100%;"></div>`
-                : `<div class="card-banner-img" style="background-image: url('${rom.banner}');"></div>`;
+                let cardAction = `onclick="viewDetail('${rom.id}')"`;
+                let cursorStyle = "cursor: pointer;";
+                let btnText = isUnlockedByYtta ? 'View Details (Debug)' : 'View Details';
+                let btnClass = "btn-dl primary btn-card-main";
+                let btnStyle = "";
 
-            return `
-            <div class="rom-card" ${cardAction} style="${cursorStyle} animation-delay: ${romIdx * 0.05}s;">
-                <div class="card-banner-wrapper">
-                    ${bannerContent}
-                    <div class="card-banner-overlay">
-                        <div class="card-floating-badges">
-                            <span class="card-device-badge">${codename || 'Xiaomi'}</span>
-                            <span class="card-version-pill">${androidPill}</span>
+                // Extract codename from device
+                const matchCodename = (rom.device || '').match(/\(([^)]+)\)/);
+                const codename = matchCodename ? matchCodename[1] : '';
+
+                // Extract Android version pill
+                const matchAndroid = (rom.version || '').match(/(Android\s*\d+)/i);
+                const androidPill = matchAndroid ? matchAndroid[1] : 'Android';
+
+                if (isWip) {
+                    badgeHtml += `<span class="badge-tag wip">WIP</span>`;
+                    cardAction = `onclick="showWipPopup()"`;
+                    cursorStyle = "cursor: pointer;";
+                    btnText = "Under Development";
+                    btnStyle = "opacity: 0.75;";
+                    btnClass = "btn-dl secondary btn-card-main";
+                    displayDate = "Work in Progress";
+                } else if (isNuked) {
+                    badgeHtml += `<span class="badge-tag nuked">NUKED</span>`;
+                    cardAction = `onclick="showNukedPopup()"`;
+                    cursorStyle = "cursor: pointer;";
+                    btnText = "Unavailable";
+                    btnStyle = "opacity: 0.6;";
+                    btnClass = "btn-dl secondary btn-card-main";
+                    displayDate = "Unavailable";
+                } else if (isUpcoming) {
+                    if (isUnlockedByYtta) {
+                        badgeHtml += `<span class="badge-tag upcoming" style="background: var(--accent); color: #032313; font-weight: 700;">UNLOCKED</span>`;
+                        displayDate = build ? `${build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })} (Upcoming)` : 'Coming soon';
+                    } else {
+                        badgeHtml += `<span class="badge-tag upcoming">UPCOMING</span>`;
+                        displayDate = "Coming soon";
+                    }
+                } else if (build) {
+                    displayDate = build.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                    const diffTime = now - build;
+                    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                    if (diffDays >= 0 && diffDays <= 21) {
+                        badgeHtml += `<span class="badge-tag new">NEW</span>`;
+                    }
+                }
+
+                if (rom.isPersonal) {
+                    badgeHtml += `<span class="badge-tag personal">PERSONAL</span>`;
+                }
+
+                let bannerContent = (isNuked || isWip)
+                    ? `<div class="nuked-banner-noise" style="width: 100%; height: 100%;"></div>`
+                    : `<div class="card-banner-img" style="background-image: url('${rom.banner}');"></div>`;
+
+                const animDelay = (globalCardIdx++ * 0.04).toFixed(2);
+
+                return `
+                <div class="rom-card" ${cardAction} style="${cursorStyle} animation-delay: ${animDelay}s;">
+                    <div class="card-banner-wrapper">
+                        ${bannerContent}
+                        <div class="card-banner-overlay">
+                            <div class="card-floating-badges">
+                                <span class="card-device-badge">${codename || 'Xiaomi'}</span>
+                                <span class="card-version-pill">${androidPill}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="card-title-row">
+                            <h3 class="card-title" style="color: ${isNuked ? 'var(--muted)' : 'var(--accent)'};">
+                                ${rom.name}
+                            </h3>
+                            <div style="display: flex; gap: 4px;">
+                                ${badgeHtml}
+                            </div>
+                        </div>
+
+                        <div class="card-info-list">
+                            <div class="card-info-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                                </svg>
+                                <span>Device: <span class="val">${rom.device}</span></span>
+                            </div>
+                            <div class="card-info-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                                <span>Version: <span class="val">${rom.version}</span></span>
+                            </div>
+                            <div class="card-info-item">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                <span>Released: <span class="val">${displayDate}</span></span>
+                            </div>
+                        </div>
+
+                        <div class="card-actions-row">
+                            <button class="${btnClass}" style="${btnStyle}">${btnText}</button>
+                            <button class="btn-card-share" onclick="event.stopPropagation(); copyRomLink('${rom.id}')" title="Copy ROM link" aria-label="Copy link">
+                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
-
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3 class="card-title" style="color: ${isNuked ? 'var(--muted)' : 'var(--accent)'};">
-                            ${rom.name}
-                        </h3>
-                        <div style="display: flex; gap: 4px;">
-                            ${badgeHtml}
-                        </div>
-                    </div>
-
-                    <div class="card-info-list">
-                        <div class="card-info-item">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                                <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                            </svg>
-                            <span>Device: <span class="val">${rom.device}</span></span>
-                        </div>
-                        <div class="card-info-item">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                            </svg>
-                            <span>Version: <span class="val">${rom.version}</span></span>
-                        </div>
-                        <div class="card-info-item">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                <line x1="16" y1="2" x2="16" y2="6"></line>
-                                <line x1="8" y1="2" x2="8" y2="6"></line>
-                                <line x1="3" y1="10" x2="21" y2="10"></line>
-                            </svg>
-                            <span>Released: <span class="val">${displayDate}</span></span>
-                        </div>
-                    </div>
-
-                    <div class="card-actions-row">
-                        <button class="${btnClass}" style="${btnStyle}">${btnText}</button>
-                        <button class="btn-card-share" onclick="event.stopPropagation(); copyRomLink('${rom.id}')" title="Copy ROM link" aria-label="Copy link">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            `;
-        }).join('');
+                `;
+            }).join('');
+        });
     });
 
     container.innerHTML = htmlContent;
@@ -960,10 +1020,12 @@ function renderROMCards() {
 function resetSearchAndFilters() {
     currentSearchQuery = '';
     currentDeviceFilter = 'All';
+    currentCategory = 'All';
     const searchInput = document.getElementById('rom-search-input');
     const clearBtn = document.getElementById('search-clear-btn');
     if (searchInput) searchInput.value = '';
     if (clearBtn) clearBtn.classList.add('hidden');
+    renderCategoryFilters();
     renderDeviceFilterChips();
     renderROMCards();
 }
@@ -1086,6 +1148,31 @@ function showNukedPopup() {
             <h2 class="modal-popup-title danger">Build Withdrawn</h2>
             <p class="modal-popup-text">
                 This ROM build has been deprecated or nuked due to newer releases or issues. Details and files are no longer accessible.
+            </p>
+            <div class="modal-actions-row">
+                <button class="btn-dl primary" onclick="closeModal()">Understood</button>
+            </div>
+        </div>
+    `;
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+}
+
+function showWipPopup() {
+    const modal = document.getElementById('md-modal');
+    const content = document.getElementById('md-content');
+
+    content.innerHTML = `
+        <div class="modal-popup-container">
+            <div class="modal-popup-icon-box warning">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+            </div>
+            <h2 class="modal-popup-title warning">Work in Progress</h2>
+            <p class="modal-popup-text">
+                This ROM is actively under development and initial testing. Build details, changelogs, and downloads are not yet available.
             </p>
             <div class="modal-actions-row">
                 <button class="btn-dl primary" onclick="closeModal()">Understood</button>
@@ -1257,6 +1344,12 @@ function viewDetail(id) {
         return;
     }
 
+    if (rom.isWip) {
+        showWipPopup();
+        window.location.hash = isSecretMode ? 'personal' : '';
+        return;
+    }
+
     // Apply theme suffix if defined (e.g. sakura, emerald, gold, red)
     updateCSS(rom.cssSuffix || '-emerald');
 
@@ -1408,8 +1501,8 @@ function viewDetail(id) {
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
                 </div>
                 <div class="spec-info-col">
-                    <span class="spec-label">Package Type</span>
-                    <span class="spec-val">${rom.category || 'ROM'}</span>
+                    <span class="spec-label">Category</span>
+                    <span class="spec-val">${rom.category || 'Non-Xiaomi'}</span>
                 </div>
             </div>
         </div>

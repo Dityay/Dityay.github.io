@@ -959,6 +959,32 @@ nav {
     background: linear-gradient(to top, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.22) 60%, transparent 100%);
 }
 
+.nuked-banner-noise {
+    width: 100%;
+    height: 100%;
+    background-color: #121212;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 150px 150px;
+    opacity: 0.5;
+    animation: staticNoise 0.5s steps(2) infinite;
+}
+
+[data-theme="light"] .nuked-banner-noise {
+    background-color: #f8fafc;
+    opacity: 0.65;
+    filter: grayscale(1) contrast(1.15) brightness(1.05);
+}
+
+@keyframes staticNoise {
+    0% { background-position: 0px 0px; }
+    20% { background-position: -40px 30px; }
+    40% { background-position: 30px -50px; }
+    60% { background-position: -20px -20px; }
+    80% { background-position: 50px 40px; }
+    100% { background-position: 0px 0px; }
+}
+
 .card-floating-badges {
     display: flex;
     align-items: center;
@@ -1065,6 +1091,18 @@ nav {
     color: #a1a1aa;
     text-decoration: line-through;
     border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.badge-tag.wip {
+    background-color: #f59e0b;
+    color: #18181b;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3);
+}
+
+[data-theme="light"] .badge-tag.wip {
+    background-color: #d97706;
+    color: #ffffff;
 }
 
 .badge-tag.personal {
@@ -3458,6 +3496,12 @@ button, a, select, input, .rom-card, .chip-btn, .filter-btn, .tab-btn {
     border-color: rgba(239, 68, 68, 0.35);
 }
 
+.modal-popup-icon-box.warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: #f59e0b;
+    border-color: rgba(245, 158, 11, 0.4);
+}
+
 .modal-popup-title {
     font-family: 'Syne', sans-serif;
     font-size: 1.55rem;
@@ -3469,6 +3513,10 @@ button, a, select, input, .rom-card, .chip-btn, .filter-btn, .tab-btn {
 
 .modal-popup-title.danger {
     color: #ef4444;
+}
+
+.modal-popup-title.warning {
+    color: #f59e0b;
 }
 
 .modal-popup-text {

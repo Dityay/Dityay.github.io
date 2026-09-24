@@ -241,10 +241,13 @@ if (!document.documentElement.hasAttribute('data-css-theme')) {
     document.documentElement.setAttribute('data-css-theme', '-emerald');
 }
 
+window.updateCSS = updateCSS;
 function updateCSS(suffix) {
-    const desiredSuffix = suffix || '-emerald';
+    let desiredSuffix = suffix || '-emerald';
+    if (desiredSuffix === '-coklat' || desiredSuffix === '-mocha') desiredSuffix = '-brown';
+    if (desiredSuffix === '-abu' || desiredSuffix === '-grey' || desiredSuffix === '-slate') desiredSuffix = '-gray';
     const targetFile = 'assets/css/style' + desiredSuffix + '.css';
-    const targetHref = targetFile + '?v=39';
+    const targetHref = targetFile + '?v=44';
     let mainLink = document.getElementById('main-css');
 
     // 1. Immediately set data-css-theme on <html> for instant reactive synchronization
@@ -290,7 +293,7 @@ function updateCSS(suffix) {
     }
 
     // Safety sweep: purge any duplicate or rogue theme link elements left in <head>
-    const themeLinks = document.querySelectorAll('link[href*="style-emerald"], link[href*="style-gold"], link[href*="style-red"], link[href*="style-sakura"], link[href*="style."]');
+    const themeLinks = document.querySelectorAll('link[href*="style-emerald"], link[href*="style-gold"], link[href*="style-red"], link[href*="style-sakura"], link[href*="style-brown"], link[href*="style-gray"], link[href*="style-coklat"], link[href*="style-abu"], link[href*="style."]');
     themeLinks.forEach(link => {
         const href = link.getAttribute('href') || '';
         if (link.id !== 'main-css' && !href.includes('style-components')) {

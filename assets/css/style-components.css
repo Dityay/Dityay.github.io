@@ -53,6 +53,12 @@ body::after {
     opacity: 0.65;
 }
 
+/* Ambient Glow Orbs Stay in Place */
+.orb {
+    position: fixed !important;
+    pointer-events: none;
+}
+
 #leaf-container {
     display: none !important;
 }

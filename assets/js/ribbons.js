@@ -59,6 +59,14 @@
             dark: { r: 244, g: 114, b: 182 },  // #f472b6
             light: { r: 219, g: 39, b: 119 }   // #db2777
         },
+        'brown': {
+            dark: { r: 201, g: 122, b: 62 },   // #c97a3e
+            light: { r: 160, g: 86, b: 38 }    // #a05626
+        },
+        'gray': {
+            dark: { r: 161, g: 161, b: 170 },  // #a1a1aa
+            light: { r: 71, g: 85, b: 105 }    // #475569
+        },
         'default': {
             dark: { r: 16, g: 185, b: 129 },   // #10b981
             light: { r: 5, g: 150, b: 105 }    // #059669
@@ -95,6 +103,8 @@
         if (s.includes('sakura')) return THEME_PRESETS['sakura'];
         if (s.includes('red')) return THEME_PRESETS['red'];
         if (s.includes('gold')) return THEME_PRESETS['gold'];
+        if (s.includes('brown') || s.includes('mocha') || s.includes('coklat')) return THEME_PRESETS['brown'];
+        if (s.includes('gray') || s.includes('grey') || s.includes('slate') || s.includes('abu')) return THEME_PRESETS['gray'];
         if (s.includes('default') || s.includes('style.css')) return THEME_PRESETS['default'];
         return null;
     }

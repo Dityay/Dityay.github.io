@@ -52,13 +52,22 @@ window.kunziteData = [
         device: "Xiaomi REDMI Note 15 5G (kunzite)",
         version: "Android 17 (Initial)",
         buildDate: "2026-09-30",
-        cssSuffix: "-emerald",
-        isWip: true,
+        cssSuffix: "-brown",
+        isWip: false,
         downloadUrl: "",
-        banner: "",
-        screenshots: [],
+        banner: "assets/roms/kunzite/hello17/banner.png",
+        screenshots: [
+            "assets/roms/kunzite/hello17/1.jpg",
+            "assets/roms/kunzite/hello17/2.jpg",
+            "assets/roms/kunzite/hello17/3.jpg",
+            "assets/roms/kunzite/hello17/4.jpg",
+            "assets/roms/kunzite/hello17/5.jpg",
+            "assets/roms/kunzite/hello17/6.jpg",
+            "assets/roms/kunzite/hello17/7.jpg",
+            "assets/roms/kunzite/hello17/8.jpg"
+        ],
         description: "> *\"Work in progress build.\"*",
-        flashInstruction: "",
+        flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
         credits: ""
     }
 ];

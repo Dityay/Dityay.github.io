@@ -109,12 +109,13 @@ overflow-x: hidden;
 }
 
 .orb {
-    position: absolute;
+    position: fixed;
     border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
     filter: blur(60px);
     z-index: -1;
     opacity: 0.15;
     animation: blob-bounce 8s infinite alternate;
+    pointer-events: none;
 }
 
 .orb-1 {

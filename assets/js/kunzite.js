@@ -51,11 +51,11 @@ window.kunziteData = [
         category: "Non-Xiaomi",
         device: "Xiaomi REDMI Note 15 5G (kunzite)",
         version: "Android 17 (Initial)",
-        buildDate: "2026-09-30",
+        buildDate: "2026-09-25",
         cssSuffix: "-brown",
         isWip: false,
-        downloadUrl: "",
-        banner: "assets/roms/kunzite/hello17/banner.png",
+        downloadUrl: "https://drive.google.com/file/d/1Uf4rckvDDAnkg60wC6Mmp55RKzCXYPKG/view?usp=sharing",
+        banner: "assets/roms/kunzite/hello17/banner.jpg",
         screenshots: [
             "assets/roms/kunzite/hello17/1.jpg",
             "assets/roms/kunzite/hello17/2.jpg",
@@ -66,8 +66,8 @@ window.kunziteData = [
             "assets/roms/kunzite/hello17/7.jpg",
             "assets/roms/kunzite/hello17/8.jpg"
         ],
-        description: "> *\"Work in progress build.\"*",
+        description: "> *\"Both the ANGEL and the DEVIL themselves has forgotten this world\"*\n\n### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n\n### Changes\n- Initial release\n- Fixed several Moto features\n- Fixed Fingerprint on Display (FOD)\n\n### Known Issues\n- None so far\n- Please report any other bugs encountered to the maintainer",
         flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
-        credits: ""
+        credits: "- dr_ortex (Discord) for artwork\n- @SM6475, @UralRedux for testing\n- @ProjectUnknown01 for RapidFlasher"
     }
 ];

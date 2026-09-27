@@ -1378,7 +1378,7 @@ nav {
     border-radius: var(--radius-sm);
     padding: 16px 20px;
     padding-top: 40px;
-    overflow-x: auto;
+    flex-wrap: wrap;
     font-family: var(--font-mono);
     font-size: 0.88rem;
     line-height: 1.6;
@@ -1865,7 +1865,7 @@ button, a, select, input, .rom-card, .chip-btn, .filter-btn, .tab-btn {
 .rom-description-container table {
     display: block;
     width: 100%;
-    overflow-x: auto;
+    flex-wrap: wrap;
     -webkit-overflow-scrolling: touch;
     border-collapse: collapse;
     margin: 16px 0;
@@ -2309,7 +2309,7 @@ button, a, select, input, .rom-card, .chip-btn, .filter-btn, .tab-btn {
     .detail-top-bar .detail-breadcrumbs {
         order: 3;
         width: 100%;
-        overflow-x: auto;
+        flex-wrap: wrap;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
@@ -2447,7 +2447,7 @@ button, a, select, input, .rom-card, .chip-btn, .filter-btn, .tab-btn {
     .rom-info-tabs {
         display: flex;
         gap: 6px;
-        overflow-x: auto;
+        flex-wrap: wrap;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         padding-bottom: 4px;
@@ -3616,3 +3616,11 @@ button, a, select, input, .rom-card, .chip-btn, .filter-btn, .tab-btn {
 
 
 
+
+/* Global fix for tabs visibility on mobile/desktop */
+.rom-info-tabs {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    overflow: visible !important;
+}

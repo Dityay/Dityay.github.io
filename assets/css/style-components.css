@@ -3624,3 +3624,12 @@ button, a, select, input, .rom-card, .chip-btn, .filter-btn, .tab-btn {
     gap: 8px !important;
     overflow: visible !important;
 }
+
+/* Simplification Overrides */
+body::before, body::after {
+    display: none !important;
+    animation: none !important;
+}
+.orb {
+    display: none !important;
+}

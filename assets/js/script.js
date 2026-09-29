@@ -236,9 +236,9 @@ function getGMT8Target(dateStr) {
 }
 
 // Dynamic Theme CSS loader (smooth, robust stylesheet switching without getting stuck)
-let currentActiveCssSuffix = '-emerald';
+let currentActiveCssSuffix = '-xia';
 if (!document.documentElement.hasAttribute('data-css-theme')) {
-    document.documentElement.setAttribute('data-css-theme', '-emerald');
+    document.documentElement.setAttribute('data-css-theme', '-xia');
 }
 
 window.updateCSS = updateCSS;
@@ -1054,7 +1054,7 @@ function shareCurrentRom() {
 
 // Home Navigation
 function navigateHome(fromHash = false) {
-    updateCSS('-emerald');
+    updateCSS('-xia');
 
     if (!fromHash) {
         if (isSecretMode) {
@@ -1088,7 +1088,7 @@ function navigateHome(fromHash = false) {
 
 // 404 Error Page
 function show404() {
-    updateCSS('-emerald');
+    updateCSS('-xia');
     document.body.classList.remove('has-sticky-bar');
     const existingStickyBar = document.getElementById('mobile-sticky-bar');
     if (existingStickyBar) existingStickyBar.remove();
@@ -1354,7 +1354,7 @@ function viewDetail(id) {
     }
 
     // Apply theme suffix if defined (e.g. sakura, emerald, gold, red)
-    updateCSS(rom.cssSuffix || '-emerald');
+    updateCSS(rom.cssSuffix || '-xia');
 
     const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
     const now = new Date();

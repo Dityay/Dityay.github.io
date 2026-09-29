@@ -1,0 +1,30 @@
+:root {
+  --bg: #120a0f;
+  --surface: #1a1016;
+  --surface-cards: rgba(255, 182, 193, 0.05);
+  --border: rgba(255, 228, 230, 0.09);
+  --grid-color: rgba(255, 182, 193, 0.03);
+  
+  --text: #f6e9ed;
+  --muted: rgba(246, 233, 237, 0.66);
+  --accent: #ff9a9e;
+  --accent-hover: #ff758c;
+  --accent-glow: rgba(255, 154, 158, 0.28);
+  --accent-subtle: rgba(255, 182, 193, 0.11);
+  
+  --radius-m3: 16px;
+  --btn-primary-bg: var(--accent);
+  --btn-primary-hover: var(--accent-hover);
+  --btn-primary-color: #1a0f14;
+  --btn-primary-shadow: 0 4px 14px var(--accent-glow);
+}
+
+[data-theme="light"] {
+  --bg: #faf4f7;
+  --surface: #fffafd;
+  --surface-cards: rgba(255, 255, 255, 0.6);
+  --border: rgba(219, 39, 119, 0.15);
+  --grid-color: rgba(219, 39, 119, 0.05);
+  --text: #1a0f14;
+  --muted: rgba(26, 15, 20, 0.66);
+}

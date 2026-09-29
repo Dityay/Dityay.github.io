@@ -3633,3 +3633,44 @@ body::before, body::after {
 .orb {
     display: none !important;
 }
+
+/* Minimal Hero Styles */
+.minimal-hero {
+    padding: 40px 20px 30px 20px;
+    text-align: left;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.minimal-hero-title {
+    font-family: var(--font-display);
+    font-size: 3.2rem;
+    font-weight: 800;
+    margin-bottom: 12px;
+    letter-spacing: -1px;
+    color: var(--text);
+    line-height: 1.1;
+    word-wrap: break-word;
+}
+
+.minimal-hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .minimal-hero {
+        padding: 30px 15px 20px 15px;
+    }
+    .minimal-hero-title {
+        font-size: 2.2rem;
+    }
+    .minimal-hero-sub {
+        font-size: 1rem;
+    }
+}

@@ -2185,28 +2185,72 @@ footer {
 
 @media (max-width: 768px) {
     .page {
-        padding: 20px 4% 50px 4%;
+        padding: 16px 14px 50px 14px;
     }
 
     nav {
-        padding: 10px 4%;
+        padding: 8px 14px;
+        gap: 8px;
+    }
+
+    .nav-brand {
+        gap: 6px;
+    }
+
+    .nav-logo-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .nav-logo-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .nav-logo-text {
+        font-size: 1rem;
+    }
+
+    .nav-badge-pill {
+        font-size: 0.62rem;
+        padding: 1px 6px;
+    }
+
+    .nav-controls {
+        gap: 6px;
+    }
+
+    .btn-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .nav-btn {
+        padding: 6px 10px;
+        font-size: 0.78rem;
     }
 
     .minimal-hero {
-        padding: 20px 0 16px 0;
+        padding: 18px 0 14px 0;
     }
 
     .minimal-hero-title {
-        font-size: 1.85rem;
+        font-size: 1.55rem;
         letter-spacing: -0.03em;
         line-height: 1.15;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
+        word-break: break-word;
+        overflow-wrap: break-word;
     }
 
     .minimal-hero-sub {
-        font-size: 0.92rem;
+        font-size: 0.88rem;
         line-height: 1.5;
-        margin-bottom: 20px;
+        margin-bottom: 18px;
+    }
+
+    .filter-search-hub {
+        padding: 14px 14px;
     }
 
     .cards-grid {
@@ -2258,28 +2302,83 @@ footer {
     }
 }
 
-@media (max-width: 480px) {
-    .minimal-hero {
-        padding: 14px 0 10px 0;
+@media (max-width: 560px) {
+    .nav-btn span {
+        display: none;
     }
 
-    .hero-pill-badge {
-        font-size: 0.72rem;
-        padding: 3px 10px;
-        margin-bottom: 10px;
+    .nav-btn {
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        justify-content: center;
+        border-radius: var(--radius-sm);
     }
 
     .minimal-hero-title {
-        font-size: 1.5rem;
-        letter-spacing: -0.03em;
-        line-height: 1.15;
+        font-size: 1.35rem;
+        letter-spacing: -0.02em;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        padding: 12px 10px 40px 10px;
+    }
+
+    nav {
+        padding: 6px 10px;
+    }
+
+    .nav-logo-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .nav-logo-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .nav-logo-text {
+        font-size: 0.92rem;
+    }
+
+    .nav-badge-pill {
+        font-size: 0.58rem;
+        padding: 1px 4px;
+    }
+
+    .minimal-hero {
+        padding: 12px 0 8px 0;
+    }
+
+    .hero-pill-badge {
+        font-size: 0.68rem;
+        padding: 2px 8px;
         margin-bottom: 8px;
     }
 
+    .minimal-hero-title {
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+        line-height: 1.18;
+        margin-bottom: 6px;
+    }
+
     .minimal-hero-sub {
-        font-size: 0.85rem;
-        line-height: 1.48;
-        margin-bottom: 16px;
+        font-size: 0.8rem;
+        line-height: 1.45;
+        margin-bottom: 14px;
+    }
+
+    .filter-search-hub {
+        padding: 12px 10px;
+        gap: 12px;
+    }
+
+    .search-box {
+        padding: 8px 10px;
     }
 
     .detail-specs-grid {
@@ -2289,21 +2388,26 @@ footer {
     .hero-stats-row {
         grid-template-columns: 1fr 1fr;
         gap: 8px;
+        margin-bottom: 24px;
     }
 
     .hero-stat-card {
-        padding: 10px;
+        padding: 8px 6px;
     }
 
     .hero-stat-val {
-        font-size: 1.15rem;
+        font-size: 1.05rem;
+    }
+
+    .hero-stat-label {
+        font-size: 0.68rem;
     }
 
     .rom-detail-banner {
-        height: 200px;
+        height: 180px;
     }
 
     .modal-content {
-        padding: 24px 18px;
+        padding: 20px 16px;
     }
 }

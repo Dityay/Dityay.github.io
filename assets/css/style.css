@@ -412,6 +412,12 @@ nav {
     transform: translateY(-1px);
 }
 
+.btn-icon.tg-btn:hover {
+    color: #229ED9;
+    border-color: rgba(34, 158, 217, 0.4);
+    box-shadow: 0 0 12px rgba(34, 158, 217, 0.25);
+}
+
 /* Base Buttons */
 .btn-dl {
     display: inline-flex;

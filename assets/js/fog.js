@@ -7,13 +7,13 @@ window.fogData = [
         version: "Android 15 (Hotfix)",
         buildDate: "2026-03-26",
         downloadUrl: "https://drive.google.com/file/d/1OmNmmazHOZxB_R6jJfEcipuuLVtdPOVD/view?usp=drive_link",
-        banner: "assets/roms/fog/myui/banner.jpg",
+        banner: "assets/roms/fog/myui/banner.webp",
         screenshots: [
-            "assets/roms/fog/myui/1.jpg",
-            "assets/roms/fog/myui/2.jpg",
-            "assets/roms/fog/myui/3.jpg",
-            "assets/roms/fog/myui/4.jpg",
-            "assets/roms/fog/myui/5.jpg"
+            "assets/roms/fog/myui/1.webp",
+            "assets/roms/fog/myui/2.webp",
+            "assets/roms/fog/myui/3.webp",
+            "assets/roms/fog/myui/4.webp",
+            "assets/roms/fog/myui/5.webp"
         ],
         description: "### Notes\n- CN variant (dirty flashing from Global is NOT recommended)\n- **EROFS:** Only use an EROFS-supported kernel (this ROM is EROFS)\n- Install Play Store from App Center or download directly from [here](https://t.me/bscotchsdump/100)\n- Certain Lenovo features require a Chinese Lenovo account\n- Allow the ROM to settle for ~10 minutes after initial boot\n- Initial flashing may take around 10 minutes — please be patient!",
         flashInstruction: "### Installation Steps\n> ⚠️ **Please follow these steps carefully!**\n\n1. Use [OrangeFox Recovery](https://t.me/Redmi10CUpdates/1089) for flashing\n2. Flash [EROFS Kernel](https://t.me/bscotchsdump/243) first\n3. Reboot to Recovery\n4. Flash the ROM zip file\n5. Flash [FRP Remover](https://t.me/bscotchsdump/256) (recommended precaution)\n6. Format Data\n7. Reboot to system",
@@ -27,13 +27,13 @@ window.fogData = [
         version: "Android 14 (Hotfix 2)",
         buildDate: "2026-04-26",
         downloadUrl: "https://drive.google.com/file/d/1jkkBCXp5j5Hyne23dPzfgqPQ0ujFS7Vb/view?usp=sharing",
-        banner: "assets/roms/fog/h2cn_lisa/banner.jpg",
+        banner: "assets/roms/fog/h2cn_lisa/banner.webp",
         screenshots: [
-            "assets/roms/fog/h2cn_lisa/1.jpg",
-            "assets/roms/fog/h2cn_lisa/2.jpg",
-            "assets/roms/fog/h2cn_lisa/3.jpg",
-            "assets/roms/fog/h2cn_lisa/4.jpg",
-            "assets/roms/fog/h2cn_lisa/5.jpg"
+            "assets/roms/fog/h2cn_lisa/1.webp",
+            "assets/roms/fog/h2cn_lisa/2.webp",
+            "assets/roms/fog/h2cn_lisa/3.webp",
+            "assets/roms/fog/h2cn_lisa/4.webp",
+            "assets/roms/fog/h2cn_lisa/5.webp"
         ],
         description: "### Changes\n- Fixed device spoofing issue that caused several features to stop working\n- Removed HyperAI bloat\n- Unlimited Google Photos original quality backup\n- Lite Mode disabled by default\n- Low Memory Killer (LMK) optimizations to prevent OutOfMemory crashes\n- General system and responsiveness optimizations\n\n### Notes\n- Pre-rooted with KernelSU Next 3.0.0 and OrangeFox Recovery\n- Not recommended to change the kernel\n\n### Known Issues\n- NFC may be unstable on rain variant",
         flashInstruction: "### Installation Steps\n1. Boot into any custom recovery (OrangeFox recommended)\n2. Flash the ROM zip file\n3. Format Data\n4. Change active boot slot to **'a'** in the Reboot menu (if not already set)\n5. Reboot to system\n\n> ℹ️ **Note:** Performing any manual \"Wipe\" is NOT needed.",
@@ -66,12 +66,12 @@ window.fogData = [
         version: "Android 16 (Initial)",
         buildDate: "2026-05-26",
         downloadUrl: "https://drive.google.com/file/d/1oAET8kS9tbrvFre2QlrvHAeOXZGPP0-J/view?usp=sharing",
-        banner: "assets/roms/fog/nothing/banner.jpg",
+        banner: "assets/roms/fog/nothing/banner.webp",
         screenshots: [
-            "assets/roms/fog/nothing/1.jpg",
-            "assets/roms/fog/nothing/2.jpg",
-            "assets/roms/fog/nothing/3.jpg",
-            "assets/roms/fog/nothing/4.jpg"
+            "assets/roms/fog/nothing/1.webp",
+            "assets/roms/fog/nothing/2.webp",
+            "assets/roms/fog/nothing/3.webp",
+            "assets/roms/fog/nothing/4.webp"
         ],
         description: "### Notes\n- System performs dex2oat compilation on first boot\n- Kernel is locked for stability\n- Includes ViPER4Android FX (accessible in Sound settings)\n- Shipped with KernelSU Next (v3.2.0-legacy) and OrangeFox Recovery\n- NFC is fully functional\n\n### Known Issues\n- Some UI elements may scale unusually on 720p displays (originally designed for 1080p)\n- Dirac Audio (requires 64-bit audio service)\n- Face Unlock\n- Double Tap to Wake (DT2W) unsupported by Nothing base",
         flashInstruction: "### Installation Steps\n1. Boot into custom recovery (OrangeFox by @Romeo_13card recommended)\n2. Flash the ROM zip file\n3. Format Data\n4. Reboot to system\n\n> ℹ️ **Note:** Performing any manual \"Wipe\" is NOT needed.",
@@ -105,14 +105,14 @@ window.fogData = [
         buildDate: "2026-07-12",
         cssSuffix: "-sakura",
         downloadUrl: "https://drive.google.com/file/d/1ap-4_Y0xUBHxIhqRAkwNnCxZmq03ACe8/view?usp=sharing",
-        banner: "assets/roms/fog/mi125/banner.png",
+        banner: "assets/roms/fog/mi125/banner.webp",
         screenshots: [
-            "assets/roms/fog/mi125/1.jpg",
-            "assets/roms/fog/mi125/2.jpg",
-            "assets/roms/fog/mi125/3.jpg",
-            "assets/roms/fog/mi125/4.jpg",
-            "assets/roms/fog/mi125/5.jpg",
-            "assets/roms/fog/mi125/6.jpg"
+            "assets/roms/fog/mi125/1.webp",
+            "assets/roms/fog/mi125/2.webp",
+            "assets/roms/fog/mi125/3.webp",
+            "assets/roms/fog/mi125/4.webp",
+            "assets/roms/fog/mi125/5.webp",
+            "assets/roms/fog/mi125/6.webp"
         ],
         description: "> *\"Let’s turn around and watch the sun, before it goes down completely.\"*\n\n### Changes\n- Fixed system freezes caused by OutOfMemory (OOM)\n- Fixed Zygote binary fork process spamming crash (resolved overheating)\n- General performance improvements and under-the-hood optimizations\n\n### Notes\n- **Custom Kernels:** NOT recommended. Issues encountered while using custom kernels will not be supported\n- Non-rooted by default\n- Shipped with Stock Kernel and TWRP 3.6\n- NFC is working on rain variant",
         flashInstruction: "### Installation Steps\n1. Boot into any custom recovery\n2. Flash the ROM zip file\n3. Format Data\n4. Reboot to system\n\n> ℹ️ **Note:** Performing any manual \"Wipe\" is NOT needed.",
@@ -127,15 +127,15 @@ window.fogData = [
         buildDate: "2026-07-21",
         isPersonal: false,
         downloadUrl: "https://drive.google.com/file/d/1eSxfdxrAr2F4J9e-3SPRX9jbSKUa3bNJ/view?usp=sharing",
-        banner: "assets/roms/fog/hos3id/banner.png",
+        banner: "assets/roms/fog/hos3id/banner.webp",
         screenshots: [
-            "assets/roms/fog/hos3id/1.jpg",
-            "assets/roms/fog/hos3id/2.jpg",
-            "assets/roms/fog/hos3id/3.jpg",
-            "assets/roms/fog/hos3id/4.jpg",
-            "assets/roms/fog/hos3id/5.jpg",
-            "assets/roms/fog/hos3id/6.jpg",
-            "assets/roms/fog/hos3id/7.jpg"
+            "assets/roms/fog/hos3id/1.webp",
+            "assets/roms/fog/hos3id/2.webp",
+            "assets/roms/fog/hos3id/3.webp",
+            "assets/roms/fog/hos3id/4.webp",
+            "assets/roms/fog/hos3id/5.webp",
+            "assets/roms/fog/hos3id/6.webp",
+            "assets/roms/fog/hos3id/7.webp"
         ],
         description: "> *\"Hee hee, what's going on? Is the whole world revolving?\"*\n\n### Notes\n- **EROFS Build:** System partitions are read-only\n- **Custom Kernels:** NOT recommended. Custom kernel issues will not receive support\n- Allow the ROM to settle for a few minutes after initial boot\n- Non-rooted by default\n- Shipped with AOSP Kernel and TWRP Recovery\n\n### Extra Files\n- [Folkpatched Boot Image](https://t.me/archivebsct2/26)\n\n### Known Issues\n- Certain apps may fail to detect pinch-to-zoom gestures\n- Screen color calibration options are currently non-functional",
         flashInstruction: "### Installation Steps\n1. Boot into any custom recovery\n2. Flash the ROM zip file\n3. Format Data\n4. Reboot to system\n\n> ℹ️ **Note:** Performing any manual \"Wipe\" is NOT needed.",

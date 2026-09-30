@@ -602,12 +602,12 @@ nav {
 
 .minimal-hero-title {
     font-family: var(--font-display);
-    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
     font-weight: 800;
     letter-spacing: -0.04em;
-    line-height: 1.08;
+    line-height: 1.12;
     color: var(--text);
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 .minimal-hero-title span {
@@ -2192,6 +2192,23 @@ footer {
         padding: 10px 4%;
     }
 
+    .minimal-hero {
+        padding: 20px 0 16px 0;
+    }
+
+    .minimal-hero-title {
+        font-size: 1.85rem;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        margin-bottom: 10px;
+    }
+
+    .minimal-hero-sub {
+        font-size: 0.92rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
     .cards-grid {
         grid-template-columns: 1fr;
     }
@@ -2242,6 +2259,29 @@ footer {
 }
 
 @media (max-width: 480px) {
+    .minimal-hero {
+        padding: 14px 0 10px 0;
+    }
+
+    .hero-pill-badge {
+        font-size: 0.72rem;
+        padding: 3px 10px;
+        margin-bottom: 10px;
+    }
+
+    .minimal-hero-title {
+        font-size: 1.5rem;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        margin-bottom: 8px;
+    }
+
+    .minimal-hero-sub {
+        font-size: 0.85rem;
+        line-height: 1.48;
+        margin-bottom: 16px;
+    }
+
     .detail-specs-grid {
         grid-template-columns: 1fr;
     }

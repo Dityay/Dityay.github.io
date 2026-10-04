@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-css-theme="-xia">
+<html lang="en" data-css-theme="-blue">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>404 - Page Not Found | Butterscotch</title>
     <meta name="theme-color" content="#07080a" id="meta-theme-color" />
+    <script>
+        (function() {
+            try {
+                const saved = localStorage.getItem('butterscotch-theme');
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = saved || (systemDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                const metaTheme = document.getElementById('meta-theme-color');
+                if (metaTheme) metaTheme.setAttribute('content', theme === 'light' ? '#f8fafc' : '#07080a');
+            } catch (e) {}
+        })();
+    </script>
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -114,12 +126,16 @@
                 }
             }
 
+            const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
             const savedTheme = localStorage.getItem('butterscotch-theme');
-            if (savedTheme) {
-                applyTheme(savedTheme, false);
-            } else {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                applyTheme(prefersDark ? 'dark' : 'light', false);
+            const initialTheme = savedTheme || (mediaQuery.matches ? 'dark' : 'light');
+            applyTheme(initialTheme, false);
+
+            if (mediaQuery.addEventListener) {
+                mediaQuery.addEventListener('change', (e) => {
+                    localStorage.removeItem('butterscotch-theme');
+                    applyTheme(e.matches ? 'dark' : 'light', false);
+                });
             }
 
             if (themeBtn) {

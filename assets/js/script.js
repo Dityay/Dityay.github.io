@@ -48,7 +48,8 @@ function getGMT8Target(dateStr) {
 // Dynamic Theme CSS Loader
 window.updateCSS = updateCSS;
 function updateCSS(suffix) {
-    let desiredSuffix = suffix || '-xia';
+    let desiredSuffix = suffix || '-blue';
+    if (desiredSuffix === '-biru' || desiredSuffix === '-helloui') desiredSuffix = '-blue';
     if (desiredSuffix === '-coklat' || desiredSuffix === '-mocha') desiredSuffix = '-brown';
     if (desiredSuffix === '-abu' || desiredSuffix === '-grey' || desiredSuffix === '-slate') desiredSuffix = '-gray';
     document.documentElement.setAttribute('data-css-theme', desiredSuffix);
@@ -370,20 +371,16 @@ function updateHeroStats() {
     }
 }
 
-// Theme Management System
+// Theme Management System (Follows System Preference & Syncs Live)
 function initThemeManager() {
     const html = document.documentElement;
     const themeBtn = document.getElementById('theme-toggle-btn');
     const sunIcon = document.getElementById('theme-icon-sun');
     const moonIcon = document.getElementById('theme-icon-moon');
     const metaThemeColor = document.getElementById('meta-theme-color');
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    function applyTheme(theme, save = true) {
-        html.setAttribute('data-theme', theme);
-        if (save) {
-            localStorage.setItem('butterscotch-theme', theme);
-        }
-
+    function updateIconsAndMeta(theme) {
         if (theme === 'light') {
             if (sunIcon) sunIcon.style.display = 'none';
             if (moonIcon) moonIcon.style.display = 'block';
@@ -395,12 +392,32 @@ function initThemeManager() {
         }
     }
 
+    function applyTheme(theme, save = true) {
+        html.setAttribute('data-theme', theme);
+        if (save) {
+            localStorage.setItem('butterscotch-theme', theme);
+        }
+        updateIconsAndMeta(theme);
+    }
+
+    // Determine initial theme: saved preference or system preference
     const savedTheme = localStorage.getItem('butterscotch-theme');
-    if (savedTheme) {
-        applyTheme(savedTheme, false);
-    } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        applyTheme(prefersDark ? 'dark' : 'light', false);
+    const systemTheme = mediaQuery.matches ? 'dark' : 'light';
+    const activeTheme = savedTheme || systemTheme;
+    applyTheme(activeTheme, false);
+
+    // Live sync with system theme changes
+    const handleSystemChange = (e) => {
+        // When system theme changes, automatically follow the new system theme
+        const newSystemTheme = e.matches ? 'dark' : 'light';
+        localStorage.removeItem('butterscotch-theme');
+        applyTheme(newSystemTheme, false);
+    };
+
+    if (mediaQuery.addEventListener) {
+        mediaQuery.addEventListener('change', handleSystemChange);
+    } else if (mediaQuery.addListener) {
+        mediaQuery.addListener(handleSystemChange);
     }
 
     if (themeBtn) {
@@ -845,7 +862,7 @@ function shareCurrentRom() {
 
 // Home Navigation
 function navigateHome(fromHash = false) {
-    updateCSS('-xia');
+    updateCSS('-blue');
 
     if (!fromHash) {
         if (isSecretMode) {
@@ -880,7 +897,7 @@ function navigateHome(fromHash = false) {
 
 // 404 Error Page
 function show404() {
-    updateCSS('-xia');
+    updateCSS('-blue');
     document.body.classList.remove('has-sticky-bar');
     const existingStickyBar = document.getElementById('mobile-sticky-bar');
     if (existingStickyBar) existingStickyBar.remove();
@@ -1132,7 +1149,7 @@ function viewDetail(id) {
     }
 
     // Apply accent theme
-    updateCSS(rom.cssSuffix || '-xia');
+    updateCSS(rom.cssSuffix || '-blue');
 
     const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
     const now = new Date();

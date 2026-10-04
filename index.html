@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-css-theme="-xia">
+<html lang="en" data-css-theme="-blue">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Butterscotch | Custom ROMs & Ports</title>
     <meta name="description" content="High-performance custom ROMs, ports, and vendor builds for Xiaomi & Redmi devices (fog, kunzite, earth, gale)." />
     <meta name="theme-color" content="#07080a" id="meta-theme-color" />
+    <script>
+        (function() {
+            try {
+                const saved = localStorage.getItem('butterscotch-theme');
+                const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const theme = saved || (systemDark ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                const metaTheme = document.getElementById('meta-theme-color');
+                if (metaTheme) metaTheme.setAttribute('content', theme === 'light' ? '#f8fafc' : '#07080a');
+            } catch (e) {}
+        })();
+    </script>
     <meta property="og:title" content="Butterscotch | Custom Android ROMs & Ports" />
     <meta property="og:description" content="High-performance custom ROMs, ports, and vendor builds for Xiaomi & Redmi devices." />
     <meta property="og:type" content="website" />
@@ -90,34 +102,7 @@
         <div id="page-home" class="page active">
             <!-- Hero Showcase Section -->
             <div class="minimal-hero">
-                <div class="hero-pill-badge">
-                    <span class="dot"></span>
-                    <span>Android 11 – 17 Custom Builds</span>
-                </div>
                 <h1 class="minimal-hero-title">Butterscotch <span>ROMs</span></h1>
-                <p class="minimal-hero-sub">
-                    Ultra-clean, high-performance custom ROMs, ports, and vendor builds for Xiaomi & Redmi devices.
-                </p>
-
-                <!-- Hero Quick Stats Row -->
-                <div class="hero-stats-row">
-                    <div class="hero-stat-card">
-                        <div class="hero-stat-val" id="stat-total-roms">12</div>
-                        <div class="hero-stat-label">Total Builds</div>
-                    </div>
-                    <div class="hero-stat-card">
-                        <div class="hero-stat-val" id="stat-total-devices">4</div>
-                        <div class="hero-stat-label">Devices Supported</div>
-                    </div>
-                    <div class="hero-stat-card">
-                        <div class="hero-stat-val" id="stat-android-versions">11 - 17</div>
-                        <div class="hero-stat-label">Android Versions</div>
-                    </div>
-                    <div class="hero-stat-card">
-                        <div class="hero-stat-val" style="color: var(--success);">Active</div>
-                        <div class="hero-stat-label">Status</div>
-                    </div>
-                </div>
             </div>
 
             <!-- Filter & Search Hub -->

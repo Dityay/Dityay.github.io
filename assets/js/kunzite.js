@@ -7,7 +7,7 @@ window.kunziteData = [
         version: "Android 16 (Hotfix)",
         buildDate: "2026-8-23",
         cssSuffix: "-gold",
-        downloadUrl: "https://drive.google.com/file/d/1tPhopNKt77aVzncqdypMV10GxGxBM4bm/view?usp=sharing",
+        downloadUrl: "",
         banner: "assets/roms/kunzite/cos16/banner.webp",
         screenshots: [
             "assets/roms/kunzite/cos16/1.webp",
@@ -69,5 +69,28 @@ window.kunziteData = [
         description: "> *\"静かに夢を見てごらん\"*\n\n### Notes\n- **Clean Flash Recommended:** Perform a complete clean flash\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n\n### Changes\n- Fixed several settings are missing\n- Fixed IR blaster sensor\n- Added Mi Cam\n- More under-the-hood changes and optimizations\n\n### Known Issues\n- Please report any other bugs encountered to the maintainer",
         flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
         credits: "- @SM6475, @UralRedux for testing\n- @heybyben, @kleidione for AOSP vendor\n- @iDeadXD for kernel\n- @ProjectUnknown01 for RapidFlasher"
+    },
+    {
+    id: "kun_cos161",
+    name: "ColorOS 16.1 CN",
+    category: "Non-Xiaomi",
+    device: "Xiaomi REDMI Note 15 5G (kunzite)",
+    version: "Android 16 (Initial)",
+    buildDate: "2026-10-23",
+    cssSuffix: "-emerald",
+    downloadUrl: "placeholder here",
+    banner: "assets/roms/kunzite/cos161/banner.webp",
+    screenshots: [
+        "assets/roms/kunzite/cos161/1.webp",
+        "assets/roms/kunzite/cos161/2.webp",
+        "assets/roms/kunzite/cos161/3.webp",
+        "assets/roms/kunzite/cos161/4.webp",
+        "assets/roms/kunzite/cos161/5.webp",
+        "assets/roms/kunzite/cos161/6.webp",
+        "assets/roms/kunzite/cos161/7.webp"
+    ],
+    description: "### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n- Non-rooted by default and shipped with OrangeFox Recovery\n- FOD working properly\n- After enrolling Face Unlock, go to Face Unlock settings, toggle Screen Unlock off and re-enable\n- Disabled some UI blurs and animations (you can change it by using *\"deltacore cmd oplus_anim\"* in any terminal with root)\n\n### Known Issues\n- Light sensor (auto-brightness) and IR Blaster not working\n- Please report any other bugs encountered to the maintainer",
+    flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
+    credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand for porting base, instructions and fixes\n- @getthefckoutofheree, *ZuyQA*, *ArticPorts* for mods\n- @heybyben for AOSP vendor and OrangeFox\n- @iDeadXD for kernel\n- @rianixia for original VOOC fix\n- @SM6475 for testing\n- @ProjectUnknown01 for original RapidFlasher"
     }
 ];

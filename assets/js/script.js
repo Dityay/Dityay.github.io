@@ -806,8 +806,8 @@ function renderROMCards() {
                         <span>Device: <span class="val">${rom.device}</span></span>
                     </div>
                     <div class="card-info-item">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                        <span>Version: <span class="val">${rom.version}</span></span>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="12" rx="3"></rect><path d="M12 8V4.5"></path><circle cx="12" cy="2.6" r="1.4"></circle><path d="M9 13v1.6M15 13v1.6"></path></svg>
+                        <span>Android: <span class="val">${rom.version}</span></span>
                     </div>
                     <div class="card-info-item">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
@@ -1275,7 +1275,7 @@ function viewDetail(id) {
 
             <div class="spec-card">
                 <div class="spec-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="8" width="16" height="12" rx="3"></rect><path d="M12 8V4.5"></path><circle cx="12" cy="2.6" r="1.4"></circle><path d="M9 13v1.6M15 13v1.6"></path></svg>
                 </div>
                 <div class="spec-info-col">
                     <span class="spec-label">Android Version</span>
@@ -1297,9 +1297,9 @@ function viewDetail(id) {
         ${personalWarningHtml}
 
         <div class="rom-info-tabs">
-            <button class="tab-btn active" onclick="switchTab('desc')">Changelog & Notes ${tabDescBadgeHtml}</button>
-            <button class="tab-btn" onclick="switchTab('flash')">Flashing Steps</button>
-            <button class="tab-btn" onclick="switchTab('screens')">Screenshots (${currentLightboxImages.length})</button>
+            <button class="tab-btn active" onclick="switchTab('desc')"><span class="tab-label-long">Changelog &amp; Notes</span><span class="tab-label-short">Changelog</span> ${tabDescBadgeHtml}</button>
+            <button class="tab-btn" onclick="switchTab('flash')"><span class="tab-label-long">Flashing Steps</span><span class="tab-label-short">Flashing</span></button>
+            <button class="tab-btn" onclick="switchTab('screens')"><span class="tab-label-long">Screenshots (${currentLightboxImages.length})</span><span class="tab-label-short">Shots (${currentLightboxImages.length})</span></button>
         </div>
 
         <div class="rom-description-container">
@@ -1531,6 +1531,21 @@ function initScrollToTop() {
     scrollBtn.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Keep the floating button from covering the footer's text on phones.
+    // The class is toggled unconditionally; the CSS that acts on it lives
+    // inside a max-width media query, so this is inert on larger screens.
+    const footer = document.querySelector('footer');
+    if (footer) {
+        const updateNearFooter = () => {
+            const rect = footer.getBoundingClientRect();
+            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+            document.body.classList.toggle('is-near-footer', inView);
+        };
+        window.addEventListener('scroll', updateNearFooter, { passive: true });
+        window.addEventListener('resize', updateNearFooter);
+        updateNearFooter();
+    }
 }
 
 // Router & Deep Linking

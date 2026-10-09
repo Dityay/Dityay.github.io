@@ -50,6 +50,10 @@
     --radius-xl: 24px;
     --radius-pill: 9999px;
 
+    /* Horizontal rhythm: overridden per breakpoint for phone gutters */
+    --edge-pad: 6%;
+    --hub-pad: 20px;
+
     /* Transitions & Shadows */
     --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
@@ -1389,6 +1393,11 @@ nav {
     border-bottom-color: var(--accent);
 }
 
+/* Full labels are the default; phones swap in the short ones below */
+.tab-label-short {
+    display: none;
+}
+
 .tab-badge-locked,
 .tab-badge-unlocked {
     font-size: 0.7rem;
@@ -2228,6 +2237,9 @@ footer {
 
 /* ==========================================================================
    Responsive Breakpoints
+   Mobile-first touch ergonomics: 44px tap targets, 16px form fields (stops
+   iOS focus zoom), edge-bleeding scroll-snap filter rows, scroll-snap tabs,
+   and floating controls that never sit on top of text.
    ========================================================================== */
 @media (max-width: 900px) {
     .detail-specs-grid {
@@ -2239,28 +2251,37 @@ footer {
     }
 }
 
+/* --------------------------------------------------------------------------
+   Tablet / large phone landscape
+   -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+    :root {
+        --edge-pad: 14px;
+        --hub-pad: 14px;
+    }
+
     .page {
-        padding: 16px 14px 50px 14px;
+        padding: 16px var(--edge-pad) 56px var(--edge-pad);
     }
 
     nav {
-        padding: 8px 14px;
+        padding: 8px var(--edge-pad);
         gap: 8px;
     }
 
     .nav-brand {
-        gap: 6px;
+        gap: 8px;
+        min-width: 0;
     }
 
     .nav-logo-icon {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
     }
 
     .nav-logo-icon svg {
-        width: 18px;
-        height: 18px;
+        width: 19px;
+        height: 19px;
     }
 
     .nav-logo-text {
@@ -2268,17 +2289,17 @@ footer {
     }
 
     .nav-badge-pill {
-        font-size: 0.62rem;
+        font-size: 0.6rem;
         padding: 1px 6px;
     }
 
     .nav-controls {
-        gap: 6px;
+        gap: 8px;
     }
 
     .btn-icon {
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
     }
 
     .nav-btn {
@@ -2287,11 +2308,11 @@ footer {
     }
 
     .minimal-hero {
-        padding: 18px 0 14px 0;
+        padding: 20px 0 14px 0;
     }
 
     .minimal-hero-title {
-        font-size: 1.55rem;
+        font-size: clamp(1.3rem, 5.5vw, 1.6rem);
         letter-spacing: -0.03em;
         line-height: 1.15;
         margin-bottom: 8px;
@@ -2299,33 +2320,23 @@ footer {
         overflow-wrap: break-word;
     }
 
-    .minimal-hero-sub {
-        font-size: 0.88rem;
-        line-height: 1.5;
-        margin-bottom: 18px;
-    }
-
     .filter-search-hub {
-        padding: 14px 14px;
+        padding: 14px var(--hub-pad);
+        gap: 12px;
+        margin-bottom: 20px;
     }
 
     .cards-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .hub-controls-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .sort-control {
-        margin-left: 0;
-        justify-content: space-between;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 16px;
     }
 
     .section-header {
-        flex-direction: column;
-        align-items: flex-start;
+        margin-bottom: 14px;
+    }
+
+    .section-label {
+        font-size: 1.15rem;
     }
 
     .rom-banner-content {
@@ -2336,29 +2347,509 @@ footer {
         padding: 20px;
     }
 
-    .mobile-sticky-bar {
-        display: flex;
+    .hero-stats-row {
+        gap: 10px;
+        margin-bottom: 24px;
     }
 
-    body.has-sticky-bar {
-        padding-bottom: 70px;
+    .rom-detail-banner {
+        height: 200px;
     }
 
-    .lightbox-prev {
-        left: 10px;
+    footer {
+        padding: 28px 16px 34px;
     }
 
-    .lightbox-next {
-        right: 10px;
-    }
-
-    .lightbox-close {
-        top: -40px;
-        right: 10px;
+    .modal-content {
+        padding: 24px 20px;
     }
 }
 
-@media (max-width: 560px) {
+/* --------------------------------------------------------------------------
+   Phone: single column, scroll-snap filters, full-width sort
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    :root {
+        --hub-pad: 12px;
+    }
+
+    /* 16px fields stop iOS Safari zooming the viewport on focus */
+    .search-box input,
+    .sort-dropdown {
+        font-size: 16px;
+    }
+
+    /* Desktop keyboard hint is meaningless without a physical keyboard */
+    .search-shortcut {
+        display: none;
+    }
+
+    .search-box {
+        padding: 11px 12px;
+        gap: 10px;
+    }
+
+    .filter-search-hub {
+        padding: 12px var(--hub-pad);
+        gap: 12px;
+        margin-bottom: 18px;
+    }
+
+    .hub-controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    /* Filter rows scroll sideways instead of wrapping into tall stacks.
+       min-width:0 is required: as column flex items they default to
+       min-width:auto, so a nowrap row would force the whole page wider
+       than the viewport (mobile browsers then zoom the layout out). */
+    .device-chips,
+    .filter-controls {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x proximity;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        min-width: 0;
+        max-width: 100%;
+        width: 100%;
+        margin: 0 calc(-1 * var(--hub-pad));
+        padding: 2px var(--hub-pad);
+    }
+
+    .filter-controls {
+        margin: 0 calc(-1 * var(--edge-pad));
+        padding: 2px var(--edge-pad);
+    }
+
+    .device-chips::-webkit-scrollbar,
+    .filter-controls::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Fade the cut edge so the scroll affordance reads as intentional */
+    .device-chips,
+    .filter-controls {
+        -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 28px), transparent 100%);
+        mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 28px), transparent 100%);
+    }
+
+    .chip-btn,
+    .filter-btn {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .sort-control {
+        margin-left: 0;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .sort-dropdown {
+        flex: 1;
+        width: 100%;
+        min-height: 40px;
+        padding: 8px 12px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .section-label-row {
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .results-counter {
+        font-size: 0.78rem;
+        white-space: nowrap;
+    }
+
+    /* Cards */
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card-banner-overlay {
+        padding: 10px 12px;
+    }
+
+    .card-body {
+        padding: 14px 14px 16px;
+    }
+
+    .card-title {
+        font-size: 1.12rem;
+    }
+
+    .card-title-row {
+        gap: 8px;
+    }
+
+    .card-info-list {
+        gap: 7px;
+        margin-bottom: 14px;
+    }
+
+    .card-info-item {
+        font-size: 0.8rem;
+        gap: 7px;
+        align-items: flex-start;
+    }
+
+    .card-info-item svg {
+        margin-top: 1px;
+    }
+
+    .card-actions-row .btn-dl {
+        min-height: 42px;
+    }
+
+    .btn-card-share {
+        width: 42px;
+        height: 42px;
+    }
+
+    /* Detail page top bar: one compact row, breadcrumbs repeat the specs */
+    .detail-top-bar {
+        flex-wrap: nowrap;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .detail-breadcrumbs {
+        display: none;
+    }
+
+    .back-btn {
+        padding: 8px 12px;
+        font-size: 0.84rem;
+    }
+
+    .btn-share-top {
+        margin-left: auto;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .btn-share-top span {
+        display: none;
+    }
+
+    /* Specs: two tight columns, values wrap instead of truncating */
+    .detail-specs-grid {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .spec-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 12px;
+    }
+
+    .spec-icon-box {
+        width: 32px;
+        height: 32px;
+    }
+
+    .spec-label {
+        font-size: 0.64rem;
+    }
+
+    .spec-val {
+        font-size: 0.8rem;
+        line-height: 1.35;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        word-break: break-word;
+    }
+
+    /* Three tabs must all be visible without sideways scrolling, so lay them out
+       as an equal 3-column grid with wrapping labels instead of a nowrap
+       scroll row (208 + 120 + 128 = 484px could never fit a 320px phone).
+       The bottom border stays on the row so it reads as a tab bar. */
+    .rom-info-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        margin: 0 0 16px;
+        padding: 0;
+        overflow-x: visible;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .rom-info-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 4px;
+        min-height: 44px;
+        padding: 8px 6px;
+        font-size: 0.8rem;
+        line-height: 1.25;
+        text-align: center;
+        white-space: normal;
+        overflow-wrap: break-word;
+        scroll-snap-align: none;
+    }
+
+    /* Short labels only exist for the phone grid; the full names return
+       above this breakpoint so desktop is unaffected. */
+    .tab-label-long {
+        display: none;
+    }
+
+    .tab-label-short {
+        display: inline;
+    }
+
+    .rom-description-container {
+        padding: 16px 14px;
+        border-radius: var(--radius-md);
+        margin-bottom: 18px;
+    }
+
+    .rom-description-container h1 { font-size: 1.3rem; }
+    .rom-description-container h2 { font-size: 1.15rem; }
+    .rom-description-container h3 { font-size: 1.02rem; }
+
+    .rom-description-container p,
+    .rom-description-container li {
+        font-size: 0.92rem;
+    }
+
+    .rom-description-container ul,
+    .rom-description-container ol {
+        margin-left: 16px;
+    }
+
+    .code-block-wrapper pre {
+        padding: 12px;
+        font-size: 0.78rem;
+    }
+
+    .code-copy-btn {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+
+    /* Locked "coming soon" panel: the card is taller than the blurred body it
+       overlays, so absolute positioning clipped its last line. Put the card in
+       normal flow and let the wrapper size to it. */
+    .upcoming-desc-body.is-blurred {
+        max-height: 180px;
+    }
+
+    .upcoming-sensor-overlay {
+        position: static;
+        padding: 14px;
+        background: rgba(7, 8, 10, 0.4);
+    }
+
+    .upcoming-sensor-card {
+        padding: 20px 16px;
+        max-width: 100%;
+    }
+
+    .upcoming-sensor-icon {
+        width: 40px;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+
+    .upcoming-sensor-title {
+        font-size: 1.1rem;
+    }
+
+    .upcoming-sensor-text {
+        font-size: 0.84rem;
+    }
+
+    .upcoming-sensor-callout {
+        font-size: 0.78rem;
+        padding: 8px 10px;
+        align-items: flex-start;
+        line-height: 1.5;
+    }
+
+    .upcoming-sensor-callout svg {
+        flex-shrink: 0;
+        margin-top: 1px;
+    }
+
+    .screenshot-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .detail-actions-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .detail-actions-row .btn-dl {
+        width: 100%;
+        min-height: 44px;
+    }
+
+    .ytta-debug-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 14px;
+    }
+
+    /* Sticky download bar + matching body padding (safe-area aware) */
+    .mobile-sticky-bar {
+        display: flex;
+        padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+        gap: 10px;
+    }
+
+    .sticky-dl-btn {
+        padding: 10px 18px;
+        min-height: 40px;
+        font-size: 0.84rem;
+    }
+
+    body.has-sticky-bar {
+        padding-bottom: calc(72px + env(safe-area-inset-bottom));
+    }
+
+    /* Floating controls move out of the text column: bottom-right, clear of
+       the sticky bar and above the footer copy. */
+    .scroll-top-btn {
+        left: auto;
+        right: 14px;
+        bottom: calc(14px + env(safe-area-inset-bottom));
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Keep it out of the footer's text block while the footer is on screen */
+    body.is-near-footer .scroll-top-btn {
+        bottom: auto;
+        top: calc(72px + env(safe-area-inset-top));
+    }
+
+    body.has-sticky-bar .scroll-top-btn {
+        bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+
+    .toast-container {
+        left: 12px;
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        align-items: center;
+    }
+
+    body.has-sticky-bar .toast-container {
+        bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+
+    .toast {
+        width: 100%;
+    }
+
+    /* Lightbox: arrows live in the gutter, never on top of the screenshot */
+    .lightbox-modal {
+        padding: 16px 56px;
+    }
+
+    .lightbox-prev {
+        left: 6px;
+    }
+
+    .lightbox-next {
+        right: 6px;
+    }
+
+    .lightbox-close {
+        top: 4px;
+        right: 8px;
+    }
+
+    .lightbox-counter {
+        font-size: 0.78rem;
+    }
+
+    .banner {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+
+    .banner-text {
+        font-size: 0.82rem;
+        white-space: normal;
+        max-height: 66px;
+        -webkit-line-clamp: 3;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .banner-text.expanded {
+        max-height: 400px;
+        -webkit-line-clamp: unset;
+        display: block;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Small phones (320px class)
+   -------------------------------------------------------------------------- */
+@media (max-width: 400px) {
+    :root {
+        --edge-pad: 10px;
+        --hub-pad: 10px;
+    }
+
+    .page {
+        padding: 12px var(--edge-pad) 48px var(--edge-pad);
+    }
+
+    nav {
+        padding: 6px var(--edge-pad);
+    }
+
+    .nav-logo-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .nav-logo-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .nav-logo-text {
+        font-size: 0.94rem;
+    }
+
+    .nav-badge-pill {
+        font-size: 0.55rem;
+        padding: 1px 5px;
+    }
+
     .nav-btn span {
         display: none;
     }
@@ -2371,99 +2862,135 @@ footer {
         border-radius: var(--radius-sm);
     }
 
-    .minimal-hero-title {
-        font-size: 1.35rem;
-        letter-spacing: -0.02em;
-    }
-}
-
-@media (max-width: 480px) {
-    .page {
-        padding: 12px 10px 40px 10px;
-    }
-
-    nav {
-        padding: 6px 10px;
-    }
-
-    .nav-logo-icon {
-        width: 26px;
-        height: 26px;
-    }
-
-    .nav-logo-icon svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .nav-logo-text {
-        font-size: 0.92rem;
-    }
-
-    .nav-badge-pill {
-        font-size: 0.58rem;
-        padding: 1px 4px;
-    }
-
     .minimal-hero {
-        padding: 12px 0 8px 0;
-    }
-
-    .hero-pill-badge {
-        font-size: 0.68rem;
-        padding: 2px 8px;
-        margin-bottom: 8px;
+        padding: 14px 0 10px 0;
     }
 
     .minimal-hero-title {
-        font-size: 1.25rem;
-        letter-spacing: -0.02em;
-        line-height: 1.18;
-        margin-bottom: 6px;
-    }
-
-    .minimal-hero-sub {
-        font-size: 0.8rem;
-        line-height: 1.45;
-        margin-bottom: 14px;
+        font-size: 1.28rem;
     }
 
     .filter-search-hub {
-        padding: 12px 10px;
-        gap: 12px;
+        padding: 10px var(--hub-pad);
+        gap: 10px;
     }
 
     .search-box {
-        padding: 8px 10px;
+        padding: 10px 11px;
+    }
+
+    .section-label {
+        font-size: 1.05rem;
+    }
+
+    .card-body {
+        padding: 12px 12px 14px;
+    }
+
+    .card-title {
+        font-size: 1.05rem;
+    }
+
+    .card-info-item {
+        font-size: 0.78rem;
     }
 
     .detail-specs-grid {
         grid-template-columns: 1fr;
     }
 
-    .hero-stats-row {
-        grid-template-columns: 1fr 1fr;
+    .spec-card {
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+
+    footer {
+        padding: 24px 14px 30px;
+    }
+
+    .footer-logo {
+        font-size: 1.1rem;
+    }
+
+    .footer-tagline {
+        font-size: 0.82rem;
+    }
+
+    .footer-links {
+        gap: 10px;
+    }
+
+    /* Give footer links a real tap target */
+    .footer-links a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 6px;
+    }
+
+    .footer-disclaimer {
+        font-size: 0.72rem;
+    }
+
+    .pin-keypad {
+        max-width: 100%;
         gap: 8px;
-        margin-bottom: 24px;
     }
 
-    .hero-stat-card {
-        padding: 8px 6px;
+    .pin-key {
+        height: 48px;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Touch devices: no desktop-only affordances, no sticky hover states
+   -------------------------------------------------------------------------- */
+@media (hover: none) and (pointer: coarse) {
+    button,
+    a,
+    .chip-btn,
+    .filter-btn,
+    .tab-btn {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
     }
 
-    .hero-stat-val {
-        font-size: 1.05rem;
+    .search-shortcut {
+        display: none;
     }
 
-    .hero-stat-label {
-        font-size: 0.68rem;
+    .rom-card:hover,
+    .hero-stat-card:hover,
+    .btn-icon:hover,
+    .btn-dl.primary:hover,
+    .btn-dl.secondary:hover,
+    .ytta-exit-btn:hover,
+    .code-copy-btn:hover,
+    .screenshot-card:hover,
+    .back-btn:hover,
+    .btn-share-top:hover,
+    .scroll-top-btn:hover {
+        transform: none;
     }
 
-    .rom-detail-banner {
-        height: 180px;
+    .rom-card:hover .card-banner-img,
+    .screenshot-card:hover .screenshot-item {
+        transform: none;
     }
 
-    .modal-content {
-        padding: 20px 16px;
+    .scroll-top-btn:hover {
+        transform: translateY(-2px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }

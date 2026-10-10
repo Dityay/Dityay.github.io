@@ -7,7 +7,7 @@ window.kunziteData = [
         version: "Android 16 (Hotfix)",
         buildDate: "2026-8-23",
         cssSuffix: "-gold",
-        downloadUrl: "",
+        downloadUrl: "https://drive.google.com/file/d/1tPhopNKt77aVzncqdypMV10GxGxBM4bm/view?usp=sharing",
         banner: "assets/roms/kunzite/cos16/banner.webp",
         screenshots: [
             "assets/roms/kunzite/cos16/1.webp",
@@ -76,7 +76,7 @@ window.kunziteData = [
     category: "Non-Xiaomi",
     device: "Xiaomi REDMI Note 15 5G (kunzite)",
     version: "Android 16 (Initial)",
-    buildDate: "2026-10-10",
+    buildDate: "2026-10-31",
     cssSuffix: "-emerald",
     downloadUrl: "https://drive.google.com/file/d/1fU-UcrJzI6TBj-8y7erSmssscP4Lkl8A/view?usp=sharing",
     banner: "assets/roms/kunzite/cos161/banner.webp",

@@ -7,7 +7,7 @@ window.kunziteData = [
         version: "Android 16 (Hotfix)",
         buildDate: "2026-8-23",
         cssSuffix: "-gold",
-        downloadUrl: "https://drive.google.com/file/d/1tPhopNKt77aVzncqdypMV10GxGxBM4bm/view?usp=sharing",
+        downloadUrl: "",
         banner: "assets/roms/kunzite/cos16/banner.webp",
         screenshots: [
             "assets/roms/kunzite/cos16/1.webp",

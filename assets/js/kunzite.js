@@ -76,7 +76,7 @@ window.kunziteData = [
     category: "Non-Xiaomi",
     device: "Xiaomi REDMI Note 15 5G (kunzite)",
     version: "Android 16 (Initial)",
-    buildDate: "2026-10-31",
+    buildDate: "2026-10-12",
     cssSuffix: "-emerald",
     downloadUrl: "https://drive.google.com/file/d/1fU-UcrJzI6TBj-8y7erSmssscP4Lkl8A/view?usp=sharing",
     banner: "assets/roms/kunzite/cos161/banner.webp",
@@ -89,8 +89,8 @@ window.kunziteData = [
         "assets/roms/kunzite/cos161/6.webp",
         "assets/roms/kunzite/cos161/7.webp"
     ],
-    description: "### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n- Non-rooted by default and shipped with OrangeFox Recovery\n- FOD working properly\n- After enrolling Face Unlock, go to Face Unlock settings, toggle Screen Unlock off and re-enable\n- Disabled some UI blurs and animations (you can change it by using *\"deltacore cmd oplus_anim\"* in any terminal with root)\n\n### Known Issues\n- Light sensor (auto-brightness) and IR Blaster not working\n- Please report any other bugs encountered to the maintainer",
+    description: "### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n- Non-rooted by default and shipped with OrangeFox Recovery\n- FOD working properly\n- After enrolling Face Unlock, go to Face Unlock settings, toggle Screen Unlock off and re-enable\n- Disabled some UI blurs and animations (you can change it by using *\"deltacore cmd oplus_anim\"* in any terminal with root)\n\n### Known Issues\n- Light sensor (auto-brightness) and IR Blaster not working\n- App lock not fixed yet (lazy)\n- Please report any other bugs encountered to the maintainer",
     flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
-    credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand for porting base, instructions and fixes\n- @getthefckoutofheree, *ZuyQA*, *ArticPorts* for mods\n- @heybyben for AOSP vendor and OrangeFox\n- @iDeadXD for kernel\n- @rianixia for original VOOC fix\n- @SM6475 for testing\n- @ProjectUnknown01 for original RapidFlasher"
+    credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand for porting base, instructions and fixes\n- @getthefckoutofheree, *ZuyQA*, *ArticPorts* for mods\n- @heybyben for AOSP vendor and OrangeFox\n- @iDeadXD for kernel\n- @Raphraphan FOD anim fix\n- @rianixia for original VOOC fix\n- @SM6475 for testing\n- @ProjectUnknown01 for original RapidFlasher"
     }
 ];

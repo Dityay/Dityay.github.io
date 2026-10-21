@@ -550,7 +550,9 @@ body {
     color: var(--on-surface);
 }
 
-/* Atmospheric Expressive Backdrop */
+/* ==========================================================================
+   Atmospheric Expressive Backdrop - Rotating Fans (Motion Kipas)
+   ========================================================================== */
 .backdrop {
     position: fixed;
     inset: 0;
@@ -562,52 +564,72 @@ body {
 .bd {
     position: absolute;
     color: var(--primary);
-    opacity: 0.16;
-    animation: spin 32s linear infinite, floatAmbient 12s ease-in-out infinite alternate;
+    opacity: 0.15;
     transition: color 0.6s var(--ease);
-    transform-origin: center center;
+    transform-origin: 50% 50%;
+    transform-box: fill-box;
+    will-change: transform;
+    pointer-events: none;
 }
 
 [data-theme="light"] .bd {
-    opacity: 0.18;
+    opacity: 0.16;
 }
 
+/* Fan A: Top-Right (8-blade flower, berputar searah jarum jam kayak kipas) */
 .bd-a {
-    top: -240px;
+    top: -220px;
     right: -180px;
-    width: 680px;
-    height: 680px;
+    width: 660px;
+    height: 660px;
+    animation: fanSpin 16s linear infinite;
 }
 
+/* Fan B: Bottom-Left (8-blade star fan, berputar berlawanan arah kayak kipas) */
 .bd-b {
     bottom: -220px;
     left: -190px;
     width: 640px;
     height: 640px;
     color: var(--tertiary, var(--primary));
-    animation: spin 24s linear infinite reverse, floatAmbient 10s ease-in-out infinite alternate-reverse;
+    animation: fanSpinReverse 20s linear infinite;
 }
 
-@keyframes spin {
-    to {
+/* Fan C: Mid-Right (4-blade clover fan) */
+.bd-c {
+    top: 42%;
+    right: -220px;
+    width: 520px;
+    height: 520px;
+    color: var(--secondary, var(--primary));
+    opacity: 0.10;
+    animation: fanSpin 24s linear infinite;
+}
+
+[data-theme="light"] .bd-c {
+    opacity: 0.12;
+}
+
+@keyframes fanSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
         transform: rotate(360deg);
     }
 }
 
-@keyframes floatAmbient {
+@keyframes fanSpinReverse {
     0% {
-        transform: translateY(0) scale(1);
-    }
-    50% {
-        transform: translateY(-20px) scale(1.04);
+        transform: rotate(360deg);
     }
     100% {
-        transform: translateY(14px) scale(0.98);
+        transform: rotate(0deg);
     }
 }
 
 .spinning-slow {
-    animation: spin 35s linear infinite;
+    animation: fanSpin 20s linear infinite;
 }
 
 #app {
@@ -1401,6 +1423,9 @@ nav {
 
 /* Status Badges */
 .badge-tag {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
     font-size: 0.7rem;
     font-weight: 750;
     text-transform: uppercase;
@@ -1640,6 +1665,7 @@ nav {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    align-items: flex-start;
     padding: 32px;
 }
 
@@ -2453,7 +2479,7 @@ footer {
 }
 
 /* ==========================================================================
-   Responsive Adaptations
+   Responsive Adaptations & Mobile Optimization
    ========================================================================== */
 @media (max-width: 900px) {
     .detail-specs-grid {
@@ -2461,31 +2487,272 @@ footer {
     }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 768px) {
+    /* Atmospheric Rotating Fans on Tablet / Mobile */
+    .bd-a {
+        top: -140px;
+        right: -130px;
+        width: 440px;
+        height: 440px;
+        animation-duration: 12s;
+    }
+
+    .bd-b {
+        bottom: -140px;
+        left: -140px;
+        width: 420px;
+        height: 420px;
+        animation-duration: 15s;
+    }
+
+    .bd-c {
+        display: none;
+    }
+
+    /* Layout & Navbar */
     nav {
-        padding: 12px 4%;
+        padding: 10px 16px;
+        margin: 10px 14px 16px 14px;
     }
 
-    .filter-search-hub,
-    .section-header,
-    .cards-grid,
-    .detail-container {
-        margin-left: 4%;
-        margin-right: 4%;
-        padding-left: 0;
-        padding-right: 0;
+    .nav-brand-text {
+        font-size: 1.1rem;
     }
 
+    /* Announcement Banner */
+    .banner {
+        padding: 10px 14px;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .banner-content {
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .banner-text {
+        white-space: normal;
+        max-height: none;
+        overflow: visible;
+        font-size: 0.82rem;
+        line-height: 1.45;
+        word-break: break-word;
+    }
+
+    .minimal-hero {
+        padding: 26px 16px 16px 16px;
+    }
+
+    .minimal-hero-title {
+        font-size: clamp(2.1rem, 7.5vw, 2.85rem);
+    }
+
+    /* Search & Filter Hub */
     .filter-search-hub {
-        padding: 16px;
+        margin: 0 14px 24px 14px;
+        padding: 16px 14px;
+        border-radius: 20px;
     }
 
+    .search-box {
+        height: 48px;
+        padding: 0 14px;
+    }
+
+    .search-box input {
+        font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+    }
+
+    .hub-controls-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    /* Horizontal swipeable device chips carousel */
+    .device-chips {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 2px 2px 6px 2px;
+        margin: 0 -2px;
+    }
+
+    .device-chips::-webkit-scrollbar {
+        display: none;
+    }
+
+    .chip-btn {
+        flex-shrink: 0;
+        height: 36px;
+        padding: 0 14px;
+        font-size: 0.82rem;
+    }
+
+    .sort-control {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .sort-select {
+        flex: 1;
+        height: 40px;
+        padding: 0 14px;
+        font-size: 0.84rem;
+    }
+
+    /* Section Header & Category Filters */
+    .section-header {
+        margin: 0 14px 16px 14px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .filter-controls {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 3px;
+    }
+
+    .filter-controls::-webkit-scrollbar {
+        display: none;
+    }
+
+    .filter-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        height: 34px;
+        padding: 0 14px;
+        font-size: 0.8rem;
+    }
+
+    /* ROM Cards Grid */
     .cards-grid {
         grid-template-columns: 1fr;
+        gap: 18px;
+        margin: 0 14px 40px 14px;
+    }
+
+    .rom-card {
+        border-radius: 20px;
+    }
+
+    .card-body {
+        padding: 16px 18px;
+        gap: 12px;
+    }
+
+    .card-actions-row {
+        padding-top: 6px;
+    }
+
+    .btn-card-main {
+        height: 46px;
+        font-size: 0.88rem;
+    }
+
+    .btn-card-share {
+        width: 46px;
+        height: 46px;
+    }
+
+    /* Detail Page */
+    .detail-container {
+        margin: 0 14px;
+        padding: 0 0 60px 0;
+    }
+
+    .detail-top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .detail-breadcrumbs {
+        display: none;
+    }
+
+    .back-btn {
+        height: 38px;
+        padding: 0 14px;
+        font-size: 0.82rem;
+    }
+
+    .rom-detail-banner {
+        height: 200px;
+        border-radius: 20px;
+        margin-bottom: 16px;
+    }
+
+    .rom-banner-content {
+        padding: 16px 18px;
+    }
+
+    .rom-banner-title {
+        font-size: 1.6rem;
     }
 
     .detail-specs-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .spec-card {
+        padding: 12px 14px;
+        border-radius: 16px;
+        gap: 10px;
+    }
+
+    .spec-icon-box {
+        width: 36px;
+        height: 36px;
+    }
+
+    .spec-card .val {
+        font-size: 0.84rem;
+    }
+
+    .segmented-tabs {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        padding: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        margin-bottom: 16px;
+    }
+
+    .segmented-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        height: 38px;
+        padding: 0 16px;
+        font-size: 0.82rem;
     }
 
     .tab-label-long {
@@ -2496,8 +2763,39 @@ footer {
         display: inline;
     }
 
+    .dl-box-card {
+        padding: 18px 16px;
+        border-radius: 20px;
+        margin-bottom: 16px;
+    }
+
+    .dl-box-actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .dl-primary-btn,
+    .dl-mirror-btn {
+        width: 100%;
+        justify-content: center;
+        height: 46px;
+    }
+
+    .screenshots-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
     .mobile-sticky-bar {
         display: flex;
+    }
+
+    .scroll-top-btn {
+        bottom: 20px;
+        right: 16px;
+        width: 44px;
+        height: 44px;
     }
 
     .lightbox-prev {
@@ -2511,5 +2809,103 @@ footer {
     .lightbox-close {
         top: 10px;
         right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    nav {
+        padding: 8px 12px;
+        margin: 6px 10px 12px 10px;
+    }
+
+    .nav-brand {
+        gap: 8px;
+    }
+
+    .nav-brand-text {
+        font-size: 1.02rem;
+    }
+
+    .nav-badge-pill {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+    }
+
+    .nav-actions {
+        gap: 6px;
+    }
+
+    .btn-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .alert-banner {
+        margin: 0 10px 14px 10px;
+        padding: 10px 12px;
+        font-size: 0.78rem;
+    }
+
+    .minimal-hero {
+        padding: 20px 12px 14px 12px;
+    }
+
+    .minimal-hero-title {
+        font-size: 2.1rem;
+    }
+
+    .filter-search-hub {
+        margin: 0 10px 20px 10px;
+        padding: 14px 12px;
+    }
+
+    .section-header {
+        margin: 0 10px 14px 10px;
+    }
+
+    .cards-grid {
+        margin: 0 10px 32px 10px;
+        gap: 14px;
+    }
+
+    .rom-card {
+        border-radius: 18px;
+    }
+
+    .card-body {
+        padding: 14px 14px;
+    }
+
+    .card-title {
+        font-size: 1.12rem;
+    }
+
+    .detail-container {
+        margin: 0 10px;
+    }
+
+    .detail-specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .spec-card {
+        padding: 10px 12px;
+    }
+
+    .spec-icon-box {
+        width: 32px;
+        height: 32px;
+    }
+
+    .pin-modal-card {
+        width: calc(100vw - 24px);
+        padding: 20px 16px;
+        border-radius: 22px;
+    }
+
+    .keypad-btn {
+        height: 50px;
+        font-size: 1.25rem;
     }
 }

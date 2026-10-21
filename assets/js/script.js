@@ -339,48 +339,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initKeyboardShortcuts();
     initLightboxTouchGestures();
     initScrollToTop();
-    initHeroTyping();
 });
-
-// Dynamic Hero Typing Animation (Material 3 Expressive)
-function initHeroTyping() {
-    const el = document.getElementById('hero-typing-text');
-    if (!el) return;
-    const lines = [
-        "Crafting butter-smooth custom Android ROMs & ports.",
-        "Optimized for Xiaomi & Redmi (fog, kunzite, earth, gale).",
-        "Stock Android fidelity meets maximum battery endurance.",
-        "Engineered with Material 3 Expressive aesthetics."
-    ];
-    let lineIdx = 0;
-    let charIdx = lines[0].length;
-    let isDeleting = true;
-
-    function step() {
-        const line = lines[lineIdx];
-        if (isDeleting) {
-            charIdx--;
-            el.textContent = line.substring(0, charIdx);
-            if (charIdx <= 0) {
-                isDeleting = false;
-                lineIdx = (lineIdx + 1) % lines.length;
-                setTimeout(step, 400);
-                return;
-            }
-            setTimeout(step, 24);
-        } else {
-            charIdx++;
-            el.textContent = line.substring(0, charIdx);
-            if (charIdx >= line.length) {
-                isDeleting = true;
-                setTimeout(step, 2400);
-                return;
-            }
-            setTimeout(step, 45);
-        }
-    }
-    setTimeout(step, 1800);
-}
 
 // Update Hero Statistics
 function updateHeroStats() {
@@ -841,7 +800,7 @@ function renderROMCards() {
             : `<div class="card-banner-img" style="background-image: url('${rom.banner}');"></div>`;
 
         return `
-        <div class="rom-card" ${cardAction}>
+        <div class="rom-card" style="--card-index: ${idx};" ${cardAction}>
             <div class="card-banner-wrapper">
                 ${bannerContent}
                 <div class="card-banner-overlay">

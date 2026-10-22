@@ -908,7 +908,10 @@ function navigateHome(fromHash = false) {
     closeReaderModal();
 
     const existingStickyBar = document.getElementById('mobile-sticky-bar');
-    if (existingStickyBar) existingStickyBar.remove();
+    if (existingStickyBar) {
+        existingStickyBar.style.display = 'none';
+        existingStickyBar.innerHTML = '';
+    }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -922,7 +925,10 @@ function show404() {
     updateCSS('-blue');
     document.body.classList.remove('has-sticky-bar');
     const existingStickyBar = document.getElementById('mobile-sticky-bar');
-    if (existingStickyBar) existingStickyBar.remove();
+    if (existingStickyBar) {
+        existingStickyBar.style.display = 'none';
+        existingStickyBar.innerHTML = '';
+    }
 
     const detailContent = document.getElementById('detail-content');
     if (detailContent) {
@@ -1406,9 +1412,14 @@ function viewDetail(id) {
                 Copy Link
             </button>
         </div>
+    `;
 
-        <!-- Sticky Mobile Bottom Bar -->
-        <div class="mobile-sticky-bar" id="mobile-sticky-bar">
+    enhanceMarkdownBlocks(detailContent);
+
+    // Update root-level Mobile Sticky Bar
+    const stickyBar = document.getElementById('mobile-sticky-bar');
+    if (stickyBar) {
+        stickyBar.innerHTML = `
             <div class="sticky-bar-info">
                 <span class="sticky-rom-name">${rom.name}</span>
                 <span class="sticky-rom-meta">${rom.device.split('(')[0].trim()} • ${rom.version}</span>
@@ -1419,10 +1430,9 @@ function viewDetail(id) {
                     : `<button class="btn-dl primary sticky-dl-btn" onclick="showDownloadWarningPopup()">${isUnlockedByYtta ? 'Download (Debug)' : 'Download'}</button>`
                 }
             </div>
-        </div>
-    `;
-
-    enhanceMarkdownBlocks(detailContent);
+        `;
+        stickyBar.style.display = 'flex';
+    }
 
     document.getElementById('page-home').classList.remove('active');
     document.getElementById('page-detail').classList.add('active');
@@ -1673,12 +1683,15 @@ async function loadAnnouncement() {
                     const expandBtn = document.getElementById('expand-btn');
 
                     if (bannerTextContainer && expandBtn) {
-                        if (bannerTextContainer.scrollHeight > 30) {
+                        // Only show expand button if content actually overflows and is clipped
+                        if (bannerTextContainer.scrollHeight > bannerTextContainer.clientHeight + 6) {
                             expandBtn.style.display = 'block';
                             expandBtn.onclick = () => {
                                 bannerTextContainer.classList.toggle('expanded');
                                 expandBtn.textContent = bannerTextContainer.classList.contains('expanded') ? 'View less' : 'View more';
                             };
+                        } else {
+                            expandBtn.style.display = 'none';
                         }
                     }
                 }, 60);

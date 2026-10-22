@@ -1,3 +1,3 @@
 2026-10-17
 2027-12-31
-- Please don't complain to your ROM or device maintainer about Play Integrity: <a href="https://no-integrity.vercel.app/" target="_blank">https://no-integrity.vercel.app/</a>
+Please don't complain to maintainers about Play Integrity: <a href="https://no-integrity.vercel.app/" target="_blank"><span style="white-space: nowrap;">Read the guide &rarr;</span></a>

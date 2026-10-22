@@ -282,12 +282,10 @@ function triggerEasterEgg() {
 }
 
 function preloadAssets() {
+    // Only preload lightweight image; audio is loaded only if easter egg is actually triggered
     try {
         const img = new Image();
         img.src = 'assets/tree.gif';
-        const audio = new Audio();
-        audio.src = 'assets/man.ogg';
-        audio.preload = 'none';
     } catch (e) {}
 }
 

@@ -856,15 +856,22 @@ nav {
    Announcement Banner
    ========================================================================== */
 .banner {
-    background: var(--surface-container-high);
-    border-bottom: 1px solid var(--outline-variant);
-    padding: 12px 6%;
+    background: var(--surface-container);
+    border: 1px solid var(--outline-variant);
+    padding: 10px 18px;
+    margin: 12px auto 6px auto;
+    max-width: 1200px;
+    width: calc(100% - 12%);
+    border-radius: var(--r-pill);
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
     position: relative;
     z-index: 90;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     transition: var(--transition);
 }
 
@@ -944,7 +951,7 @@ nav {
    ========================================================================== */
 .minimal-hero {
     text-align: center;
-    padding: 42px 6% 28px 6%;
+    padding: 22px 6% 16px 6%;
     max-width: 860px;
     margin: 0 auto;
 }
@@ -984,12 +991,14 @@ nav {
 .filter-search-hub {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    margin: 0 6% 32px 6%;
+    gap: 14px;
+    max-width: 1200px;
+    width: calc(100% - 12%);
+    margin: 0 auto 20px auto;
     background: var(--surface-container);
     border: 1px solid var(--outline-variant);
     border-radius: var(--r-xl);
-    padding: 22px 24px;
+    padding: 18px 22px;
     backdrop-filter: blur(16px);
     box-shadow: var(--card-shadow);
     animation: hubEntrance 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both;
@@ -1011,11 +1020,11 @@ nav {
     display: flex;
     align-items: center;
     gap: 12px;
-    height: 52px;
+    height: 48px;
     padding: 0 16px;
     border-radius: var(--r-pill);
     background: var(--surface-container-high);
-    border: 2px solid transparent;
+    border: 1px solid var(--outline-variant);
     transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 
@@ -1172,7 +1181,9 @@ nav {
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    margin: 0 6% 22px 6%;
+    max-width: 1200px;
+    width: calc(100% - 12%);
+    margin: 0 auto 16px auto;
     flex-wrap: wrap;
 }
 
@@ -1232,8 +1243,10 @@ nav {
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 24px;
-    margin: 0 6% 48px 6%;
+    gap: 22px;
+    max-width: 1200px;
+    width: calc(100% - 12%);
+    margin: 0 auto 48px auto;
 }
 
 .rom-card {
@@ -1567,17 +1580,25 @@ nav {
 }
 
 .detail-container {
-    max-width: 980px;
+    max-width: 1040px;
+    width: calc(100% - 12%);
     margin: 0 auto;
-    padding: 0 6% 60px 6%;
+    padding: 0 0 60px 0;
 }
 
 .detail-top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 14px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.detail-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     flex-wrap: wrap;
 }
 
@@ -1648,12 +1669,12 @@ nav {
 .rom-detail-banner {
     position: relative;
     width: 100%;
-    height: 290px;
+    height: 270px;
     border-radius: var(--r-xl);
     overflow: hidden;
     background-size: cover;
     background-position: center;
-    margin-bottom: 24px;
+    margin-bottom: 10px;
     border: 1px solid var(--outline-variant);
     box-shadow: var(--card-shadow);
 }
@@ -1666,7 +1687,7 @@ nav {
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
-    padding: 32px;
+    padding: 28px 30px;
 }
 
 .rom-banner-title {
@@ -1682,8 +1703,8 @@ nav {
 .detail-specs-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-    margin-bottom: 24px;
+    gap: 10px;
+    margin-bottom: 18px;
 }
 
 .spec-card {
@@ -1767,9 +1788,9 @@ nav {
     gap: 6px;
     background: var(--surface-container-high);
     border: 1px solid var(--outline-variant);
-    padding: 6px;
+    padding: 5px;
     border-radius: var(--r-pill);
-    margin-bottom: 24px;
+    margin-bottom: 12px;
 }
 
 .tab-btn {
@@ -1813,9 +1834,9 @@ nav {
     background: var(--surface-container);
     border: 1px solid var(--outline-variant);
     border-radius: var(--r-xl);
-    padding: 32px;
+    padding: 26px 28px;
     box-shadow: var(--card-shadow);
-    margin-bottom: 24px;
+    margin-bottom: 16px;
     line-height: 1.7;
 }
 
@@ -2026,8 +2047,8 @@ nav {
 .detail-actions-row {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-top: 24px;
+    gap: 12px;
+    margin-top: 14px;
 }
 
 /* Mobile Sticky Download Bar */
@@ -2119,10 +2140,10 @@ footer {
    Modals & Dialogs (Material 3 Expressive 32px Surfaces)
    ========================================================================== */
 .modal {
+    display: none;
     position: fixed;
     inset: 0;
     z-index: 200;
-    display: flex;
     align-items: center;
     justify-content: center;
     background: rgba(0, 0, 0, 0.65);
@@ -2521,9 +2542,12 @@ footer {
 
     /* Announcement Banner */
     .banner {
+        width: calc(100% - 28px);
+        margin: 6px 14px 10px 14px;
         padding: 10px 14px;
         align-items: flex-start;
         gap: 10px;
+        border-radius: 18px;
     }
 
     .banner-content {
@@ -2541,7 +2565,7 @@ footer {
     }
 
     .minimal-hero {
-        padding: 26px 16px 16px 16px;
+        padding: 18px 16px 12px 16px;
     }
 
     .minimal-hero-title {
@@ -2550,7 +2574,8 @@ footer {
 
     /* Search & Filter Hub */
     .filter-search-hub {
-        margin: 0 14px 24px 14px;
+        width: calc(100% - 28px);
+        margin: 0 14px 16px 14px;
         padding: 16px 14px;
         border-radius: 20px;
     }
@@ -2675,6 +2700,7 @@ footer {
 
     /* Detail Page */
     .detail-container {
+        width: calc(100% - 28px);
         margin: 0 14px;
         padding: 0 0 60px 0;
     }
@@ -2684,7 +2710,7 @@ footer {
         justify-content: space-between;
         align-items: center;
         gap: 10px;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
     }
 
     .detail-breadcrumbs {
@@ -2700,7 +2726,7 @@ footer {
     .rom-detail-banner {
         height: 200px;
         border-radius: 20px;
-        margin-bottom: 16px;
+        margin-bottom: 10px;
     }
 
     .rom-banner-content {
@@ -2713,8 +2739,8 @@ footer {
 
     .detail-specs-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        margin-bottom: 20px;
+        gap: 8px;
+        margin-bottom: 14px;
     }
 
     .spec-card {

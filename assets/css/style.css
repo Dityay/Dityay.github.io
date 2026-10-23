@@ -537,6 +537,9 @@ html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
     transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
 }
 
@@ -544,7 +547,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-x: clip;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
     position: relative;
     background: var(--surface);
     color: var(--on-surface);
@@ -2637,6 +2642,7 @@ body.has-sticky-bar .scroll-top-btn {
         margin: 0 14px 16px 14px;
         padding: 16px 14px;
         border-radius: 20px;
+        overflow: hidden;
     }
 
     .search-box {
@@ -2656,6 +2662,8 @@ body.has-sticky-bar .scroll-top-btn {
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
+        min-width: 0;
+        width: 100%;
     }
 
     /* Horizontal swipeable device chips carousel */
@@ -2668,8 +2676,10 @@ body.has-sticky-bar .scroll-top-btn {
         flex-wrap: nowrap;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding: 4px 14px 8px 14px;
-        margin: 0 -14px;
+        padding: 4px 2px 8px 2px;
+        margin: 0;
+        width: 100%;
+        min-width: 0;
     }
 
     .device-chips::-webkit-scrollbar {
@@ -2700,14 +2710,19 @@ body.has-sticky-bar .scroll-top-btn {
 
     /* Section Header & Category Filters */
     .section-header {
+        width: calc(100% - 28px);
         margin: 0 14px 16px 14px;
         flex-direction: column;
         align-items: stretch;
         gap: 12px;
+        min-width: 0;
+        overflow: hidden;
     }
 
     .filter-controls {
         width: 100%;
+        min-width: 0;
+        max-width: 100%;
         display: flex;
         align-items: center;
         gap: 6px;
@@ -2716,7 +2731,7 @@ body.has-sticky-bar .scroll-top-btn {
         flex-wrap: nowrap;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        padding: 3px;
+        padding: 4px 2px;
     }
 
     .filter-controls::-webkit-scrollbar {
@@ -2735,6 +2750,7 @@ body.has-sticky-bar .scroll-top-btn {
     .cards-grid {
         grid-template-columns: 1fr;
         gap: 18px;
+        width: calc(100% - 28px);
         margin: 0 14px 40px 14px;
     }
 
@@ -3042,10 +3058,12 @@ body.has-sticky-bar .scroll-top-btn {
 
     .section-header {
         margin: 0 10px 14px 10px;
+        width: calc(100% - 20px);
     }
 
     .cards-grid {
         margin: 0 10px 32px 10px;
+        width: calc(100% - 20px);
         gap: 14px;
     }
 

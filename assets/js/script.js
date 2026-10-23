@@ -124,8 +124,7 @@ function openPinModal() {
         input.classList.remove('pin-input-error');
     }
 
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    openModal(modal);
 
     setTimeout(() => {
         if (input) input.focus();
@@ -134,7 +133,16 @@ function openPinModal() {
 
 function closePinModal(authorized = false) {
     const modal = document.getElementById('pin-modal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+        modal.classList.add('closing');
+        modal.classList.remove('active');
+        setTimeout(() => {
+            if (modal.classList.contains('closing')) {
+                modal.style.display = 'none';
+                modal.classList.remove('closing');
+            }
+        }, 220);
+    }
     document.body.style.overflow = '';
 
     if (!authorized) {
@@ -838,7 +846,7 @@ function renderROMCards() {
                 </div>
 
                 <div class="card-actions-row">
-                    <button class="${btnClass}" style="${btnStyle}">${btnText}</button>
+                    <button class="${btnClass}" style="${btnStyle}" ${cardAction}>${btnText}</button>
                     <button class="btn-card-share" onclick="event.stopPropagation(); copyRomLink('${rom.id}')" title="Copy ROM link" aria-label="Copy link">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
@@ -969,8 +977,7 @@ function showUpcomingPopup() {
             </div>
         </div>
     `;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    openModal(modal);
 }
 
 function showNukedPopup() {
@@ -980,19 +987,18 @@ function showNukedPopup() {
     content.innerHTML = `
         <div class="modal-popup-container">
             <div class="modal-popup-icon-box danger">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line></svg>
             </div>
             <h2 class="modal-popup-title danger">Build Withdrawn</h2>
             <p class="modal-popup-text">
-                This ROM build has been deprecated or nuked due to newer releases or issues. Details and files are no longer accessible.
+                This ROM build has been deprecated or nuked due to newer releases or critical issues. Details and files are no longer accessible.
             </p>
             <div class="modal-actions-row">
-                <button class="btn-dl primary" onclick="closeModal()">Understood</button>
+                <button class="btn-dl primary danger-btn" onclick="closeModal()">Understood</button>
             </div>
         </div>
     `;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    openModal(modal);
 }
 
 function showWipPopup() {
@@ -1016,8 +1022,7 @@ function showWipPopup() {
             </div>
         </div>
     `;
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    openModal(modal);
 }
 
 function showDownloadWarningPopup() {
@@ -1037,15 +1042,14 @@ function showDownloadWarningPopup() {
             </div>
 
             <div class="modal-actions-row">
-                <button class="btn-dl primary" onclick="proceedDownload()">Proceed to Download</button>
+                <button class="btn-dl primary danger-btn" onclick="proceedDownload()">Proceed to Download</button>
                 <button class="btn-dl secondary" onclick="copyActiveDownloadUrl()">Copy Link</button>
                 <button class="btn-dl secondary" onclick="closeModal()">Cancel</button>
             </div>
         </div>
     `;
 
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    openModal(modal);
 }
 
 function copyActiveDownloadUrl() {
@@ -1172,7 +1176,9 @@ function viewDetail(id) {
 
     if (rom.isWip) {
         showWipPopup();
-        window.location.hash = isSecretMode ? 'personal' : '';
+        if (window.location.hash) {
+            history.replaceState("", document.title, window.location.pathname + window.location.search);
+        }
         return;
     }
 
@@ -1187,7 +1193,9 @@ function viewDetail(id) {
 
     if (isNuked) {
         showNukedPopup();
-        window.location.hash = isSecretMode ? 'personal' : '';
+        if (window.location.hash) {
+            history.replaceState("", document.title, window.location.pathname + window.location.search);
+        }
         return;
     }
 
@@ -1602,15 +1610,42 @@ function handleRouting() {
 window.addEventListener('hashchange', handleRouting);
 
 // Modal Helpers
+function openModal(modal) {
+    if (!modal) return;
+    modal.classList.remove('closing');
+    modal.style.display = 'flex';
+    void modal.offsetWidth; // Force CSS animation restart
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
 function closeModal() {
     const mdModal = document.getElementById('md-modal');
-    if (mdModal) mdModal.style.display = 'none';
+    if (mdModal) {
+        mdModal.classList.add('closing');
+        mdModal.classList.remove('active');
+        setTimeout(() => {
+            if (mdModal.classList.contains('closing')) {
+                mdModal.style.display = 'none';
+                mdModal.classList.remove('closing');
+            }
+        }, 220);
+    }
     document.body.style.overflow = '';
 }
 
 function closeReaderModal() {
     const readerModal = document.getElementById('reader-modal');
-    if (readerModal) readerModal.style.display = 'none';
+    if (readerModal) {
+        readerModal.classList.add('closing');
+        readerModal.classList.remove('active');
+        setTimeout(() => {
+            if (readerModal.classList.contains('closing')) {
+                readerModal.style.display = 'none';
+                readerModal.classList.remove('closing');
+            }
+        }, 220);
+    }
     document.body.style.overflow = '';
 }
 
@@ -1618,12 +1653,21 @@ window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {
         if (event.target.id === 'pin-modal') {
             closePinModal(false);
+        } else if (event.target.id === 'reader-modal') {
+            closeReaderModal();
         } else {
-            event.target.style.display = "none";
-            document.body.style.overflow = '';
+            closeModal();
         }
     }
 };
+
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeModal();
+        closeReaderModal();
+        closePinModal(false);
+    }
+});
 
 // Announcement Banner Loader
 async function loadAnnouncement() {

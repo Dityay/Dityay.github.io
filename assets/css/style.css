@@ -2154,7 +2154,7 @@ footer {
 }
 
 /* ==========================================================================
-   Modals & Dialogs (Material 3 Expressive 32px Surfaces)
+   Modals & Dialogs (Material 3 Expressive 28px Surfaces & Spring Motion)
    ========================================================================== */
 .modal {
     display: none;
@@ -2163,30 +2163,103 @@ footer {
     z-index: 200;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     padding: 20px;
+    animation: modalFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.modal.closing {
+    animation: modalFadeOut 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+    pointer-events: none;
 }
 
 .modal-content {
     background: var(--surface-container-high);
     border: 1px solid var(--outline-variant);
-    border-radius: 32px;
+    border-radius: 28px;
     padding: 32px;
-    max-width: 540px;
+    max-width: 500px;
     width: 100%;
     position: relative;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.2);
     max-height: 85vh;
     overflow-y: auto;
+    animation: modalSpringIn 0.36s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.modal.closing .modal-content {
+    animation: modalSpringOut 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes modalFadeIn {
+    0% {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+    100% {
+        opacity: 1;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+}
+
+@keyframes modalFadeOut {
+    0% {
+        opacity: 1;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+    }
+    100% {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+}
+
+@keyframes modalSpringIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.86) translateY(24px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes modalSpringOut {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.9) translateY(16px);
+    }
+}
+
+@keyframes modalIconPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.4) rotate(-14deg);
+    }
+    70% {
+        transform: scale(1.15) rotate(4deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0);
+    }
 }
 
 .close-modal {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 1.5rem;
+    top: 18px;
+    right: 18px;
+    font-size: 1.45rem;
     line-height: 1;
     color: var(--text-muted);
     cursor: pointer;
@@ -2195,12 +2268,15 @@ footer {
     border-radius: 50%;
     display: grid;
     place-items: center;
+    background: var(--surface-container-highest);
+    border: 1px solid var(--outline-variant);
     transition: var(--transition);
 }
 
 .close-modal:hover {
     color: var(--on-surface);
-    background: var(--surface-container-highest);
+    background: var(--surface-container-lowest);
+    transform: scale(1.08);
 }
 
 .modal-popup-container {
@@ -2208,29 +2284,54 @@ footer {
 }
 
 .modal-popup-icon-box {
-    width: 60px;
-    height: 60px;
+    width: 64px;
+    height: 64px;
     margin: 0 auto 16px auto;
     border-radius: 50%;
     background: var(--primary-container);
     color: var(--on-primary-container);
     display: grid;
     place-items: center;
+    animation: modalIconPop 0.44s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    animation-delay: 0.08s;
+}
+
+.modal-popup-icon-box.danger {
+    background: rgba(239, 68, 68, 0.14);
+    color: #ef4444;
+    border: 1.5px solid rgba(239, 68, 68, 0.32);
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2);
+}
+
+.modal-popup-icon-box.warning {
+    background: rgba(245, 158, 11, 0.14);
+    color: #f59e0b;
+    border: 1.5px solid rgba(245, 158, 11, 0.32);
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.2);
 }
 
 .modal-popup-title {
     font-family: var(--font-display);
     font-size: 1.45rem;
-    font-weight: 800;
+    font-weight: 850;
     color: var(--on-surface);
     margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.modal-popup-title.danger {
+    color: #ef4444;
+}
+
+.modal-popup-title.warning {
+    color: #f59e0b;
 }
 
 .modal-popup-text {
     font-size: 0.92rem;
     color: var(--on-surface-variant);
     line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .modal-popup-notice {
@@ -2253,8 +2354,33 @@ footer {
 
 .modal-actions-row {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     justify-content: center;
+    width: 100%;
+}
+
+.modal-actions-row .btn-dl {
+    height: 48px;
+    font-size: 0.92rem;
+    font-weight: 750;
+    border-radius: var(--r-pill);
+    padding: 0 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.modal-actions-row .btn-dl.danger-btn {
+    background: #ef4444;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(239, 68, 68, 0.35);
+}
+
+.modal-actions-row .btn-dl.danger-btn:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(239, 68, 68, 0.45);
 }
 
 /* PIN Security Modal & Keypad */
@@ -2992,6 +3118,54 @@ body.has-sticky-bar .scroll-top-btn {
         height: 44px;
     }
 
+    /* Modals Responsive */
+    .modal {
+        padding: 16px;
+    }
+
+    .modal-content {
+        max-width: calc(100vw - 28px);
+        width: 100%;
+        padding: 28px 18px 22px 18px;
+        border-radius: 26px;
+    }
+
+    .modal-popup-icon-box {
+        width: 56px;
+        height: 56px;
+        margin-bottom: 14px;
+    }
+
+    .modal-popup-title {
+        font-size: 1.25rem;
+    }
+
+    .modal-popup-text {
+        font-size: 0.88rem;
+        line-height: 1.55;
+        margin-bottom: 20px;
+    }
+
+    .modal-actions-row {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .modal-actions-row .btn-dl {
+        width: 100%;
+        height: 48px;
+        justify-content: center;
+    }
+
+    .close-modal {
+        top: 14px;
+        right: 14px;
+        width: 34px;
+        height: 34px;
+        font-size: 1.35rem;
+    }
+
     .lightbox-prev {
         left: 10px;
     }
@@ -3107,5 +3281,19 @@ body.has-sticky-bar .scroll-top-btn {
     .keypad-btn {
         height: 50px;
         font-size: 1.25rem;
+    }
+
+    .modal {
+        padding: 12px;
+    }
+
+    .modal-content {
+        max-width: calc(100vw - 20px);
+        padding: 24px 16px 20px 16px;
+        border-radius: 22px;
+    }
+
+    .modal-popup-title {
+        font-size: 1.18rem;
     }
 }

@@ -2517,28 +2517,35 @@ footer {
 }
 
 /* ==========================================================================
-   Fullscreen Screenshot Lightbox Modal
+   Fullscreen Screenshot Lightbox Modal (Material 3 Expressive Motion)
    ========================================================================== */
 .lightbox-modal {
     position: fixed;
     inset: 0;
     z-index: 300;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
+    animation: lightboxFadeIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.lightbox-modal.closing {
+    animation: lightboxFadeOut 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+    pointer-events: none;
 }
 
 .lightbox-backdrop {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.88);
-    backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
 }
 
 .lightbox-content {
     position: relative;
     z-index: 2;
-    max-width: 90vw;
+    max-width: 92vw;
     max-height: 90vh;
     display: flex;
     align-items: center;
@@ -2546,18 +2553,27 @@ footer {
 }
 
 .lightbox-img-wrapper {
-    max-width: 85vw;
-    max-height: 82vh;
-    border-radius: var(--r-lg);
+    max-width: 88vw;
+    max-height: 84vh;
+    border-radius: var(--r-xl);
     overflow: hidden;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 28px 72px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.14);
+    animation: lightboxSpringIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    transform-origin: center center;
+    background: rgba(15, 18, 25, 0.6);
+}
+
+.lightbox-modal.closing .lightbox-img-wrapper {
+    animation: lightboxSpringOut 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .lightbox-img-wrapper img {
     max-width: 100%;
-    max-height: 82vh;
+    max-height: 84vh;
     display: block;
     object-fit: contain;
+    transition: transform 0.28s cubic-bezier(0.2, 0, 0, 1), opacity 0.22s ease;
+    will-change: transform, opacity;
 }
 
 .lightbox-btn {
@@ -2565,20 +2581,30 @@ footer {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: rgba(30, 28, 35, 0.75);
+    background: rgba(26, 30, 44, 0.85);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
     display: grid;
     place-items: center;
     cursor: pointer;
-    transition: transform 0.2s var(--ease-bouncy), background-color 0.2s var(--ease);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.25s var(--ease-bouncy), background-color 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    z-index: 10;
+    animation: lightboxControlsPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both;
 }
 
 .lightbox-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.12);
     background: var(--primary);
     color: var(--on-primary);
+    border-color: var(--primary);
+    box-shadow: 0 8px 24px var(--accent-glow);
+}
+
+.lightbox-btn:active {
+    transform: scale(0.92);
 }
 
 .lightbox-close {
@@ -2596,15 +2622,80 @@ footer {
 
 .lightbox-counter {
     position: absolute;
-    bottom: -40px;
+    bottom: -46px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 0.85rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 4px 14px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+    color: #ffffff;
+    padding: 6px 18px;
     border-radius: var(--r-pill);
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(26, 30, 44, 0.88);
+    border: 1.5px solid rgba(255, 255, 255, 0.16);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    animation: lightboxControlsPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+}
+
+@keyframes lightboxFadeIn {
+    0% {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+    100% {
+        opacity: 1;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+    }
+}
+
+@keyframes lightboxFadeOut {
+    0% {
+        opacity: 1;
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+    }
+    100% {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+        -webkit-backdrop-filter: blur(0px);
+    }
+}
+
+@keyframes lightboxSpringIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.82) translateY(28px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes lightboxSpringOut {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.86) translateY(20px);
+    }
+}
+
+@keyframes lightboxControlsPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* ==========================================================================
@@ -3227,17 +3318,54 @@ body.has-sticky-bar .scroll-top-btn {
         font-size: 1.35rem;
     }
 
-    .lightbox-prev {
-        left: 10px;
+    .lightbox-modal {
+        padding: 0;
     }
 
-    .lightbox-next {
-        right: 10px;
+    .lightbox-content {
+        max-width: 100vw;
+        max-height: 100vh;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .lightbox-img-wrapper {
+        max-width: 92vw;
+        max-height: 76vh;
+        border-radius: var(--r-lg);
+    }
+
+    .lightbox-img-wrapper img {
+        max-width: 92vw;
+        max-height: 76vh;
     }
 
     .lightbox-close {
-        top: 10px;
-        right: 10px;
+        top: 20px;
+        right: 18px;
+        width: 44px;
+        height: 44px;
+        background: rgba(26, 30, 44, 0.9);
+    }
+
+    .lightbox-prev {
+        left: 12px;
+        width: 44px;
+        height: 44px;
+        background: rgba(26, 30, 44, 0.9);
+    }
+
+    .lightbox-next {
+        right: 12px;
+        width: 44px;
+        height: 44px;
+        background: rgba(26, 30, 44, 0.9);
+    }
+
+    .lightbox-counter {
+        bottom: 24px;
+        background: rgba(26, 30, 44, 0.92);
+        padding: 6px 16px;
     }
 }
 

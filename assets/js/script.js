@@ -1460,18 +1460,33 @@ function openLightbox(index) {
 
     if (!modal || !image) return;
 
+    modal.classList.remove('closing');
     image.src = currentLightboxImages[currentLightboxIndex];
+    image.style.opacity = '1';
+    image.style.transform = 'scale(1) translateX(0)';
+
     if (counter) {
         counter.textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
     }
 
     modal.style.display = 'flex';
+    void modal.offsetWidth; // Force CSS animation reflow
+    modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
 
 function closeLightbox() {
     const modal = document.getElementById('lightbox-modal');
-    if (modal) modal.style.display = 'none';
+    if (modal) {
+        modal.classList.add('closing');
+        modal.classList.remove('active');
+        setTimeout(() => {
+            if (modal.classList.contains('closing')) {
+                modal.style.display = 'none';
+                modal.classList.remove('closing');
+            }
+        }, 220);
+    }
     document.body.style.overflow = '';
 }
 
@@ -1483,13 +1498,13 @@ function nextLightboxImage() {
     const counter = document.getElementById('lightbox-counter');
 
     if (image) {
-        image.style.opacity = '0.3';
-        image.style.transform = 'scale(0.96)';
+        image.style.opacity = '0';
+        image.style.transform = 'scale(0.92) translateX(20px)';
         setTimeout(() => {
             image.src = currentLightboxImages[currentLightboxIndex];
             image.style.opacity = '1';
-            image.style.transform = 'scale(1)';
-        }, 100);
+            image.style.transform = 'scale(1) translateX(0)';
+        }, 120);
     }
     if (counter) {
         counter.textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
@@ -1504,13 +1519,13 @@ function prevLightboxImage() {
     const counter = document.getElementById('lightbox-counter');
 
     if (image) {
-        image.style.opacity = '0.3';
-        image.style.transform = 'scale(0.96)';
+        image.style.opacity = '0';
+        image.style.transform = 'scale(0.92) translateX(-20px)';
         setTimeout(() => {
             image.src = currentLightboxImages[currentLightboxIndex];
             image.style.opacity = '1';
-            image.style.transform = 'scale(1)';
-        }, 100);
+            image.style.transform = 'scale(1) translateX(0)';
+        }, 120);
     }
     if (counter) {
         counter.textContent = `${currentLightboxIndex + 1} / ${currentLightboxImages.length}`;
@@ -1663,6 +1678,7 @@ window.onclick = function(event) {
 
 window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
+        closeLightbox();
         closeModal();
         closeReaderModal();
         closePinModal(false);

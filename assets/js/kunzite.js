@@ -92,5 +92,26 @@ window.kunziteData = [
     description: "> *\"Petal falls, petal dance\"*\n\n### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n- Non-rooted by default and shipped with OrangeFox Recovery\n- FOD working properly\n- After enrolling Face Unlock, go to Face Unlock settings, toggle Screen Unlock off and re-enable\n- Disabled some UI blurs and animations (you can change it by using *\"deltacore cmd oplus_anim\"* in any terminal with root)\n\n### Known Issues\n- Light sensor (auto-brightness) not working\n- App lock not fixed yet (lazy)\n- Please report any other bugs encountered to the maintainer",
     flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
     credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand for porting base, instructions and fixes\n- @getthefckoutofheree, *ZuyQA*, *ArticPorts* for mods\n- @heybyben for OrangeFox\n- @iDeadXD for kernel\n- @Raphraphan FOD anim fix\n- @rianixia for original VOOC fix\n- @SM6475 @UralRedux for testing\n- @ProjectUnknown01 for original RapidFlasher"
-    }
+    },
+{
+    id: "kun_hos4cn",
+    name: "HyperOS 4 CN",
+    category: "Xiaomi (HyperOS, MIUI)",
+    device: "Xiaomi REDMI Note 15 5G (kunzite)",
+    version: "Android 17 (Initial)",
+    buildDate: "2026-10-28",
+    cssSuffix: "-red",
+    isWip: false,
+    downloadUrl: "https://drive.google.com/file/d/1HLKiHGdSVbTcnCcVKkPSAPFF6hNzIqNj/view?usp=sharing",
+    banner: "assets/roms/kunzite/hos4cn/banner.webp",
+    screenshots: [
+        "assets/roms/kunzite/hos4cn/1.webp",
+        "assets/roms/kunzite/hos4cn/2.webp",
+        "assets/roms/kunzite/hos4cn/3.webp",
+        "assets/roms/kunzite/hos4cn/4.webp"
+    ],
+    description: "> *\"There are no monsters in this world, but bless those who still feel like monsters.\"*\n\n### Notes\n- **Clean Flash Recommended:** Perform a complete clean flash\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n\n### Known Issues\n- Please report any other bugs encountered to the maintainer",
+    flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
+    credits: "- @makartos, @UralRedux for testing\n- @ProjectUnknown01 for RapidFlasher"
+}
 ];

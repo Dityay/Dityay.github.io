@@ -99,7 +99,7 @@ window.kunziteData = [
     category: "Xiaomi (HyperOS, MIUI)",
     device: "Xiaomi REDMI Note 15 5G (kunzite)",
     version: "Android 17 (Initial)",
-    buildDate: "2026-10-28",
+    buildDate: "2026-10-29",
     cssSuffix: "-red",
     isWip: false,
     downloadUrl: "https://drive.google.com/file/d/1HLKiHGdSVbTcnCcVKkPSAPFF6hNzIqNj/view?usp=sharing",

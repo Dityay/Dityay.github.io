@@ -3486,3 +3486,14 @@ body.has-sticky-bar .scroll-top-btn {
         font-size: 1.18rem;
     }
 }
+
+/* November 3rd Confetti Celebration Overlay (Background) */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+}

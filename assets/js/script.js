@@ -345,6 +345,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initKeyboardShortcuts();
     initLightboxTouchGestures();
     initScrollToTop();
+
+    // Special Event: Falling Confetti (November 3rd)
+    initNovemberConfetti();
 });
 
 // Update Hero Statistics
@@ -1763,4 +1766,190 @@ async function loadAnnouncement() {
             }
         }
     } catch (error) {}
+}
+
+// Special Event: November 3rd Falling Confetti
+function isNovember3rd() {
+    const today = new Date();
+    // JavaScript months are 0-indexed: 0 = January ... 10 = November
+    const isNov3 = (today.getMonth() === 10 && today.getDate() === 3);
+    const isTesting = window.location.search.includes('confetti=1') || window.location.hash === '#confetti';
+    return isNov3 || isTesting;
+}
+
+function initNovemberConfetti() {
+    if (!isNovember3rd()) return;
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+    }
+
+    const backdrop = document.querySelector('.backdrop');
+    const canvas = document.createElement('canvas');
+    canvas.id = 'confetti-canvas';
+    canvas.setAttribute('aria-hidden', 'true');
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+    canvas.style.pointerEvents = 'none';
+    canvas.style.zIndex = '0';
+
+    if (backdrop) {
+        backdrop.appendChild(canvas);
+    } else {
+        document.body.prepend(canvas);
+    }
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+
+    // Accent Color Palette Management
+    function getAccentPalette() {
+        const cs = getComputedStyle(document.documentElement);
+        const accent = cs.getPropertyValue('--accent').trim() || '#7eb2ff';
+        const accentHover = cs.getPropertyValue('--accent-hover').trim() || accent;
+        const primary = cs.getPropertyValue('--primary').trim() || accent;
+        const tertiary = cs.getPropertyValue('--tertiary').trim();
+
+        const colors = [accent, accentHover, primary];
+        if (tertiary && tertiary !== primary) {
+            colors.push(tertiary);
+        }
+        return colors;
+    }
+
+    let accentPalette = getAccentPalette();
+
+    const observer = new MutationObserver(() => {
+        accentPalette = getAccentPalette();
+    });
+    observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['data-theme', 'data-css-theme', 'class', 'style']
+    });
+
+    const particleCount = width < 768 ? 40 : 80;
+    const particles = [];
+
+    function createParticle(initial = false) {
+        const size = Math.random() * 6 + 6;
+        const shapeChoice = Math.random();
+        const shape = shapeChoice > 0.3 ? 'rect' : (shapeChoice > 0.15 ? 'circle' : 'ribbon');
+
+        return {
+            x: Math.random() * width,
+            y: initial ? Math.random() * (height + 50) - 20 : -20 - Math.random() * 30,
+            size: size,
+            aspectRatio: shape === 'ribbon' ? (Math.random() * 1.5 + 1.8) : (Math.random() * 0.5 + 0.6),
+            shape: shape,
+            colorIndex: Math.floor(Math.random() * 10),
+            speedY: Math.random() * 1.6 + 1.2,
+            speedX: (Math.random() - 0.5) * 0.7,
+            wobble: Math.random() * Math.PI * 2,
+            wobbleSpeed: Math.random() * 0.04 + 0.02,
+            tilt: Math.random() * Math.PI * 2,
+            tiltSpeed: Math.random() * 0.08 + 0.04,
+            rotation: Math.random() * Math.PI * 2,
+            rotationSpeed: (Math.random() - 0.5) * 0.04,
+            opacity: Math.random() * 0.35 + 0.35
+        };
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+        particles.push(createParticle(true));
+    }
+
+    let animationFrameId = null;
+    let isPaused = false;
+
+    function render() {
+        if (typeof isEggTriggered !== 'undefined' && isEggTriggered) {
+            if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+            observer.disconnect();
+            return;
+        }
+
+        ctx.clearRect(0, 0, width, height);
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+
+            p.y += p.speedY;
+            p.x += Math.sin(p.wobble) * 1.2 + p.speedX;
+            p.wobble += p.wobbleSpeed;
+            p.tilt += p.tiltSpeed;
+            p.rotation += p.rotationSpeed;
+
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotation);
+            ctx.scale(1, Math.cos(p.tilt));
+
+            ctx.globalAlpha = p.opacity;
+            ctx.fillStyle = accentPalette[p.colorIndex % accentPalette.length];
+
+            if (p.shape === 'circle') {
+                ctx.beginPath();
+                ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                const w = p.size;
+                const h = p.size * p.aspectRatio;
+                ctx.beginPath();
+                if (typeof ctx.roundRect === 'function') {
+                    ctx.roundRect(-w / 2, -h / 2, w, h, 2);
+                } else {
+                    ctx.rect(-w / 2, -h / 2, w, h);
+                }
+                ctx.fill();
+            }
+
+            ctx.restore();
+
+            if (p.y > height + 25) {
+                particles[i] = createParticle(false);
+            }
+            if (p.x < -30) p.x = width + 20;
+            else if (p.x > width + 30) p.x = -20;
+        }
+
+        if (!isPaused) {
+            animationFrameId = requestAnimationFrame(render);
+        }
+    }
+
+    animationFrameId = requestAnimationFrame(render);
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            isPaused = true;
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+        } else {
+            if (isPaused) {
+                isPaused = false;
+                animationFrameId = requestAnimationFrame(render);
+            }
+        }
+    });
 }

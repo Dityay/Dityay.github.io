@@ -99,10 +99,11 @@ window.kunziteData = [
     category: "Xiaomi (HyperOS, MIUI)",
     device: "Xiaomi REDMI Note 15 5G (kunzite)",
     version: "Android 17 (Initial)",
-    buildDate: "2026-10-28",
+    buildDate: "2026-11-03",
+    isForcePush: true,
     cssSuffix: "-red",
     isWip: false,
-    downloadUrl: "https://drive.google.com/file/d/1nczBLXpb2Yj9FSXjJtr8wGkjfd2ZjfZF/view?usp=sharing",
+    downloadUrl: "https://drive.google.com/file/d/1ocDM_LvTs868YQrG8d7B97tbNo70Vgxn/view?usp=sharing",
     banner: "assets/roms/kunzite/hos4cn/banner.webp",
     screenshots: [
         "assets/roms/kunzite/hos4cn/1.webp",
@@ -110,7 +111,7 @@ window.kunziteData = [
         "assets/roms/kunzite/hos4cn/3.webp",
         "assets/roms/kunzite/hos4cn/4.webp"
     ],
-    description: "> *\"There are no monsters in this world, but bless those who still feel like monsters.\"*\n\n### Notes\n- **Clean Flash Recommended:** Perform a complete clean flash\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n- Enable Gapps in \"Accounts & sync\" > \"Basic Google services\"\n\n### Known Issues\n- Please report any other bugs encountered to the maintainer",
+    description: "> *\"There are no monsters in this world, but bless those who still feel like monsters.\"*\n\n### Notes\n- **Clean Flash Recommended:** Perform a complete clean flash\n- Shipped with OrangeFox Recovery and non-rooted by default\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n- Enable Gapps in \"Accounts & sync\" > \"Basic Google services\"\n\n### Changelog\n- Fixed camera app crash when switching modes\n- System stability and performance improvements\n- Miscellaneous fixes and enhancements\n\n### Known Issues\n- Please report any other bugs encountered to the maintainer",
     flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
     credits: "- @makartos, @UralRedux for testing\n- @ProjectUnknown01 for RapidFlasher"
 }

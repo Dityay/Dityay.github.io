@@ -33,14 +33,16 @@ let spamTarget = Math.floor(Math.random() * 8) + 6;
 const YTTA_DEBUG_PIN = '1225';
 
 // Date utility: convert GMT+8 date string safely
-function getGMT8Target(dateStr) {
+function getGMT8Target(dateStr, isForcePush = false) {
     if (!dateStr) return new Date();
     const parts = String(dateStr).trim().replace(/\//g, '-').split('-');
     if (parts.length === 3) {
         const y = parts[0];
         const m = parts[1].padStart(2, '0');
         const d = parts[2].padStart(2, '0');
-        return new Date(`${y}-${m}-${d}T20:00:00+08:00`);
+        // If isForcePush is enabled, bypass 20:00:00 GMT+8 and release at midnight (00:00:00 GMT+8)
+        const timeStr = isForcePush ? '00:00:00+08:00' : '20:00:00+08:00';
+        return new Date(`${y}-${m}-${d}T${timeStr}`);
     }
     return new Date(dateStr);
 }
@@ -225,11 +227,16 @@ function verifyPin() {
     }
 }
 
+function isRomUpcoming(rom) {
+    if (!rom || rom.isWip) return false;
+    // Bypass upcoming lock if isForcePush is true
+    if (rom.isForcePush) return false;
+    const build = rom.buildDate ? getGMT8Target(rom.buildDate, false) : null;
+    return !!(build && build > new Date());
+}
+
 function redirectToUpcomingRom() {
-    const upcomingRom = (window.romData && window.romData.find(r => {
-        const b = r.buildDate ? getGMT8Target(r.buildDate) : null;
-        return b && b > new Date();
-    })) || (window.romData && window.romData.find(r => r.id === 'kun_nos5'));
+    const upcomingRom = (window.romData && window.romData.find(r => isRomUpcoming(r))) || (window.romData && window.romData.find(r => r.id === 'kun_nos5'));
 
     if (upcomingRom) {
         viewDetail(upcomingRom.id);
@@ -741,10 +748,10 @@ function renderROMCards() {
     htmlContent = filteredData.map((rom, idx) => {
         let badgeHtml = "";
         let displayDate = "-";
-        const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
+        const build = rom.buildDate ? getGMT8Target(rom.buildDate, !!rom.isForcePush) : null;
         const now = new Date();
         const isWip = !!rom.isWip;
-        const isUpcoming = !isWip && build && build > now;
+        const isUpcoming = isRomUpcoming(rom);
         const isUnlockedByYtta = isUpcoming && isYttaMode;
         const isNuked = !isWip && !isUpcoming && (!rom.downloadUrl || rom.downloadUrl.trim() === "");
 
@@ -1188,9 +1195,9 @@ function viewDetail(id) {
     // Apply accent theme
     updateCSS(rom.cssSuffix || '-blue');
 
-    const build = rom.buildDate ? getGMT8Target(rom.buildDate) : null;
+    const build = rom.buildDate ? getGMT8Target(rom.buildDate, !!rom.isForcePush) : null;
     const now = new Date();
-    const isUpcoming = build && build > now;
+    const isUpcoming = isRomUpcoming(rom);
     const isUnlockedByYtta = isUpcoming && isYttaMode;
     const isNuked = !isUpcoming && (!rom.downloadUrl || rom.downloadUrl.trim() === "");
 

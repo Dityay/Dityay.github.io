@@ -124,7 +124,7 @@ window.kunziteData = [
         version: "Android 17 (Initial)",
         buildDate: "2026-11-25",
         cssSuffix: "-red",
-        downloadUrl: "https://drive.google.com/file/d/1fU-UcrJzI6TBj-8y7erSmssscP4Lkl8A/view?usp=sharing",
+        downloadUrl: "https://drive.google.com/file/d/1C17AH3pECS6HnCYqkLJtqsLBh9floz3u/view?usp=sharing",
         banner: "assets/roms/kunzite/cos17gl/banner.webp",
         screenshots: [
             "assets/roms/kunzite/cos17gl/1.webp",
@@ -135,7 +135,7 @@ window.kunziteData = [
             "assets/roms/kunzite/cos17gl/6.webp"
         ],
         description: "> *\"A fallen stars will eventually land in northern\"*\n\n### Notes\n- **Clean Flash Mandatory:** Perform a complete clean flash\n- Let the ROM settle for a few minutes after initial boot (may lag temporarily while compiling caches)\n- Non-rooted by default and shipped with OrangeFox Recovery\n- FOD working properly\n- Bypass charging is fully supported\n- After enrolling Face Unlock, go to Face Unlock settings, toggle Screen Unlock off and re-enable\n- **Do NOT update Chrome, use the prebuilt version**\n\n### Known Issues\n- Please report any other bugs encountered to the maintainer",
-        flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*\n\n> ⚠️ **Warning:** Do NOT flash from ZKOS as it will make the device unbootable!",
-        credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand, @rianixia, @hoshikv, @Raphraphan, [LazyBonesLZY](https://github.com/LazyBonesLZY), [slakkystar](https://github.com/slakkystar), @makartos, @SM6475, @UralRedux for help, guides, fixes\n- @heybyben for OrangeFox\n- @iDeadXD for kernel\n- @makartos, @SM6475, @UralRedux for testing\n- @ProjectUnknown01 for original RapidFlasher"
+        flashInstruction: "### Installation Steps\n1. Flash [OrangeFox Recovery](https://t.me/KunziteIDUpdates/38) (or [Mirror Recovery](https://t.me/archivebsct2/35))\n2. Flash the ROM zip file (recommended via Internal Storage or ADB Sideload)\n3. Format Data\n4. *(Optional)* Flash [region-matching firmware](https://sourceforge.net/projects/wakacaw-project/files/kunzite/fw/)\n5. Reboot to system *(if you see a \"No OS Installed\" warning after flashing, safely ignore it)*",
+        credits: "- @KanagawaYamadaVTeacher, @eepyvanagrand, @rianixia, @hoshikv, @Raphraphan, [LazyBonesLZY](https://github.com/LazyBonesLZY), [slakkystar](https://github.com/slakkystar), @makartos, @UralRedux for help, guides, fixes\n- @heybyben for OrangeFox\n- @iDeadXD for kernel\n- @makartos, @SM6475, @UralRedux, @rolarix for testing\n- @ProjectUnknown01 for original RapidFlasher"
     }
 ];

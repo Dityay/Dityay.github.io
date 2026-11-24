@@ -228,7 +228,7 @@ function verifyPin() {
 }
 
 function isRomUpcoming(rom) {
-    if (!rom || rom.isWip) return false;
+    if (!rom || rom.isWip || rom.isRevoked) return false;
     // Bypass upcoming lock if isForcePush is true
     if (rom.isForcePush) return false;
     const build = rom.buildDate ? getGMT8Target(rom.buildDate, false) : null;
@@ -753,7 +753,7 @@ function renderROMCards() {
         const isWip = !!rom.isWip;
         const isUpcoming = isRomUpcoming(rom);
         const isUnlockedByYtta = isUpcoming && isYttaMode;
-        const isNuked = !isWip && !isUpcoming && (!rom.downloadUrl || rom.downloadUrl.trim() === "");
+        const isNuked = !isWip && !isUpcoming && (!!rom.isRevoked || !rom.downloadUrl || rom.downloadUrl.trim() === "");
 
         let cardAction = `onclick="viewDetail('${rom.id}')"`;
         let btnText = isUnlockedByYtta ? 'View Details (Debug)' : 'View Details';
@@ -1199,7 +1199,7 @@ function viewDetail(id) {
     const now = new Date();
     const isUpcoming = isRomUpcoming(rom);
     const isUnlockedByYtta = isUpcoming && isYttaMode;
-    const isNuked = !isUpcoming && (!rom.downloadUrl || rom.downloadUrl.trim() === "");
+    const isNuked = !isUpcoming && (!!rom.isRevoked || !rom.downloadUrl || rom.downloadUrl.trim() === "");
 
     if (isNuked) {
         showNukedPopup();

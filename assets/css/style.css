@@ -6,7 +6,7 @@
 :root {
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-mono: 'JetBrains Mono', SFMono-Regular, Consolas, monospace;
-    --font-display: 'Plus Jakarta Sans', var(--font-sans);
+    --font-display: 'Unbounded', 'Plus Jakarta Sans', var(--font-sans);
 
     /* Material 3 Expressive High-Contrast Tonal Surfaces (Dark Default) */
     --bg: #0a0c10;
